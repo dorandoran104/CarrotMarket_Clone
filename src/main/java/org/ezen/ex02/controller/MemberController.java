@@ -1,13 +1,15 @@
 package org.ezen.ex02.controller;
 
-import java.net.http.HttpHeaders;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.ezen.ex02.domain.ArticleVO;
 import org.ezen.ex02.domain.MemberVO;
+import org.ezen.ex02.service.ArticlesService;
 import org.ezen.ex02.service.MemberService;
 import org.ezen.ex02.util.JScript;
 import org.mindrot.jbcrypt.BCrypt;
@@ -32,6 +34,9 @@ public class MemberController {
 	
 	@Setter(onMethod_=@Autowired)
 	private MemberService memberService;
+	
+	@Setter(onMethod_=@Autowired)
+	private ArticlesService articlesService;
 	
 	//로그인 폼
 	@GetMapping("/login") 
@@ -148,11 +153,12 @@ public class MemberController {
 	public String myInfo(HttpSession session, Model model) {
 
 		int id = (int) session.getAttribute("loginUser");
-
+		
+		List<ArticleVO> list = articlesService.getMyArticles(id);
 		MemberVO memberVO = memberService.getMemberId(id);
 
 		model.addAttribute("member", memberVO);
-
+		model.addAttribute("list",list);
 		return "member/myInfo";
 
 	}
@@ -161,10 +167,11 @@ public class MemberController {
 	@GetMapping("/modify")
 	public String ModifyForm(HttpSession session, Model model) {
 		int id = (int) session.getAttribute("loginUser");
+		
 		MemberVO memberVO = memberService.getMemberId(id);
-
+	
 		model.addAttribute("member", memberVO); // front에서 member로 VO값 불러옴
-
+		
 		return "member/memberModify";
 	}
 		

@@ -35,65 +35,33 @@
     <div id="user-records-detail">
       <section id="user-filter">
     <ul class="d-flex justify-content-around">
-      <li><a class="active" href="#">판매 물품 (2)</a></li>
+      <li><a class="active" href="#">내 판매 물품 (${list.size()})</a></li>
         <li><a class="" href="#">거래 후기 (0)</a></li>
         <li><a class="" href="#">매너 칭찬</a></li>
     </ul>
 </section>
 
   <section id="user-records" class="user-articles" data-total-page="1" data-current-page="1">
-    <h3 class="hide">${member.usernickname}님의 판매 물품 목록</h3>
       <section class="cards-wrap">
-        <article class="card ">
-  <a class="card-link " data-event-label="581243506" href="/articles/581243506">
-    <div class="card-photo ">
-        <img alt="제습기" src="https://dnvefa72aowie.cloudfront.net/origin/article/202305/7ca9be8ec9e6eed735fa294d75b3da0c2daab391b1b7e6965a0f7ffb7a15d774_0.webp?q=82&amp;s=300x300&amp;t=crop" />
-    </div>
-    <div class="card-desc">
-      <h2 class="card-title">제습기</h2>
-      <div class="card-price ">
-        50,000원
-      </div>
-      <div class="card-region-name">
-        부산 사상구 모라제3동
-      </div>
-      <div class="card-counts">
-          <span>
-            관심 9
-          </span>
-        ∙
-        <span>
-            채팅 0
-          </span>
-      </div>
-    </div>
-</a></article>
-<article class="card ">
-  <a class="card-link " data-event-label="581236806" href="/articles/581236806">
-    <div class="card-photo ">
-        <img alt="공기청정기" src="https://dnvefa72aowie.cloudfront.net/origin/article/202305/6d3ad986fc9fe2f6079d19065247306e64d7c67fb903222478c64fa83e310d6c_0.webp?q=82&amp;s=300x300&amp;t=crop" />
-    </div>
-    <div class="card-desc">
-      <h2 class="card-title">공기청정기</h2>
-      <div class="card-price ">
-        500,000원
-      </div>
-      <div class="card-region-name">
-        부산 사상구 모라제3동
-      </div>
-      <div class="card-counts">
-          <span>
-            관심 0
-          </span>
-        ∙
-        <span>
-            채팅 0
-          </span>
-      </div>
-    </div>
-</a></article>
-
+      	<c:forEach items="${list}" var="list">
+	        <article class="card ">
+	  			<a class="card-link" href="../articles/get?id=${list.id}">
+				    <div class="card-photo" >
+				        <img src="../attach/thumbnail/${list.id}" style="width : 100%; height : 100%" />
+				    </div>
+	    		<div class="card-desc">
+		      		<h2 class="card-title">${list.title}</h2>
+					<div class="card-price "><fmt:formatNumber value="${list.cost}" pattern="#,###" />원</div>
+		      		<div class="card-region-name">${member.useraddress}</div>
+					<div class="card-counts">
+					    <span>관심 9</span>∙<span>채팅 0</span>
+					</div>
+	   			</div>
+				</a>
+			</article>
+		</c:forEach>
       </section>
+      
   </section>
     </div>
 

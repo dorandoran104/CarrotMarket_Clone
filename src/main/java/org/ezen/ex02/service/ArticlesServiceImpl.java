@@ -38,13 +38,9 @@ public class ArticlesServiceImpl implements ArticlesService{
 		int result = articlesMapper.registerArticles(article);
 		
 		int articleId = articlesMapper.getLastId();
-		if(files.length == 0) {
-			return articleId;
-		}
+		
 		StringBuilder filePath = new StringBuilder("images");
-		
 		String fileFullPath = "C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\";
-		
 		
 		File uploadPath = new File(new StringBuilder().append(fileFullPath).append(filePath).toString(),getFolder());
 		
@@ -54,12 +50,13 @@ public class ArticlesServiceImpl implements ArticlesService{
 		
 		//이미지 파일들 저장하기
 		for(int a = 0; a<files.length; a++) {
+			
+			if(files[a].isEmpty()) {
+				log.info(files[a].isEmpty());
+				return articleId;
+			}
 			ImageVO imageVO = new ImageVO();
-
-			log.info(files[a].getOriginalFilename());
-			
 			StringBuilder sb = new StringBuilder();
-			
 			UUID uuid = UUID.randomUUID();
 			
 			sb.append(uuid + "-");
@@ -99,6 +96,14 @@ public class ArticlesServiceImpl implements ArticlesService{
 		return articleId;
 	}
 	
+	//내정보에서 내 게시글 띄우기
+	@Override
+	public List<ArticleVO> getMyArticles(int id) {
+		List<ArticleVO> list = articlesMapper.getMyArticles(id);
+		return list;
+	}
+
+	
 	
 	//게시글 가져오기
 	@Override
@@ -122,8 +127,5 @@ public class ArticlesServiceImpl implements ArticlesService{
 			Date date = new Date();
 			String str = sdf.format(date);
 			return str.replace("-", File.separator);
-		}
-
-
-	
+		}	
 }

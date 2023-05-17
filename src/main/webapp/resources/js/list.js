@@ -37,7 +37,7 @@
 	
 	for(let i = 0; i<result.length; i++){
 		str +='<article class="flea-market-article flat-card">'
-		str +='<a class="flea-market-article-link" href="get?id=' + result[i].id + '">'
+		str +='<a class="flea-market-article-link" href="get?id=' + result[i].id + '" target="_blank">'
 		str +='<div class="card-photo" style="background: url(../attach/thumbnail/' + result[i].id + ');background-size: cover;"></div>'						
 		str +='<div class="article-info">';
 		str +='<div class="article-title-content">';

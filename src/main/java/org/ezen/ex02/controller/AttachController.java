@@ -52,7 +52,7 @@ public class AttachController {
 	}
 	
 	//섬네일 뿌리기
-	@GetMapping("/thumbnail/{articleNo}")
+	@GetMapping(value="/thumbnail/{articleNo}")
 	public Resource showThumbnail(@PathVariable("articleNo") int articleNo) throws MalformedURLException {
 		
 		ImageVO imageVO = attachService.getThumbnail(articleNo);

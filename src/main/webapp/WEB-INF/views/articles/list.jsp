@@ -17,10 +17,10 @@
 					<a href="/ex02/articles/new" class="article-kind">당근 등록</a>
 				</c:if>
 			</div>
-			<div id="result-area" class="row">
+			<div id="result-area">
 			<c:forEach items="${list}" var="list">
 			<article class="flea-market-article flat-card col-4">
-				<a class="flea-market-article-link" href="get?id=${list.id}">
+				<a class="flea-market-article-link" href="get?id=${list.id}" target='_blank'>
 					<div class="card-photo" style="background: url(../attach/thumbnail/${list.id});background-size: cover;">
 						<!-- <img src="../attach/thumbnail/${list.id}" /> -->
 					</div>
@@ -33,9 +33,8 @@
 						<p class="article-region-name">충남 천안시 동남구 수신면</p>
 						<p class="article-price "><fmt:formatNumber value="${list.cost}" pattern="#,###" />원</p>
 						<section class="article-sub-info">
-							<span class="article-watch"> <img class="watch-icon"
-								alt="Watch count"
-								src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base/like-8111aa74d4b1045d7d5943a901896992574dd94c090cef92c26ae53e8da58260.svg" />
+							<span class="article-watch"> 
+							<img class="watch-icon" alt="Watch count" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base/like-8111aa74d4b1045d7d5943a901896992574dd94c090cef92c26ae53e8da58260.svg" />
 								1
 							</span>
 						</section>
@@ -44,7 +43,7 @@
 			</article>
 			</c:forEach>
 			</div>
-			<div class="more-btn" data-o-keyword="노트북" data-page="1" data-total-pages="834">
+			<div class="more-btn">
    			<span class="more-text">더보기</span>
       		<div class="more-loading">
         	<div class="loader"></div>

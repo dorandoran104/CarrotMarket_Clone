@@ -15,4 +15,6 @@ public interface ArticlesService {
 
 	List<ArticleVO> getArticles(Criteria cri);
 
+	List<ArticleVO> getMyArticles(int id);
+
 }

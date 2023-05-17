@@ -46,4 +46,10 @@
 		where c.id = #{id}
 	</select>
 	
+	<select id="getMyArticles" resultType="org.ezen.ex02.domain.ArticleVO">
+		select *
+		from carrot_articles
+		where memberno = #{id}
+	</select>
+	
 </mapper>

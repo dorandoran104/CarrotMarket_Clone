@@ -9,6 +9,10 @@ img{
     text-align: left;
     display: inline-block;
     /* width: 217px; */
-    /* margin-right: 31px; */
+     margin-right: 20px;
     margin-bottom: 40px;
+}
+
+#result .result-container .articles-wrap .flat-card:nth-child(3n-2) {
+    margin-right: 20px;
 }

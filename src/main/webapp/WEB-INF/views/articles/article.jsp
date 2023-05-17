@@ -4,7 +4,9 @@
 	pageEncoding="UTF-8"%>
 <c:set var="pageTitle" value="${article.title}"></c:set>
 <%@ include file="../include/header.jspf"%>
+<c:if test="${article.lng != null && article.lat != null }">
 <script type="text/javascript" src="${kakaoKey}"></script>
+</c:if>
 
 <!-- bootstrap -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
@@ -94,7 +96,9 @@
 		</section>
 	</article>
 </div>
+<c:if test="${article.lng != null && article.lat != null }">
 <script src="../js/ArticleMap.js"></script>
+</c:if>
 <script src="../js/article.js"></script>
 <script src="../js/image.js"></script>
 <script

@@ -17,4 +17,6 @@ public interface ArticlesMapper {
 	ArticleVO getArticle(int id);
 
 	List<ArticleVO> getArticles(Criteria cri);
+
+	List<ArticleVO> getMyArticles(int id);
 }
