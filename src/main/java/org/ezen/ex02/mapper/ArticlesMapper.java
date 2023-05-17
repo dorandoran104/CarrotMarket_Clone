@@ -3,14 +3,14 @@ package org.ezen.ex02.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.ezen.ex02.domain.ArticleVO;
 import org.ezen.ex02.domain.Criteria;
-import org.ezen.ex02.domain.ImageVO;
 
 @Mapper
 public interface ArticlesMapper {
 
-	int registerArticles(ArticleVO article);
+	void registerArticles(ArticleVO article);
 
 	int getLastId();
 
@@ -19,4 +19,8 @@ public interface ArticlesMapper {
 	List<ArticleVO> getArticles(Criteria cri);
 
 	List<ArticleVO> getMyArticles(int id);
+
+	void setSell(@Param("id") int id,@Param("sell") int sell);
+
+	void modifyArticle(ArticleVO articleVO);
 }

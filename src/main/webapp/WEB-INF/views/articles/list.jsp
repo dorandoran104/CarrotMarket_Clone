@@ -30,7 +30,7 @@
 								<span class="article-content">${list.body}</span>
 						</div>
 
-						<p class="article-region-name">충남 천안시 동남구 수신면</p>
+						<p class="article-region-name">${list.address}</p>
 						<p class="article-price "><fmt:formatNumber value="${list.cost}" pattern="#,###" />원</p>
 						<section class="article-sub-info">
 							<span class="article-watch"> 

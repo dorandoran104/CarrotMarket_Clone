@@ -35,7 +35,7 @@ public class ArticlesServiceImpl implements ArticlesService{
 	@Override
 	@Transactional
 	public int registerArticles(MultipartFile[] files,ArticleVO article){
-		int result = articlesMapper.registerArticles(article);
+		articlesMapper.registerArticles(article);
 		
 		int articleId = articlesMapper.getLastId();
 		
@@ -50,7 +50,7 @@ public class ArticlesServiceImpl implements ArticlesService{
 		
 		//이미지 파일들 저장하기
 		for(int a = 0; a<files.length; a++) {
-			
+			//빈파일 체크 후 빈 파일이면 파일저장없이 return
 			if(files[a].isEmpty()) {
 				log.info(files[a].isEmpty());
 				return articleId;
@@ -66,7 +66,7 @@ public class ArticlesServiceImpl implements ArticlesService{
 		
 			try {
 				files[a].transferTo(saveFile);
-				
+				//첫번째 파일일 경우 thumbnail파일 생성
 				if(a == 0) {
 					ImageVO thumbnailVO = new ImageVO();
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath.getPath(), "s_"+sb.toString()));
@@ -85,8 +85,6 @@ public class ArticlesServiceImpl implements ArticlesService{
 				imageVO.setFilePath(filePath.toString() + "\\" +  getFolder() + "\\");
 				
 				attachMapper.registerImg(imageVO);
-				
-				
 			} catch (Exception e) {
 				log.error(e.getMessage());
 				new Exception();
@@ -103,8 +101,6 @@ public class ArticlesServiceImpl implements ArticlesService{
 		return list;
 	}
 
-	
-	
 	//게시글 가져오기
 	@Override
 	public ArticleVO getArticle(int id) {
@@ -118,14 +114,27 @@ public class ArticlesServiceImpl implements ArticlesService{
 		List<ArticleVO> list = articlesMapper.getArticles(cri);
 		return list;
 	}
+	
+	//내 게시글 예약중,거래완료 정보 넣기
+	@Override
+	public void setSell(int id, int sell) {
+		articlesMapper.setSell(id, sell);
+	}
 
+	//게시글 수정
+	@Override
+	public void modifyArticle(ArticleVO articleVO) {
+		articlesMapper.modifyArticle(articleVO);
+		
+	}	
 	
 	//폴더 날짜별로 정리하기
-		private String getFolder() {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			
-			Date date = new Date();
-			String str = sdf.format(date);
-			return str.replace("-", File.separator);
-		}	
+	private String getFolder() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date date = new Date();
+		String str = sdf.format(date);
+		return str.replace("-", File.separator);
+	}
+
 }

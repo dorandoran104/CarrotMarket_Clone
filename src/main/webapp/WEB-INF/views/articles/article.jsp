@@ -1,3 +1,4 @@
+<%@page import="org.springframework.web.context.annotation.SessionScope"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -25,53 +26,57 @@
 	<article id="content" data-id="${article.id}">
 		<h1 class="hide">참치캔</h1>
 		<div class="row">
-			<span class="prev col-1" id="aro1_prev"><i class="bi bi-arrow-left"></i></span>
-			<div class="imageArea col-10" style="height:350px; overflow: hidden; margin: auto">
-				
-				
-			</div>
-			<span class="next col-1" id="aro1_next"><i class="bi bi-arrow-right"></i></span>
+			<span class="prev col-1" id="aro1_prev" style="text-align: center"><i class="bi bi-arrow-left"></i></span>
+			<div class="imageArea col-10" style="height:350px; overflow: hidden; margin: auto"></div>
+			<span class="next col-1" id="aro1_next" style="text-align: center"><i class="bi bi-arrow-right"></i></span>
 		</div>
 		<section id="article-profile">
-		
-				<h3 class="hide">프로필</h3>
-				<div class="space-between">
-					<div style="display: flex;">
-						<!-- 
-						<div id="article-profile-image">
-							<img alt="당근당근쥬스"
-								src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png" />
-						</div>
-						 -->
-						<div id="article-profile-left">
-							<div id="nickname">${article.nickname }</div>
-							<div id="region-name">${article.address }</div>
-						</div>
+			<h3 class="hide">프로필</h3>
+			<c:if test="${loginUser == article.memberNo }">
+			<div class="dropdown mt-3 mb-3">
+			  <button class="common-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			    내 글 수정하기
+			  </button>
+			  <ul class="dropdown-menu myArticle">
+			    <li><a class="dropdown-item article_dropdown" href="#">예약중</a></li>
+			    <li><a class="dropdown-item article_dropdown" href="#">거래완료</a></li>
+			    <li><a class="dropdown-item article_dropdown" href="modify?id=${article.id}">글 수정하기</a></li>
+			    <li><a class="dropdown-item article_dropdown" href="#">글 삭제하기</a></li>
+			  </ul>
+			</div>
+			</c:if>
+			<div class="space-between">
+					<!-- 
+					<div id="article-profile-image">
+						<img alt="당근당근쥬스"
+							src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png" />
 					</div>
-					<div id="article-profile-right">
-						<dl id="temperature-wrap">
-							<dt>매너온도</dt>
-							<dd class="text-color-04 ">
-								90.4 <span>°C</span>
-							</dd>
-						</dl>
-						<div class="meters">
-							<div class=" bar bar-color-04" style="width: 39%;"></div>
-						</div>
-						<div class=" face face-04"></div>
-					</div>
+					 -->
+				<div id="article-profile-left">
+					<div id="nickname">${article.nickname }</div>
+					<div id="region-name">${article.address }</div>
 				</div>
+		
+				<div id="article-profile-right">
+					<dl id="temperature-wrap">
+						<dt>매너온도</dt>
+						<dd class="text-color-04 ">
+							90.4 <span>°C</span>
+						</dd>
+					</dl>
+					<div class="meters">
+						<div class=" bar bar-color-04" style="width: 39%;"></div>
+					</div>
+					<div class=" face face-04"></div>
+				</div>
+			</div>
 		</section>
 
 		<section id="article-description">
 			<h1 property="schema:name" id="article-title"
 				style="margin-top: 0px;">${article.title}</h1>
-			<p id="article-category">
-				가공식품 ∙
-				<time> 6일 전 </time>
-			</p>
-			
-			<p style="font-size: 18px; font-weight: bold;">
+			<!-- <p id="article-category">가공식품 ∙<time> 6일 전 </time></p> -->
+			<p id="cost-area">
 				<fmt:formatNumber value="${article.cost}" pattern="#,###" />원
 			 </p>
 			<!--  <div property="schema:description" id="article-detail">-->
@@ -83,7 +88,7 @@
 				<div id="staticMap" style="width:100%;height:350px; margin:auto;" data-lng="${article.lng}" data-lat="${article.lat}"></div>	
 			</c:if>
 			
-			<button id="chat-btn" class="mt-2">채팅하기</button>
+			<button id="chat-btn" class="mt-2 common-btn">채팅하기</button>
 		</section>
 		<section id="article-reply">
 			<h2>댓글</h2>
@@ -101,9 +106,4 @@
 </c:if>
 <script src="../js/article.js"></script>
 <script src="../js/image.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-	crossorigin="anonymous"></script>
-
 <%@ include file="../include/footer.jspf"%>

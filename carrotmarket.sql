@@ -33,7 +33,7 @@ LAT VARCHAR2(25 BYTE),
 LOCATIONINFO VARCHAR2(1000 BYTE), 
 SEIL NUMBER(1,0) DEFAULT 0, 
 HITCOUNT NUMBER(10,0) DEFAULT 0, 
-THUMBNAILPATH VARCHAR2(100 BYTE),
+chatcount number(10,0) default 0,
 CONSTRAINT CARR_ART_MEM_FK foreign key(MEMBERNO) references carrot_member (id)
 );
 create sequence carr_art_id_seq;
@@ -41,17 +41,24 @@ create sequence carr_art_id_seq;
 
 --이미지 테이블
 drop table carrot_img;
-drop sequence carr_img_id_seq;
 
 CREATE TABLE CARROT_IMG (	
-ID NUMBER(10,0) CONSTRAINT CARR_IMG_ID_PK PRIMARY KEY, 
 ARTICLENO NUMBER(10,0) NOT NULL, 
 FILEPATH VARCHAR2(200 BYTE) NOT NULL, 
-FILENAME VARCHAR2(100 BYTE) NOT NULL,
+FILENAME VARCHAR2(100 BYTE) CONSTRAINT CARR_IMG_FILE_PK PRIMARY KEY,
 CONSTRAINT CARR_IMG_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES CARROT_ARTICLES (ID)
 );
+drop table carrot_thumbnail;
+create table carrot_thumbnail(
+ARTICLENO NUMBER(10,0) NOT NULL, 
+FILEPATH VARCHAR2(200 BYTE) NOT NULL, 
+FILENAME VARCHAR2(100 BYTE) CONSTRAINT CARR_THUM_FILE_PK PRIMARY KEY,
+CONSTRAINT CARR_THUM_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES CARROT_ARTICLES (ID)
+);
 
-create sequence carr_img_id_seq;
-
-select c.*, m.nickname, m.address from carrot_articles c left outer join carrot_member m on(c.memberno = m.id);
+select * from carrot_member;
+select * from carrot_articles;
+select * from carrot_thumbnail;
 select * from carrot_img;
+
+select * from carrot_member;

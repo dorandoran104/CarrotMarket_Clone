@@ -17,4 +17,8 @@ public interface ArticlesService {
 
 	List<ArticleVO> getMyArticles(int id);
 
+	void setSell(int id, int sell);
+
+	void modifyArticle(ArticleVO articleVO);
+
 }

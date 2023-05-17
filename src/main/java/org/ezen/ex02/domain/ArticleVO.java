@@ -19,7 +19,7 @@ public class ArticleVO {
 	private String lng;
 	private String lat;
 	private String locationInfo;
-	private int seil;
+	private int sell;
 	private int hitCount;
 	private int chatCount;
 	

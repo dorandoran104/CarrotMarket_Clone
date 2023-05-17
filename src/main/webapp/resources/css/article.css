@@ -56,7 +56,7 @@ cursor : pointer;
 	border-bottom: 1px solid #e9ecef;
 }
 
-#chat-btn{
+.common-btn{
 	width : 100%;
 	background-color : white;
 	color : #ff6f0f;
@@ -65,7 +65,7 @@ cursor : pointer;
 	height : 30px;
 }
 
-#chat-btn:hover{
+.common-btn:hover{
 	color : white;
 	background-color:#ff6f0f;
 	border : 0;
@@ -79,4 +79,29 @@ cursor : pointer;
 .reply-btn:hover{
 	color : white;
 	background-color:#ff6f0f;
+}
+
+.article_dropdown{
+	font-size : 1.5rem;
+}
+
+.article_dropdown:active {
+	color : white;
+	background-color:#ff6f0f;
+}
+
+#cost-area{
+	font-weight: 600;
+    color: #ff8a3d;
+    font-size: 15px;
+    line-height: 18px;
+    margin-top: 6px;
+}
+
+pre{
+	font-size: 17px;
+    line-height: 1.6;
+    letter-spacing: -0.6px;
+    margin: 16px 0;
+    word-break: break-all;
 }

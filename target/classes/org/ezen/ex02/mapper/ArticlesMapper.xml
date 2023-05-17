@@ -52,4 +52,10 @@
 		where memberno = #{id}
 	</select>
 	
+	<update id="setSell">
+		update carrot_articles
+		set sell = #{sell}
+		where id = #{id}
+	</update>
+	
 </mapper>

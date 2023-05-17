@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Setter;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/articles")
@@ -38,8 +39,7 @@ public class ArticlesController {
 		return "articles/list";
 	}
 	
-	
-	//리스트 뿌리기
+	//더보기 누를 시 리스트 뿌리기
 	@GetMapping(
 			value="/list/{page}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,5 +75,31 @@ public class ArticlesController {
 		String kakaoApiKey = new ApiKey().getKakaoKey();
 		model.addAttribute("kakaoKey",kakaoApiKey);
 		return "articles/article";
+	}
+	
+	//게시글 수정 폼
+	@GetMapping("/modify")
+	public String modifyArticle(Model model,int id) {
+		System.out.println(id);
+		ArticleVO articleVO = articlesService.getArticle(id);
+		model.addAttribute("article",articleVO);
+		
+		String kakaoApiKey = new ApiKey().getKakaoKey();
+		model.addAttribute("kakaoKey",kakaoApiKey);
+		return "articles/modify";
+	}
+	
+	@PostMapping("/modify")
+	public String modifyArticle(ArticleVO articleVO) {
+		articlesService.modifyArticle(articleVO);
+		return "redirect:/articles/get?id="+articleVO.getId();
+	}
+	
+	//내 게시글 예약중/거래완료로 바꾸기
+	@GetMapping("/sell/{sell}/{id}")
+	@ResponseBody
+	public ResponseEntity<String> isSell(@PathVariable("id") int id, @PathVariable("sell") int sell){
+		articlesService.setSell(id,sell);
+		return new ResponseEntity<>("success",HttpStatus.OK);
 	}
 }
