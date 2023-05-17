@@ -72,6 +72,8 @@ public class ArticlesController {
 	public String getArticle(Model model, int id) {
 		ArticleVO articleVO = articlesService.getArticle(id);
 		model.addAttribute("article",articleVO);
+		String kakaoApiKey = new ApiKey().getKakaoKey();
+		model.addAttribute("kakaoKey",kakaoApiKey);
 		return "articles/article";
 	}
 }

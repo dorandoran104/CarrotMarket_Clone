@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 <link rel="stylesheet" href="../css/article.css" />
+<!-- 카카오 맵 -->
 
 <div style="margin: 95px auto; width: 100%; font-size: 1.5rem">
 	<article id="content" data-id="${article.id}">
@@ -75,7 +76,12 @@
 				<pre>${article.body}</pre>
 			<!-- </div> -->
 			<p id="article-counts">관심 19 ∙ 채팅 56 ∙ 조회 864</p>
-			<button id="chat-btn">채팅하기</button>
+			
+			<c:if test="${article.lng != null && article.lat != null }">
+				<div id="staticMap" style="width:100%;height:350px; margin:auto;" data-lng="${article.lng}" data-lat="${article.lat}"></div>	
+			</c:if>
+			
+			<button id="chat-btn" class="mt-2">채팅하기</button>
 		</section>
 		<section id="article-reply">
 			<h2>댓글</h2>
@@ -88,7 +94,7 @@
 		</section>
 	</article>
 </div>
-
+<script src="../js/ArticleMap.js"></script>
 <script src="../js/article.js"></script>
 <script src="../js/image.js"></script>
 <script

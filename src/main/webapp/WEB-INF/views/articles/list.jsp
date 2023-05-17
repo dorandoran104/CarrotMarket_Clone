@@ -3,8 +3,9 @@
 	pageEncoding="UTF-8"%>
 <c:set var="pageTitle" value="당근 찾기"></c:set>
 
-<%@ include file="../include/header.jspf"%>
 <link rel="stylesheet" media="all" href="https://d1unjqcospf8gs.cloudfront.net/assets/home/search/index-0ea06e6a74007d2189f614229a312e9d24063f6171f58f38e95232750d810017.css" />
+<%@ include file="../include/header.jspf"%>
+
 <link rel="stylesheet" type="text/css" href="../css/list.css">
 
 <section id="result">
@@ -16,9 +17,9 @@
 					<a href="/ex02/articles/new" class="article-kind">당근 등록</a>
 				</c:if>
 			</div>
-			<div id="result-area">
+			<div id="result-area" class="row">
 			<c:forEach items="${list}" var="list">
-			<article class="flea-market-article flat-card">
+			<article class="flea-market-article flat-card col-4">
 				<a class="flea-market-article-link" href="get?id=${list.id}">
 					<div class="card-photo" style="background: url(../attach/thumbnail/${list.id});background-size: cover;">
 						<!-- <img src="../attach/thumbnail/${list.id}" /> -->

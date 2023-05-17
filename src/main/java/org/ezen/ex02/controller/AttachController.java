@@ -42,7 +42,6 @@ public class AttachController {
 			)
 	public Resource showImage(String fileName) throws MalformedURLException{
 		StringBuilder fileFullPath = new StringBuilder("C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\");
-		System.out.println(fileName);
 		if(fileName.equals("non")) {
 			fileFullPath.append("images/DaangnMarket_logo.png");
 		}else {
