@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+
+#register_form{
+	width : 50%;
+	margin : 0 auto;
+}
+
+#register_form *{
+	font-size : 1.8rem;
+}
+
+#register_submit{
+	width: 100%;
+	background-color : #ff6f0f; 
+	color: white;
+	cursor : pointer;
+}
+
+#button-addon2, #location_reset{
+	background-color : #ff6f0f;
+	border-color : #ff6f0f;
+	color : white;
+	
+}
+
+#flexCheckDefault:checked {
+	background-color : #ff6f0f;
+	border-color : #ff6f0f;
+}
+.btn{
+	border : 1px #ff6f0f solid;
+	color : #ff6f0f; 
+}
+
+.btn:hover{
+	background-color : #ff6f0f;
+	border-color : #ff6f0f;
+	color: white;	
+}
+
+img{
+	border-radius: 4px;
+}
+.col-1{
+margin : auto;
+cursor : pointer;
+}
+
+#article-description, #article-profile, #article-reply{
+	width : 80%;
+	margin : 10px auto;
+}
+
+#article-profile{
+	border-bottom: 1px solid #e9ecef;
+}
+
+#chat-btn{
+	width : 100%;
+	background-color : white;
+	color : #ff6f0f;
+	border-radius: 4px;
+	border : 1px #ff6f0f solid;
+	height : 30px;
+}
+
+#chat-btn:hover{
+	color : white;
+	background-color:#ff6f0f;
+	border : 0;
+}
+.reply-btn{
+	background-color : white;
+	color : #ff6f0f;
+	border : 1px #ff6f0f solid;
+	cursor: pointer;
+}
+.reply-btn:hover{
+	color : white;
+	background-color:#ff6f0f;
+}

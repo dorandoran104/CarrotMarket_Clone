@@ -2,15 +2,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <c:set var="pageTitle" value="당근 올리기"></c:set>
+<script type="text/javascript" src="${kakaoKey}"></script>
 <%@ include file="../include/header.jspf"%>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="../css/search.css">	
-<script type="text/javascript" src="${kakaoKey}"></script>		
+<link href="../css/article.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">	
+		
 
 	<div style= " margin : 160px auto ; width : 80%; font-size : 1.5rem">
 		<form action="new" method="post" enctype="multipart/form-data" id="register_form"> 
 		
-		<input type="text" value="<%= session.getAttribute("loginUser")%>" name="memberNo"/>
+		<input type="hidden" value="<%= (int)session.getAttribute("loginUser")%>" name="memberNo"/>
 			<div class="mb-3" style="width :100%" id="img_area">
 			</div>
 	 			
@@ -72,6 +73,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<script src="../js/articles.js"></script>
+<script src="../js/article.js"></script>
 <script src="../js/map.js"></script>
 <%@ include file="../include/footer.jspf"%>

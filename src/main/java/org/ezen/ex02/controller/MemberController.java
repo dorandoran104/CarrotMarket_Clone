@@ -120,6 +120,7 @@ public class MemberController {
 			value="/join",
 			produces = "text/html;charset=UTF-8"
 			)
+	@ResponseBody
 	public String joinAction(MemberVO memberVO) {
 
 		String hashPasswd = BCrypt.hashpw(memberVO.getUserpwd(), BCrypt.gensalt());
@@ -168,87 +169,85 @@ public class MemberController {
 	}
 		
 	// 내정보 수정 후 저장
-		@PostMapping(
-				value = "/modify",
-				produces = "text/html;charset=UTF-8"
-					)
-		@ResponseBody
-		public String modify(MemberVO memberVO){
-			
-			//1.비밀번호 맞는지 체크
-			MemberVO dbMemberVO = memberService.getMemberId(memberVO.getId());
-			if(!BCrypt.checkpw(memberVO.getUserpwd(), dbMemberVO.getUserpwd())) { //비밀번호 틀림
-				return JScript.back("비밀번호가 틀렸습니다.");
-			}
-			//2. DB 정보 수정하기
-			memberService.modifyMember(memberVO);
-
-			return JScript.href("회원정보 수정 완료", "/ex02/member/myInfo");
-		}
-		//비밀번호 변경 폼
-		@GetMapping("/passwd")
-		public String passwdForm() {
-			return "member/passwd";
-		}
-		
-		@PostMapping(
-				value = "/passwd",
-				produces = "text/html;charset=UTF-8"
+	@PostMapping(
+			value = "/modify",
+			produces = "text/html;charset=UTF-8"
 				)
-		@ResponseBody
-		public String passwd(String passwd, String newPasswd, String newPasswdConfirm, HttpSession session){
-			//1. 현재 비밀번호 맞는지 체크
-			int id = (int) session.getAttribute("loginUser");
-			MemberVO dbMemberVO = memberService.getMemberId(id);
-			
-			if(!BCrypt.checkpw(passwd, dbMemberVO.getUserpwd())) { //현재 비밀번호 일치하지 않음 
-				return JScript.back("현재 비밀번호가 틀렸습니다.");	
-				
-			}
-			//2. 새 비밀번호, 새 비밀번호 확인 맞는지 체크
-			if(newPasswd.equals(newPasswdConfirm) == false) { //새비밀번호, 새비밀번호 확인이 서로 다름 
-				return JScript.back("새 비밀번호와 일치하지 않습니다.");	
-			}
-			if(newPasswd.length() <4) {
-				return JScript.back("비밀번호는 4자 이상 입력해주세요");
-			}
+	@ResponseBody
+	public String modify(MemberVO memberVO){
+		
+		//1.비밀번호 맞는지 체크
+		MemberVO dbMemberVO = memberService.getMemberId(memberVO.getId());
+		if(!BCrypt.checkpw(memberVO.getUserpwd(), dbMemberVO.getUserpwd())) { //비밀번호 틀림
+			return JScript.back("비밀번호가 틀렸습니다.");
+		}
+		//2. DB 정보 수정하기
+		memberService.modifyMember(memberVO);
 
-			//3. DB 비밀번호 변경
-			//3-1. 비밀번호 암호화
-			String hashPasswd = BCrypt.hashpw(newPasswd, BCrypt.gensalt()); 
-			memberService.modifyPasswd(id, hashPasswd);			
+		return JScript.href("회원정보 수정 완료", "/ex02/member/myInfo");
+	}
+	//비밀번호 변경 폼
+	@GetMapping("/passwd")
+	public String passwdForm() {
+		return "member/passwd";
+	}
+	
+	@PostMapping(
+			value = "/passwd",
+			produces = "text/html;charset=UTF-8"
+			)
+	@ResponseBody
+	public String passwd(String passwd, String newPasswd, String newPasswdConfirm, HttpSession session){
+		//1. 현재 비밀번호 맞는지 체크
+		int id = (int) session.getAttribute("loginUser");
+		MemberVO dbMemberVO = memberService.getMemberId(id);
+		
+		if(!BCrypt.checkpw(passwd, dbMemberVO.getUserpwd())) { //현재 비밀번호 일치하지 않음 
+			return JScript.back("현재 비밀번호가 틀렸습니다.");	
 			
-			//4. 비밀번호 완료 메세지 띄우고 로그아웃처리
-			return JScript.href("비밀번호 변경 완료", "/ex02/member/logoutAction");			
 		}
-		
-		//회원탈퇴
-		@GetMapping("/remove")
-		public String removeForm() {
-			return "member/remove";
+		//2. 새 비밀번호, 새 비밀번호 확인 맞는지 체크
+		if(newPasswd.equals(newPasswdConfirm) == false) { //새비밀번호, 새비밀번호 확인이 서로 다름 
+			return JScript.back("새 비밀번호와 일치하지 않습니다.");	
 		}
-		
-		@PostMapping(
-				value="/remove",
-				produces = "text/html;charset=UTF-8"
-				)
-		@ResponseBody
-		public String remove(String passwd, HttpSession session){
-			
-			//1. 비밀번호 체크
-			int id = (int) session.getAttribute("loginUser");
-			MemberVO dbMemberVO = memberService.getMemberId(id);
-			
-			if(!BCrypt.checkpw(passwd, dbMemberVO.getUserpwd() )) { //현재 비밀번호 일치하지 않음
-				return JScript.back("현재 비밀번호가 틀렸습니다.");
-				
-			}
-			//2. DB에서 해당 아이디 정보 삭제
-			memberService.deleteMemberById(id);
-			
-			//3. 회원탈퇴 메세지 띄우고 로그아웃 처리(세션, 쿠키 삭제)
-			return JScript.href("회원탈퇴 완료", "/ex02/member/logoutAction");
+		if(newPasswd.length() <4) {
+			return JScript.back("비밀번호는 4자 이상 입력해주세요");
 		}
+
+		//3. DB 비밀번호 변경
+		//3-1. 비밀번호 암호화
+		String hashPasswd = BCrypt.hashpw(newPasswd, BCrypt.gensalt()); 
+		memberService.modifyPasswd(id, hashPasswd);			
 		
+		//4. 비밀번호 완료 메세지 띄우고 로그아웃처리
+		return JScript.href("비밀번호 변경 완료", "/ex02/member/logoutAction");			
+	}
+	
+	//회원탈퇴
+	@GetMapping("/remove")
+	public String removeForm() {
+		return "member/remove";
+	}
+	
+	@PostMapping(
+			value="/remove",
+			produces = "text/html;charset=UTF-8"
+			)
+	@ResponseBody
+	public String remove(String passwd, HttpSession session){
 		
+		//1. 비밀번호 체크
+		int id = (int) session.getAttribute("loginUser");
+		MemberVO dbMemberVO = memberService.getMemberId(id);
+		
+		if(!BCrypt.checkpw(passwd, dbMemberVO.getUserpwd() )) { //현재 비밀번호 일치하지 않음
+			return JScript.back("현재 비밀번호가 틀렸습니다.");
+			
+		}
+		//2. DB에서 해당 아이디 정보 삭제
+		memberService.deleteMemberById(id);
+		
+		//3. 회원탈퇴 메세지 띄우고 로그아웃 처리(세션, 쿠키 삭제)
+		return JScript.href("회원탈퇴 완료", "/ex02/member/logoutAction");
+	}
 }

@@ -3,6 +3,7 @@ package org.ezen.ex02.service;
 import java.util.List;
 
 import org.ezen.ex02.domain.ArticleVO;
+import org.ezen.ex02.domain.Criteria;
 import org.ezen.ex02.domain.ImageVO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,8 +13,6 @@ public interface ArticlesService {
 
 	ArticleVO getArticle(int id);
 
-	List<ImageVO> getArticleImage(int id);
-
-	List<ArticleVO> getArticles();
+	List<ArticleVO> getArticles(Criteria cri);
 
 }

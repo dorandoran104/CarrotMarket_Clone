@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ezen.ex02.mapper.AttachMapper">
+	
+	<insert id="registerImg">
+		insert into carrot_img(articleno, filepath, filename)
+		values(#{articleNo},#{filePath},#{fileName}) 
+	</insert>
+	
+	<insert id="registerThumbnail">
+		insert into carrot_thumbnail(articleno, filepath, filename)
+		values(#{articleNo},#{filePath},#{fileName}) 
+	</insert>
+	
+	<select id="getArticleImage" resultType="org.ezen.ex02.domain.ImageVO">
+		select * from carrot_img where articleno = #{id}
+	</select>
+	
+	<select id="getThumbnail" resultType="org.ezen.ex02.domain.ImageVO">
+		select * 
+		from carrot_thumbnail 
+		where articleno = #{articleNo}
+	</select>
+
+</mapper>

@@ -21,7 +21,7 @@ public class ArticleVO {
 	private String locationInfo;
 	private int seil;
 	private int hitCount;
-	private String thumbnailPath;
+	private int chatCount;
 	
 	//join
 	private String nickname;

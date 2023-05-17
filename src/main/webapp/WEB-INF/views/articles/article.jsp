@@ -5,14 +5,30 @@
 <c:set var="pageTitle" value="${article.title}"></c:set>
 <%@ include file="../include/header.jspf"%>
 <script type="text/javascript" src="${kakaoKey}"></script>
- <link rel="stylesheet" media="all" href="https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/show-761545e418b84f277aa422ad6dc89cee119e0355d95f099cd3141f529fea4806.css" />
 
-<div style="margin: 160px auto; width: 80%; font-size: 1.5rem">
+<!-- bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<!-- 당근 -->
+ <link rel="stylesheet" media="all" href="https://d1unjqcospf8gs.cloudfront.net/assets/home/articles/show-761545e418b84f277aa422ad6dc89cee119e0355d95f099cd3141f529fea4806.css" />
+<!-- slick -->
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+<link rel="stylesheet" href="../css/article.css" />
+
+<div style="margin: 95px auto; width: 100%; font-size: 1.5rem">
 	<article id="content" data-id="${article.id}">
 		<h1 class="hide">참치캔</h1>
-		<div class="imageArea">	
+		<div class="row">
+			<span class="prev col-1" id="aro1_prev"><i class="bi bi-arrow-left"></i></span>
+			<div class="imageArea col-10" style="height:350px; overflow: hidden; margin: auto">
+				
+				
+			</div>
+			<span class="next col-1" id="aro1_next"><i class="bi bi-arrow-right"></i></span>
 		</div>
-
 		<section id="article-profile">
 		
 				<h3 class="hide">프로필</h3>
@@ -33,7 +49,7 @@
 						<dl id="temperature-wrap">
 							<dt>매너온도</dt>
 							<dd class="text-color-04 ">
-								39.4 <span>°C</span>
+								90.4 <span>°C</span>
 							</dd>
 						</dl>
 						<div class="meters">
@@ -42,7 +58,6 @@
 						<div class=" face face-04"></div>
 					</div>
 				</div>
-			</a>
 		</section>
 
 		<section id="article-description">
@@ -54,17 +69,28 @@
 			</p>
 			
 			<p style="font-size: 18px; font-weight: bold;">
-				<fmt:formatNumber value="${article.cost}" type="currency"></fmt:formatNumber>
+				<fmt:formatNumber value="${article.cost}" pattern="#,###" />원
 			 </p>
-			<div property="schema:description" id="article-detail">
-				${article.body}
-			</div>
+			<!--  <div property="schema:description" id="article-detail">-->
+				<pre>${article.body}</pre>
+			<!-- </div> -->
 			<p id="article-counts">관심 19 ∙ 채팅 56 ∙ 조회 864</p>
+			<button id="chat-btn">채팅하기</button>
+		</section>
+		<section id="article-reply">
+			<h2>댓글</h2>
+			
+			<div class="input-group">
+			  <textarea class="form-control" aria-label="With textarea"></textarea>
+			  <span class="input-group-text reply-btn">댓글 작성</span>
+			</div>
+			
 		</section>
 	</article>
 </div>
 
 <script src="../js/article.js"></script>
+<script src="../js/image.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"

@@ -4,8 +4,12 @@
 	
 	<select id="getArticles" resultType="org.ezen.ex02.domain.ArticleVO">
 		<![CDATA[
-		select * from carrot_articles
-		where rownum <= 6
+		select c.*
+			,m.usernickname as nickname
+			,m.useraddress as address
+		from 
+			carrot_articles c left outer join carrot_member m on(c.memberno = m.id) 
+		where rownum <= #{page} *6
 		]]>
 	</select>
 	
@@ -33,11 +37,6 @@
 		select carr_art_id_seq.currval from dual
 	</select>
 	
-	<insert id="registerImg">
-		insert into carrot_img(id, articleno, filepath, filename)
-		values(carr_img_id_seq.nextval,#{articleNo},#{filePath},#{fileName}) 
-	</insert>
-	
 	<select id="getArticle" resultType="org.ezen.ex02.domain.ArticleVO">
 		select c.*
 			,m.usernickname as nickname
@@ -47,8 +46,4 @@
 		where c.id = #{id}
 	</select>
 	
-	<select id="getArticleImage" resultType="org.ezen.ex02.domain.ImageVO">
-		select * from carrot_img where articleno = #{id}
-	</select>
-
 </mapper>
