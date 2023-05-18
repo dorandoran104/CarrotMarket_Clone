@@ -38,10 +38,10 @@
 			    내 글 수정하기
 			  </button>
 			  <ul class="dropdown-menu myArticle">
-			    <li><a class="dropdown-item article_dropdown" href="#">예약중</a></li>
-			    <li><a class="dropdown-item article_dropdown" href="#">거래완료</a></li>
+			    <li><a class="dropdown-item article_dropdown isSell" href="id=${article.id}&sell=1">예약중</a></li>
+			    <li><a class="dropdown-item article_dropdown isSell" href="id=${article.id}&sell=2">거래완료</a></li>
 			    <li><a class="dropdown-item article_dropdown" href="modify?id=${article.id}">글 수정하기</a></li>
-			    <li><a class="dropdown-item article_dropdown" href="#">글 삭제하기</a></li>
+			    <li><a class="dropdown-item article_dropdown" id="delete-article" data-id="${article.id}">글 삭제하기</a></li>
 			  </ul>
 			</div>
 			</c:if>
@@ -52,9 +52,21 @@
 							src="https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-c649f052a34ebc4eee35048815d8e4f73061bf74552558bb70e07133f25524f9.png" />
 					</div>
 					 -->
-				<div id="article-profile-left">
-					<div id="nickname">${article.nickname }</div>
-					<div id="region-name">${article.address }</div>
+				<div id="article-profile-left" style="display:flex">
+					<div>
+						<div id="nickname">${article.nickname }</div>
+						<div id="region-name">${article.address }</div>
+					</div>
+					<c:choose>
+						<c:when test="${article.sell == 1 }">
+							<div class="ms-2"><span style="background-color : #22c355" class="badge"> 예약중 </span></div>
+						</c:when>
+						<c:when test="${article.sell == 2 }">
+							<div class="ms-2"><span class="badge bg-secondary">거래 완료</span></div>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+					</c:choose>
 				</div>
 		
 				<div id="article-profile-right">

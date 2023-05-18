@@ -3,16 +3,18 @@ package org.ezen.ex02.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.ezen.ex02.domain.ImageVO;
+import org.ezen.ex02.domain.AttachVO;
 
 @Mapper
 public interface AttachMapper {
 
-	void registerImg(ImageVO imageVO);
+	void registerImg(AttachVO imageVO);
 	
-	List<ImageVO> getArticleImage(int id);
+	List<AttachVO> getArticleImage(int id);
 	
-	void registerThumbnail(ImageVO thumbnail);
+	void registerThumbnail(AttachVO thumbnail);
 
-	ImageVO getThumbnail(int articleNo);
+	AttachVO getThumbnail(int articleNo);
+
+	void deleteArticleAllImage(int id);
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import org.ezen.ex02.domain.ArticleVO;
 import org.ezen.ex02.domain.Criteria;
-import org.ezen.ex02.domain.ImageVO;
+import org.ezen.ex02.domain.AttachVO;
 import org.ezen.ex02.mapper.ArticlesMapper;
 import org.ezen.ex02.mapper.AttachMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class ArticlesServiceImpl implements ArticlesService{
 				log.info(files[a].isEmpty());
 				return articleId;
 			}
-			ImageVO imageVO = new ImageVO();
+			AttachVO imageVO = new AttachVO();
 			StringBuilder sb = new StringBuilder();
 			UUID uuid = UUID.randomUUID();
 			
@@ -67,19 +67,20 @@ public class ArticlesServiceImpl implements ArticlesService{
 			try {
 				files[a].transferTo(saveFile);
 				//첫번째 파일일 경우 thumbnail파일 생성
-				if(a == 0) {
-					ImageVO thumbnailVO = new ImageVO();
-					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath.getPath(), "s_"+sb.toString()));
-					Thumbnailator.createThumbnail(files[a].getInputStream(),thumbnail,250,250);
-					thumbnail.close();
-					
-					thumbnailVO.setArticleNo(articleId);
-					thumbnailVO.setFilePath(filePath.toString() + "\\" +  getFolder() + "\\");
-					thumbnailVO.setFileName("s_"+sb.toString());
-					
-					attachMapper.registerThumbnail(thumbnailVO);
-				}
-
+//				
+//				if(a == 0) {
+//					AttachVO thumbnailVO = new AttachVO();
+//					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath.getPath(), "s_"+sb.toString()));
+//					Thumbnailator.createThumbnail(files[a].getInputStream(),thumbnail,250,250);
+//					thumbnail.close();
+//					
+//					thumbnailVO.setArticleNo(articleId);
+//					thumbnailVO.setFilePath(filePath.toString() + "\\" +  getFolder() + "\\");
+//					thumbnailVO.setFileName("s_"+sb.toString());
+//					
+//					attachMapper.registerThumbnail(thumbnailVO);
+//				}
+//
 				imageVO.setArticleNo(articleId);
 				imageVO.setFileName(sb.toString());
 				imageVO.setFilePath(filePath.toString() + "\\" +  getFolder() + "\\");
@@ -127,6 +128,11 @@ public class ArticlesServiceImpl implements ArticlesService{
 		articlesMapper.modifyArticle(articleVO);
 		
 	}	
+	//게시글 삭제
+	@Override
+	public void deleteArticle(int id) {
+		articlesMapper.deleteArticle(id);
+	}
 	
 	//폴더 날짜별로 정리하기
 	private String getFolder() {

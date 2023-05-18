@@ -3,7 +3,7 @@ package org.ezen.ex02.controller;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import org.ezen.ex02.domain.ImageVO;
+import org.ezen.ex02.domain.AttachVO;
 import org.ezen.ex02.service.AttachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -31,8 +31,8 @@ public class AttachController {
 			value="/{articleNo}",
 			produces = MediaType.APPLICATION_JSON_VALUE
 			)
-	public ResponseEntity<List<ImageVO>> getimages(@PathVariable("articleNo") int articleNo){
-		List<ImageVO> list = attachService.getArticleImage(articleNo);
+	public ResponseEntity<List<AttachVO>> getimages(@PathVariable("articleNo") int articleNo){
+		List<AttachVO> list = attachService.getArticleImage(articleNo);
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
@@ -55,14 +55,15 @@ public class AttachController {
 	@GetMapping(value="/thumbnail/{articleNo}")
 	public Resource showThumbnail(@PathVariable("articleNo") int articleNo) throws MalformedURLException {
 		
-		ImageVO imageVO = attachService.getThumbnail(articleNo);
+		List<AttachVO> list = attachService.getArticleImage(articleNo);
 		
 		StringBuilder fileFullPath = new StringBuilder("C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\");
 		
-		if(imageVO == null) {
+		if(list == null || list.size() == 0) {
 			fileFullPath.append("images/DaangnMarket_logo.png");
 		}else {
-			fileFullPath.append(imageVO.getFilePath() + imageVO.getFileName());
+			
+			fileFullPath.append(list.get(0).getFilePath() + list.get(0).getFileName());
 		}
 		return new UrlResource("file:"+fileFullPath.toString());
 	}

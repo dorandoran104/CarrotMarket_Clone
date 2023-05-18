@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.ezen.ex02.domain.ArticleVO;
 import org.ezen.ex02.domain.Criteria;
-import org.ezen.ex02.domain.ImageVO;
+import org.ezen.ex02.domain.AttachVO;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ArticlesService {
@@ -20,5 +20,7 @@ public interface ArticlesService {
 	void setSell(int id, int sell);
 
 	void modifyArticle(ArticleVO articleVO);
+
+	void deleteArticle(int id);
 
 }

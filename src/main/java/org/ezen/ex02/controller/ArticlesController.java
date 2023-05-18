@@ -5,8 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.ezen.ex02.domain.ArticleVO;
+import org.ezen.ex02.domain.AttachVO;
 import org.ezen.ex02.domain.Criteria;
 import org.ezen.ex02.service.ArticlesService;
+import org.ezen.ex02.service.AttachService;
 import org.ezen.ex02.util.ApiKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Setter;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/articles")
@@ -30,6 +31,9 @@ public class ArticlesController {
 	
 	@Setter(onMethod_=@Autowired)
 	private ArticlesService articlesService;
+	
+	@Setter(onMethod_=@Autowired)
+	private AttachService attachService;
 	
 	@GetMapping("/list")
 	public String listPage(Model model) {
@@ -88,18 +92,32 @@ public class ArticlesController {
 		model.addAttribute("kakaoKey",kakaoApiKey);
 		return "articles/modify";
 	}
-	
-	@PostMapping("/modify")
-	public String modifyArticle(ArticleVO articleVO) {
-		articlesService.modifyArticle(articleVO);
-		return "redirect:/articles/get?id="+articleVO.getId();
-	}
+	//수정 아직 구현 안함
+//	@PostMapping("/modify")
+//	public String modifyArticle(ArticleVO articleVO) {
+//		articlesService.modifyArticle(articleVO);
+//		return "redirect:/articles/get?id="+articleVO.getId();
+//	}
 	
 	//내 게시글 예약중/거래완료로 바꾸기
-	@GetMapping("/sell/{sell}/{id}")
-	@ResponseBody
-	public ResponseEntity<String> isSell(@PathVariable("id") int id, @PathVariable("sell") int sell){
+	@GetMapping("/sell")
+	public String isSell(int id, int sell){
 		articlesService.setSell(id,sell);
-		return new ResponseEntity<>("success",HttpStatus.OK);
+		return "redirect:/articles/get?id="+id;
+	}
+	
+	//게시글 삭제
+	@PostMapping("/delete")
+	@ResponseBody
+	public ResponseEntity<String> deleteArticle(int id){
+		List<AttachVO> list = attachService.getArticleImage(id);
+		//파일 db삭제
+		attachService.deleteArticleAllImage(id);
+		//게시글 db삭제
+		articlesService.deleteArticle(id);
+		//파일 삭제
+		attachService.deleteArticleImage(list);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

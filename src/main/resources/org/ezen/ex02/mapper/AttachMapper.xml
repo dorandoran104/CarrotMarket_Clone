@@ -12,14 +12,19 @@
 		values(#{articleNo},#{filePath},#{fileName}) 
 	</insert>
 	
-	<select id="getArticleImage" resultType="org.ezen.ex02.domain.ImageVO">
+	<select id="getArticleImage" resultType="org.ezen.ex02.domain.AttachVO">
 		select * from carrot_img where articleno = #{id}
 	</select>
 	
-	<select id="getThumbnail" resultType="org.ezen.ex02.domain.ImageVO">
+	<select id="getThumbnail" resultType="org.ezen.ex02.domain.AttachVO">
 		select * 
 		from carrot_thumbnail 
 		where articleno = #{articleNo}
 	</select>
+	
+	<delete id="deleteArticleAllImage">
+		delete carrot_img
+		where articleNo = #{id}
+	</delete>
 
 </mapper>

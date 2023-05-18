@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class ImageVO {
+public class AttachVO {
 
 	//pk
 	private int id;

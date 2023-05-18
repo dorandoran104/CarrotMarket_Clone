@@ -23,4 +23,6 @@ public interface ArticlesMapper {
 	void setSell(@Param("id") int id,@Param("sell") int sell);
 
 	void modifyArticle(ArticleVO articleVO);
+
+	void deleteArticle(int id);
 }
