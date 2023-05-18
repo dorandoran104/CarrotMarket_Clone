@@ -59,9 +59,9 @@
 					<button class="btn" type="button" id="location_reset">초기화</button>
 				</div>
 				-->
-				</div> 
-				<input type="hidden" name="lat"/>
-				<input type="hidden" name="lng"/>
+				</div>
+				<input type="text" id="lat" name="lat"/>
+				<input type="text" id="lng" name="lng"/>
 				
 				<div class="mb-3">
 			 		<label for="location_detail" class="form-label">선택한 곳의 장소명을 입력해 주세요</label>

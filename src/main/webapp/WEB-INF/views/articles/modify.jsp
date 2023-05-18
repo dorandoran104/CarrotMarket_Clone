@@ -51,12 +51,10 @@
 				  <button class="btn" type="button" id="button-addon2">찾기</button>
 				</div>
 				<div id="maparea">
-				
-			
-				
+					<span id="istrue"></span>
 				</div>
-				<input type="hidden" name="lat" value="${article.lat}"/>
-				<input type="hidden" name="lng" value="${article.lng}"/>
+				<input type="text" id="lat" name="lat" value="${article.lat}"/>
+				<input type="text" id="lng" name="lng" value="${article.lng}"/>
 				
 				<div class="mb-3">
 			 		<label for="location_detail" class="form-label">선택한 곳의 장소명을 입력해 주세요</label>
@@ -73,10 +71,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 <script src="../js/register.js"></script>
 <script src="../js/map.js"></script>
-<script>
-	if (${article.lng != null && article.lat != null }){
-	mapLoad()
-}
-</script>
 
 <%@ include file="../include/footer.jspf"%>

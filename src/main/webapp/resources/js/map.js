@@ -1,16 +1,18 @@
 /**
  * 
  */
- 
+
  $(document).ready(function(){
 
- 	function mapLoad(){
- 		let lng = $("#lng").val();
- 		let lat = $("#lat").val();
- 		makeMapDiv();
- 		writeMap(lng, lat);
+	if( $("#maparea").find("span[id='istrue']").length >= 1){ 
+	 		let lng = $("#lng").val();
+	 		let lat = $("#lat").val();
+	 		console.log("lng : " + lng);
+	 		console.log("lat : " + lat);
+	 		makeMapDiv();
+	 		writeMap(lng, lat);
 	}
- 	
+
  	//버튼 클릭시 장소 찾기
  	$("#button-addon2").on("click",function(){
  		$("#maparea").empty();
@@ -125,12 +127,21 @@
 		}
 	}
 	
+	function makeMapDiv(){
+ 	let str = "";
+	str += '<div id="map" style="width:100%;height:350px;"></div>';
+	str += '<div class="input-group mb-3">';
+	str += '<input name="hope_location" id="hope_location" type="text" class="form-control" readonly="readonly">';
+	str += '<button class="btn" type="button" id="location_reset">초기화</button></div>';
+	$("#maparea").append(str);	
+ }
+	
  });
  
  function writeMap(lng, lat){
  	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 	
@@ -149,12 +160,5 @@
  }
  
  
- function makeMapDiv(){
- 	let str = "";
-	str += '<div id="map" style="width:100%;height:350px;"></div>';
-	str += '<div class="input-group mb-3">';
-	str += '<input name="hope_location" id="hope_location" type="text" class="form-control" readonly="readonly">';
-	str += '<button class="btn" type="button" id="location_reset">초기화</button>';
-	$("#maparea").append(str);	
- }
+ 
  
