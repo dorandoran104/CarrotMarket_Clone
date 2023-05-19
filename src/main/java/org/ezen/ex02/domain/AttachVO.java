@@ -9,10 +9,8 @@ import lombok.Data;
 public class AttachVO {
 
 	//pk
-	private int id;
 	private String fileName;
 	private String filePath;
-	private Date regDate;
 	//fk
 	private int articleNo;
 }

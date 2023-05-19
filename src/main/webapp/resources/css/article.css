@@ -1,12 +1,16 @@
 @charset "UTF-8";
 
+li, ul{
+	list-style: none;
+}
 
-#register_form{
+
+#register_form, #modify_form{
 	width : 50%;
 	margin : 0 auto;
 }
 
-#register_form *{
+#register_form *, #modify_form *{
 	font-size : 1.8rem;
 }
 

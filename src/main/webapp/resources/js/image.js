@@ -13,7 +13,7 @@
  			showImage(result);
  			slickfunction();
  		}
- 	}).then;
+ 	});
  });
  
  function showImage(result){

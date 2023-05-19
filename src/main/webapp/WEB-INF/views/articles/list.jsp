@@ -20,23 +20,34 @@
 			<div id="result-area">
 			<c:forEach items="${list}" var="list">
 			<article class="flea-market-article flat-card col-4">
-				<a class="flea-market-article-link" href="get?id=${list.id}" target='_blank'>
+				<a class="flea-market-article-link list-href" href="${list.id}">
 					<div class="card-photo" style="background: url(../attach/thumbnail/${list.id});background-size: cover;">
 						<!-- <img src="../attach/thumbnail/${list.id}" /> -->
 					</div>
 					<div class="article-info">
 						<div class="article-title-content">
 							<span class="article-title">${list.title}</span> 
-								<span class="article-content">${list.body}</span>
 						</div>
-
+						
 						<p class="article-region-name">${list.address}</p>
 						<p class="article-price "><fmt:formatNumber value="${list.cost}" pattern="#,###" />원</p>
+						<c:choose>
+							<c:when test="${list.sell == 1 }">
+								<div class="ms-2"><span style="background-color: #22c355; font-size: 12px; margin-left: -4px;" class="badge"> 예약중 </span></div>
+							</c:when>
+							<c:when test="${list.sell == 2 }">
+								<div class="ms-2"><span class="badge bg-secondary" style="font-size: 12px; margin-left: -4px;">거래 완료</span></div>
+							</c:when>
+							<c:otherwise>
+								<div class="ms-2"><span class="badge" style="background-color: #ff8a3d; font-size: 12px; margin-left: -4px;">판매중</span></div>
+							</c:otherwise>
+						</c:choose>
 						<section class="article-sub-info">
 							<span class="article-watch"> 
 							<img class="watch-icon" alt="Watch count" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/base/like-8111aa74d4b1045d7d5943a901896992574dd94c090cef92c26ae53e8da58260.svg" />
 								1
 							</span>
+							
 						</section>
 					</div>
 				</a>

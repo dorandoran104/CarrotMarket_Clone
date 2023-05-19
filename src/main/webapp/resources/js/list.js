@@ -7,13 +7,9 @@
  	let pageNum = 1;
  	
  	$(".more-btn").on("click",function(e){
- 		console.log("click");
  		let loading = '<div class="spinner-border text-warning" role="status"><span class="visually-hidden">Loading...</span></div>'
- 		
  		let clone = $(this).clone();
- 		
  		$(this).html(loading);
- 		
  		getList(pageNum, clone);
  	});
  	
@@ -23,13 +19,30 @@
  		$.ajax({
  			url : 'list/'+page,
  			success : function(result){
- 				console.log(result);
  				$("#result-area").empty();
  				appendList(result);
  				$(".more-btn").html(clone.html());
  			}	
  		})
  	}
+ 	
+ 	$("#result-area").on("click","a",function(e){
+ 		e.preventDefault();
+ 		
+ 		let id = $(this).attr("href");
+
+ 		console.log(id);
+ 		
+ 		$.ajax({
+ 			url : 'hitcount/'+id,
+ 			type : 'post',
+ 			success : function(result){
+ 				location.href='get?id='+id;
+ 			}
+ 		});
+ 	});
+ 	
+ 	
  })
  
  function appendList(result){
@@ -37,7 +50,7 @@
 	
 	for(let i = 0; i<result.length; i++){
 		str +='<article class="flea-market-article flat-card">'
-		str +='<a class="flea-market-article-link" href="get?id=' + result[i].id + '" target="_blank">'
+		str +='<a class="flea-market-article-link list-href" href="' + result[i].id + '">'
 		str +='<div class="card-photo" style="background: url(../attach/thumbnail/' + result[i].id + ');background-size: cover;"></div>'						
 		str +='<div class="article-info">';
 		str +='<div class="article-title-content">';
@@ -58,7 +71,7 @@
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
     return num.toString().replace(regexp, ',');
 }
- 
+
  
 
  

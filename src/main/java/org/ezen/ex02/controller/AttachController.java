@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,10 +63,8 @@ public class AttachController {
 		if(list == null || list.size() == 0) {
 			fileFullPath.append("images/DaangnMarket_logo.png");
 		}else {
-			
 			fileFullPath.append(list.get(0).getFilePath() + list.get(0).getFileName());
 		}
 		return new UrlResource("file:"+fileFullPath.toString());
-	}
-		
+	}	
 }

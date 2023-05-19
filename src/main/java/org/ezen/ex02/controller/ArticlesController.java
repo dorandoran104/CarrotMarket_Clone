@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,9 @@ public class ArticlesController {
 	
 	@GetMapping("/list")
 	public String listPage(Model model) {
+		
+		//리스트
+		
 		List<ArticleVO> list = articlesService.getArticles(new Criteria());
 		
 		model.addAttribute("list",list);
@@ -67,8 +71,9 @@ public class ArticlesController {
 	//게시글 등록 액션
 		@PostMapping("/new")
 		public String registerAction(MultipartFile[] files, ArticleVO article){
-			int articleId = articlesService.registerArticles(files,article);
-			return "redirect:/articles/get?id="+articleId;
+			int articleNo = articlesService.registerArticles(article);
+			attachService.insertImg(files,articleNo);
+			return "redirect:/articles/get?id="+articleNo;
 		}
 	
 	//게시글 상세 조회
@@ -92,12 +97,19 @@ public class ArticlesController {
 		model.addAttribute("kakaoKey",kakaoApiKey);
 		return "articles/modify";
 	}
-	//수정 아직 구현 안함
-//	@PostMapping("/modify")
-//	public String modifyArticle(ArticleVO articleVO) {
-//		articlesService.modifyArticle(articleVO);
-//		return "redirect:/articles/get?id="+articleVO.getId();
-//	}
+	
+	@PostMapping("/modify")
+	public String modifyArticle(ArticleVO articleVO, MultipartFile[] files, AttachVO[] attachVO,
+			@RequestParam("removeFile") AttachVO[] removeFile) {
+			//먼저 db에 있는 이미지 리스트 다 지우기
+			attachService.deleteArticleAllImage(articleVO.getId());
+			
+			
+			
+
+		//articlesService.modifyArticle(articleVO);
+		return "redirect:/articles/get?id="+articleVO.getId();
+	}
 	
 	//내 게시글 예약중/거래완료로 바꾸기
 	@GetMapping("/sell")
@@ -116,8 +128,15 @@ public class ArticlesController {
 		//게시글 db삭제
 		articlesService.deleteArticle(id);
 		//파일 삭제
-		attachService.deleteArticleImage(list);
+		attachService.deleteArticleFile(list);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	//리스트에서 게시글 누를 시 조회수 증가
+	@PostMapping(value="/hitcount/{id}")
+	@ResponseBody
+	public ResponseEntity<String> hitcountModify(@PathVariable("id") int id){
+		articlesService.hitCountModify(id);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }

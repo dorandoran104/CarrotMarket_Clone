@@ -12,7 +12,10 @@
 		
 
 	<div style= " margin : 160px auto ; width : 80%; font-size : 1.5rem">
-		<form action="new" method="post" enctype="multipart/form-data" id="register_form"> 
+		<form action="new" method="post" enctype="multipart/form-data" id="modify_form"> 
+			<input type="text" name="id" value="${article.id}" id="id"/>
+			
+			
 			<div class="mb-3" style="width :100%" id="img_area">
 			</div>
 	 			
@@ -51,7 +54,9 @@
 				  <button class="btn" type="button" id="button-addon2">찾기</button>
 				</div>
 				<div id="maparea">
+					<c:if test="${article.lng != null && article.lat != null }">
 					<span id="istrue"></span>
+					</c:if>
 				</div>
 				<input type="text" id="lat" name="lat" value="${article.lat}"/>
 				<input type="text" id="lng" name="lng" value="${article.lng}"/>
@@ -69,7 +74,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-<script src="../js/register.js"></script>
+<script src="../js/modify.js"></script>
 <script src="../js/map.js"></script>
 
 <%@ include file="../include/footer.jspf"%>

@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ArticlesService {
 
-	int registerArticles(MultipartFile[] files,ArticleVO article);
+	int registerArticles(ArticleVO article);
 
 	ArticleVO getArticle(int id);
 
@@ -22,5 +22,7 @@ public interface ArticlesService {
 	void modifyArticle(ArticleVO articleVO);
 
 	void deleteArticle(int id);
+
+	void hitCountModify(int id);
 
 }

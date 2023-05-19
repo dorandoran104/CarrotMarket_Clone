@@ -94,22 +94,13 @@
 			<!--  <div property="schema:description" id="article-detail">-->
 				<pre>${article.body}</pre>
 			<!-- </div> -->
-			<p id="article-counts">관심 19 ∙ 채팅 56 ∙ 조회 864</p>
+			<p id="article-counts">관심 0 ∙ 채팅 ${article.chatCount} ∙ 조회 ${article.hitCount }</p>
 			
 			<c:if test="${article.lng != null && article.lat != null }">
 				<div id="staticMap" style="width:100%;height:350px; margin:auto;" data-lng="${article.lng}" data-lat="${article.lat}"></div>	
 			</c:if>
 			
 			<button id="chat-btn" class="mt-2 common-btn">채팅하기</button>
-		</section>
-		<section id="article-reply">
-			<h2>댓글</h2>
-			
-			<div class="input-group">
-			  <textarea class="form-control" aria-label="With textarea"></textarea>
-			  <span class="input-group-text reply-btn">댓글 작성</span>
-			</div>
-			
 		</section>
 	</article>
 </div>

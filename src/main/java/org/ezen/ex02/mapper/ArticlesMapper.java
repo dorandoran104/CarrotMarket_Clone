@@ -25,4 +25,6 @@ public interface ArticlesMapper {
 	void modifyArticle(ArticleVO articleVO);
 
 	void deleteArticle(int id);
+
+	void hitCountModify(int id);
 }

@@ -64,4 +64,11 @@
 		where id = #{id}
 	</delete>
 	
+	<update id="hitCountModify">
+		update carrot_articles
+		set hitcount = (select hitcount
+						from carrot_articles
+						where id = #{id}) + 1
+	</update>
+	
 </mapper>
