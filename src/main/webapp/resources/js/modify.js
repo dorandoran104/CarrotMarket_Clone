@@ -4,11 +4,10 @@
  
  $(document).ready(function(){
  	let id = $("#id").val();
- 	let count = 0;
+ 
  	$.ajax({
  		url : '../attach/' + id,
  		success : function(result){
- 			console.log(result);
  			showImage(result);
  		}
  	});
@@ -18,34 +17,21 @@
  		$.each(result,function(key,value){
  			let filecallpath = encodeURIComponent(value.filePath + value.fileName);
  			
- 			let str = '<li style="padding: 5px; display:inline-block; width : calc(100%/3); height : 150px">';
- 				str += '<div style="width : 100%; cursor:pointer" class="delete_img" data-filename="'+ value.fileName +'" data-filepath="'+ value.filePath+'">X</div>';
+ 			let str = ' <li style="padding: 5px; display:inline-block; width : calc(100%/3); height : 150px">';
+ 				str += '<div style="width : 100%; cursor:pointer" class="delete_img" data-articleno="'+value.articleNo+'" data-filename="'+ value.fileName +'" data-filepath="'+ value.filePath+'">X</div>';
  				str += '<img style="display : block; width:100%; height: 90%;" src="../attach/get?fileName=' + filecallpath + '"/>';
- 				str += '<input type="text" name="attachVO['+key+'].filePath" value="' + value.filePath + '"/>';
- 				str += '<input type="text" name="attachVO['+key+'].fileName" value="' + value.fileName + '"/>';
- 				str += '<input type="text" name="attachVO['+key+'].articleNo" value="' + id + '"/>';
  				$("#img_area").append(str);
  		});
- 		clone = $("#img_area").html();
  	}
  	
- 	$("#img_area").on("click","div[class='delete_img']",function(e){
- 		console.log($(this));
- 		
-		
+ 	$("#img_area").on("click","div[class='delete_img']",function(e){ 		
 		let fileName = $(this).data("filename");
 		let filePath = $(this).data("filepath");
+		let articleNo = $(this).data("articleno");
 		
-		console.log(fileName);
-		console.log(filePath);
-		 		
- 		let str = '<input type="text" name="removeFile['+count+'].fileName" value="'+ fileName+'"/>'
- 		str += '<input type="text" name="removeFile['+count+'].filePath" value="'+ filePath+'"/>'
- 		
+ 		let str = '<div data-articleno="'+articleNo+'" data-filename="'+ fileName +'" data-filepath="'+ filePath+'"></div>';
  		$(this).closest("li").remove();
- 		
- 		$("#modify_form").append(str);
- 		count = count+1;
+ 		$("#delete-area").append(str);
  	});
  	
  	$("#img_area").on("click","div[class='delete_img_modify']",function(e){
@@ -65,6 +51,35 @@
 		 
 	 	$("#modify_form").find("input[name='files']")[0].files = dataTransfer.files;
 	 	$(this).closest("ul").remove();
+ 	});
+ 	
+ 	$("#modify_submit").on("click",function(e){
+ 		e.preventDefault();
+ 		let deleteArea = $("#delete-area div").get();
+ 		
+ 		if(deleteArea.length == 0){
+ 			$("#modify_form").submit();
+ 		}
+ 		
+ 		$.each(deleteArea,function(key,value){
+ 			let fileName = $(this).data("filename");
+ 			let filePath = $(this).data("filepath");
+ 			let articleNo = $(this).data("articleno");
+ 			
+ 			$.ajax({
+ 				url : 'modify/file',
+ 				type : 'post',
+ 				data : {
+ 					fileName : fileName,
+ 					filePath : filePath,
+ 					articleNo : articleNo
+ 				},
+ 				success : function(result){
+ 					$("#modify_form").submit();
+ 				}
+ 			});
+ 			
+ 		});
  	});
 	 	
 	$("#modify_form").on("change","input[name='files']",function(e){
@@ -100,6 +115,8 @@
  		}
  		
  	});
+ 	
+ 	
  });
  
  function checkFile(regex,name){

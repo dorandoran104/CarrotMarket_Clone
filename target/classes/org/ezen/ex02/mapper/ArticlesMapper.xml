@@ -71,4 +71,17 @@
 						where id = #{id}) + 1
 	</update>
 	
+	<update id="modifyArticle">
+		update carrot_articles
+		set title = #{title}
+		, body = #{body}
+		<if test="cost != null">,cost = #{cost}</if>
+		<if test="costOffer != null">,costOffer = #{costOffer}</if>
+		<if test="lng != null">,lng = #{lng}</if>
+		<if test="lat != null">,lat = #{lat}</if>
+		<if test="locationInfo != null">,locationInfo = #{locationInfo}</if>
+		,updatedate = sysdate
+		where id = #{id}
+	</update>
+	
 </mapper>

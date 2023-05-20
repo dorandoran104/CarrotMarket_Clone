@@ -26,5 +26,10 @@
 		delete carrot_img
 		where articleNo = #{id}
 	</delete>
+	
+	<delete id="deleteArticleImageDB">
+		delete carrot_img
+		where filename = #{fileName}
+	</delete>
 
 </mapper>

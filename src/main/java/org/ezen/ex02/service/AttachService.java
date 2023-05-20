@@ -11,10 +11,13 @@ public interface AttachService {
 
 	AttachVO getThumbnail(int articleNo);
 
-	void deleteArticleFile(List<AttachVO> list);
+	void deleteArticleFile(AttachVO attachVO);
 
 	void deleteArticleAllImage(int id);
 
 	void insertImg(MultipartFile[] files, int articleNo);
 
+	void insertDBImg(AttachVO[] attachVO, int id);
+
+	void deleteArticleImageDB(String fileName);
 }

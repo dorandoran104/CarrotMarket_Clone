@@ -12,8 +12,8 @@
 		
 
 	<div style= " margin : 160px auto ; width : 80%; font-size : 1.5rem">
-		<form action="new" method="post" enctype="multipart/form-data" id="modify_form"> 
-			<input type="text" name="id" value="${article.id}" id="id"/>
+		<form action="modify" method="post" enctype="multipart/form-data" id="modify_form"> 
+			<input type="hidden" name="id" value="${article.id}" id="id"/>
 			
 			
 			<div class="mb-3" style="width :100%" id="img_area">
@@ -58,8 +58,8 @@
 					<span id="istrue"></span>
 					</c:if>
 				</div>
-				<input type="text" id="lat" name="lat" value="${article.lat}"/>
-				<input type="text" id="lng" name="lng" value="${article.lng}"/>
+				<input type="hidden" id="lat" name="lat" value="${article.lat}"/>
+				<input type="hidden" id="lng" name="lng" value="${article.lng}"/>
 				
 				<div class="mb-3">
 			 		<label for="location_detail" class="form-label">선택한 곳의 장소명을 입력해 주세요</label>
@@ -68,8 +68,11 @@
 				</div>
 			</div>
 			
-			<input type="submit" id="register_submit" value="당근 올리기"/>
+			<input type="submit" style="height: 48px;" class="common-btn" id="modify_submit" value="당근 올리기"/>
 		</form>
+		<div id="delete-area">
+			
+		</div>
 	</div>
 
 

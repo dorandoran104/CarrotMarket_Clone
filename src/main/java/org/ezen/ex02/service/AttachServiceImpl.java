@@ -87,6 +87,19 @@ public class AttachServiceImpl implements AttachService{
 			}
 		}
 	}
+	//이미지 db저장
+	@Override
+	public void insertDBImg(AttachVO[] attachVO, int id) {
+		
+		if(attachVO == null || attachVO.length == 0) {
+			return;
+		}
+		
+		for(int a = 0; a<attachVO.length; a++) {
+			attachVO[a].setArticleNo(id);
+			attachMapper.registerImg(attachVO[a]);
+		}	
+	}
 	
 	//섬네일 이미지 가져오기
 	@Override
@@ -97,26 +110,27 @@ public class AttachServiceImpl implements AttachService{
 	
 	//실제파일 삭제하기
 	@Override
-	public void deleteArticleFile(List<AttachVO> list) {
-		if(list == null || list.size() == 0) {
-			return;
-		}
+	public void deleteArticleFile(AttachVO attachVO) {
 		StringBuilder fileFullPath = new StringBuilder("C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\");
-		for(int a = 0; a<list.size(); a++) {
-			Path file = Paths.get(fileFullPath.toString() + list.get(a).getFilePath() + list.get(a).getFileName());
-			
-			try {
-				Files.deleteIfExists(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	
+		Path file = Paths.get(fileFullPath.toString() + attachVO.getFilePath() + attachVO.getFileName());
+		log.info(file);
+		try {
+			Files.deleteIfExists(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	//모든파일 db에서 지우기
 	@Override
 	public void deleteArticleAllImage(int id) {
 		attachMapper.deleteArticleAllImage(id);
+	}
+	
+	//삭제파일 db에서 지우기
+	public void deleteArticleImageDB(String fileName) {
+		attachMapper.deleteArticleImageDB(fileName);
 	}
 	
 	//폴더 날짜별로 정리하기
@@ -127,5 +141,4 @@ public class AttachServiceImpl implements AttachService{
 			String str = sdf.format(date);
 			return str.replace("-", File.separator);
 		}
-
 }

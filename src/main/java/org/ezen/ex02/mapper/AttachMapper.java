@@ -17,4 +17,6 @@ public interface AttachMapper {
 	AttachVO getThumbnail(int articleNo);
 
 	void deleteArticleAllImage(int id);
+
+	void deleteArticleImageDB(String fileName);
 }

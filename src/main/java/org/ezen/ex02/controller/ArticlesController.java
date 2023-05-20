@@ -1,5 +1,6 @@
 package org.ezen.ex02.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,9 +26,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/articles")
+@Log4j
 public class ArticlesController {
 	
 	@Setter(onMethod_=@Autowired)
@@ -97,18 +100,26 @@ public class ArticlesController {
 		model.addAttribute("kakaoKey",kakaoApiKey);
 		return "articles/modify";
 	}
-	
-	@PostMapping("/modify")
-	public String modifyArticle(ArticleVO articleVO, MultipartFile[] files, AttachVO[] attachVO,
-			@RequestParam("removeFile") AttachVO[] removeFile) {
-			//먼저 db에 있는 이미지 리스트 다 지우기
-			attachService.deleteArticleAllImage(articleVO.getId());
-			
-			
-			
 
-		//articlesService.modifyArticle(articleVO);
+	//게시글 수정
+	@PostMapping("/modify")
+	public String modifyArticle(ArticleVO articleVO, MultipartFile[] files) {
+			
+			attachService.insertImg(files,articleVO.getId());
+			
+			//마지막 게시글 수정
+			articlesService.modifyArticle(articleVO);
 		return "redirect:/articles/get?id="+articleVO.getId();
+	}
+	
+	//수정시 삭제한 파일 지우기
+	@PostMapping("/modify/file")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(AttachVO attachVO){
+		log.error(attachVO);
+		attachService.deleteArticleFile(attachVO);
+		attachService.deleteArticleImageDB(attachVO.getFileName());
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	//내 게시글 예약중/거래완료로 바꾸기
@@ -128,8 +139,9 @@ public class ArticlesController {
 		//게시글 db삭제
 		articlesService.deleteArticle(id);
 		//파일 삭제
-		attachService.deleteArticleFile(list);
-		
+		for(int a = 0; a<list.size(); a++) {
+			attachService.deleteArticleFile(list.get(a));
+		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	//리스트에서 게시글 누를 시 조회수 증가

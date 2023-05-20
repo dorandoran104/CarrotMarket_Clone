@@ -60,8 +60,8 @@
 				</div>
 				-->
 				</div>
-				<input type="text" id="lat" name="lat"/>
-				<input type="text" id="lng" name="lng"/>
+				<input type="hidden" id="lat" name="lat"/>
+				<input type="hidden" id="lng" name="lng"/>
 				
 				<div class="mb-3">
 			 		<label for="location_detail" class="form-label">선택한 곳의 장소명을 입력해 주세요</label>

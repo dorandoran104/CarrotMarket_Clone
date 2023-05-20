@@ -33,8 +33,8 @@
 	$("#maparea").on("click","#location_reset",function(){
 		$("#maparea").empty();
 		$("#hope_location").val("");
-		$("#register_form").find("input[name='lat']").val("");
-        $("#register_form").find("input[name='lng']").val("");
+		$("form").find("input[name='lat']").val("");
+        $("form").find("input[name='lng']").val("");
 	});
  
  	
@@ -88,8 +88,8 @@
 				        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
 				        let place = marker.getPosition();
 				        
-				        $("#register_form").find("input[name='lat']").val(place.getLat());
-				        $("#register_form").find("input[name='lng']").val(place.getLng());
+				        $("form").find("input[name='lat']").val(place.getLat());
+				        $("form").find("input[name='lng']").val(place.getLng());
 				        
 				        searchDetailAddrFromCoords(place,function(result, status){
 				        	if(status === kakao.maps.services.Status.OK){
