@@ -10,7 +10,6 @@
 		from 
 			carrot_articles c left outer join carrot_member m on(c.memberno = m.id) 
 		where rownum <= #{page} *6
-		order by c.updatedate desc
 		]]>
 	</select>
 	

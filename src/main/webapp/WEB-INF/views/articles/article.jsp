@@ -100,12 +100,12 @@
 				<div id="staticMap" style="width:100%;height:350px; margin:auto;" data-lng="${article.lng}" data-lat="${article.lat}"></div>	
 			</c:if>
 			
-			<button id="chat-btn" class="mt-2 common-btn">채팅하기</button>
+			<button onclick="location.href='../chat/get?targetUser=${article.memberNo}'" id="chat-btn" class="mt-2 common-btn">채팅하기</button>
 		</section>
 	</article>
 </div>
 <c:if test="${article.lng != null && article.lat != null }">
-<script src="../js/ArticleMap.js"></script>
+<script src="../js/staticMap.js"></script>
 </c:if>
 <script src="../js/article.js"></script>
 <script src="../js/image.js"></script>

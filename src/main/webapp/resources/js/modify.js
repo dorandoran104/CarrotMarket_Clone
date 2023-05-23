@@ -4,7 +4,8 @@
  
  $(document).ready(function(){
  	let id = $("#id").val();
- 
+ 	
+ 	//페이지 로딩하면 게시글 이미지 불러오기
  	$.ajax({
  		url : '../attach/' + id,
  		success : function(result){
@@ -12,18 +13,20 @@
  		}
  	});
  	
+ 	//불러온 이미지 뿌리기
  	function showImage(result){
  		
  		$.each(result,function(key,value){
  			let filecallpath = encodeURIComponent(value.filePath + value.fileName);
  			
- 			let str = ' <li style="padding: 5px; display:inline-block; width : calc(100%/3); height : 150px">';
+ 			let str = ' <li style="padding: 5px; display:inline-block; width : calc(32%); height : 150px">';
  				str += '<div style="width : 100%; cursor:pointer" class="delete_img" data-articleno="'+value.articleNo+'" data-filename="'+ value.fileName +'" data-filepath="'+ value.filePath+'">X</div>';
  				str += '<img style="display : block; width:100%; height: 90%;" src="../attach/get?fileName=' + filecallpath + '"/>';
  				$("#img_area").append(str);
  		});
  	}
  	
+ 	//게시글 이미지 삭제시 뿌린 이미지 지우고 지우는 정보 추가
  	$("#img_area").on("click","div[class='delete_img']",function(e){ 		
 		let fileName = $(this).data("filename");
 		let filePath = $(this).data("filepath");
@@ -34,6 +37,7 @@
  		$("#delete-area").append(str);
  	});
  	
+ 	//추가로 올린 이미지 지우기
  	$("#img_area").on("click","div[class='delete_img_modify']",function(e){
  		let fno = $(this).closest("ul").index() -2;
 	 	console.log(fno);
@@ -53,6 +57,7 @@
 	 	$(this).closest("ul").remove();
  	});
  	
+ 	//글 수정시 먼저 지우기 정보에 있는거 실행
  	$("#modify_submit").on("click",function(e){
  		e.preventDefault();
  		let deleteArea = $("#delete-area div").get();
@@ -74,12 +79,9 @@
  					filePath : filePath,
  					articleNo : articleNo
  				},
- 				success : function(result){
- 					$("#modify_form").submit();
- 				}
  			});
- 			
  		});
+ 		$("#modify_form").submit();
  	});
 	 	
 	$("#modify_form").on("change","input[name='files']",function(e){
@@ -104,10 +106,9 @@
  			let reader = new FileReader();
  			
  			reader.onload = function(e){
- 				let str = '<ul style="padding: 5px; display:inline-block; width : calc(100%/3); height : 150px"><li data-modify="1">';
+ 				let str = '<ul style="margin:0; padding:0;display:inline-block; width : calc(32%); height : 150px"><li style="padding: 5px;margin:0; height:100%">';
  				str+='<div style="width : 100%; cursor:pointer" class="delete_img_modify" data-fno="'+ i +'">X</div>';
  				str+= '<img style="display : block; width:100%; height: 90%;" src="' + e.target.result + '"/>';
- 				str+='<div style="font-size : 1.2rem;height: 10%;overflow:hidden; text-overflow:ellipsis; white-space:nowrap">' + files[i].name + '</div></li></ul>';
  				
  				$("#img_area").append(str);
  			}

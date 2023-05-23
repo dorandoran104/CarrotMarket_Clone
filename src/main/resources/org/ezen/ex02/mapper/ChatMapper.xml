@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ezen.ex02.mapper.ChatMapper">
+	
+	<select id="getMyChatRoom" resultType="org.ezen.ex02.domain.ChatRoomVO">
+		select * from carrot_chatroom
+		where chatuser = #{id}
+	</select>
+	
+	<select id="findChatRoom" resultType="org.ezen.ex02.domain.ChatRoomVO">
+		select * from carrot_chatroom
+		where chatuser = #{id} and targetuser = #{targetUser}
+	</select>
+	
+	<insert id="createChatRoom">
+		insert into carrot_chatroom(roomid,chatuser,targetuser)
+		values(#{roomId},#{chatUser},#{targetUser})
+	</insert>
+	
+	<select id="getChatRoomByRoomId" resultType="org.ezen.ex02.domain.ChatRoomVO">
+		select * from carrot_chatroom
+		where chatuser = #{chatUser} and roomId = #{roomId}
+	</select>
+	
+</mapper>

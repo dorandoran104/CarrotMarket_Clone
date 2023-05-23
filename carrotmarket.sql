@@ -47,6 +47,7 @@ FILEPATH VARCHAR2(200 BYTE) NOT NULL,
 FILENAME VARCHAR2(100 BYTE) CONSTRAINT CARR_IMG_FILE_PK PRIMARY KEY,
 CONSTRAINT CARR_IMG_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES CARROT_ARTICLES (ID)
 );
+
 drop table carrot_thumbnail;
 create table carrot_thumbnail(
 ARTICLENO NUMBER(10,0) NOT NULL, 
@@ -63,3 +64,17 @@ select * from carrot_thumbnail;
 select * from carrot_img;
 
 select * from carrot_member;
+
+drop table carrot_chatroom;
+
+create table carrot_chatroom(
+roomid varchar2(40) constraint carr_chat_id_pk primary key,
+chatuser number(10) not null,
+targetuser number(10) not null,
+CONSTRAINT CARR_chat_cu_FK FOREIGN KEY (chatuser) REFERENCES CARROT_member (id),
+CONSTRAINT CARR_chat_tu_FK FOREIGN KEY (targetuser) REFERENCES CARROT_member (id)
+);
+drop sequence carr_chat_id_seq;
+create sequence carr_chat_id_seq;
+
+select * from carrot_chatroom;

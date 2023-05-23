@@ -11,13 +11,13 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer{
 
 	private SocketHandler socketHandler;
-	
+
 	public WebSocketConfig(SocketHandler socketHandler) {
 		this.socketHandler = socketHandler;
 	}
 	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(socketHandler, "/chating").setAllowedOrigins("*");
+		registry.addHandler(socketHandler, "/chating/{roomId}").setAllowedOrigins("*");
 	}	
 }
