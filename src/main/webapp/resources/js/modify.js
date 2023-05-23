@@ -83,7 +83,8 @@
  		});
  		$("#modify_form").submit();
  	});
-	 	
+	
+	//추가로 게시글 이미지 등록할때
 	$("#modify_form").on("change","input[name='files']",function(e){
  		console.log("change");
  		

@@ -13,7 +13,7 @@
 		<div id="chating" class="chating">
 		</div>
 		<c:forEach var="list" items="${list}">
-			<a href="geti?roomId=${list.roomId}">${list.roomId}</a>
+			<a href="get?roomId=${list.roomId}">${list.roomId}</a>
 		</c:forEach>	
 </div>
 

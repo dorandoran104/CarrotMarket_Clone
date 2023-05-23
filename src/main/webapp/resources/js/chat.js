@@ -2,11 +2,17 @@
  * 
  */
  $(document).ready(function(){
- 	console.log("start");
+	
+	let id = $("#container").data("id");
+	$.ajax({
+		url: 'list/'+id,
+		success : function(result){
+		}
+	})
  	let roomId = $("#chatroom").data("roomid");
- 	let loginUser = $("#chatroom").data("userid");
+ 	
  	console.log(roomId);
- 	console.log(loginUser);
+ 	console.log(id);
  	
 	let webSocket = new WebSocket("ws://" + location.host + "/ex02/chating/" + roomId);
 	//웹 소켓 서버 연결되었을때
@@ -17,13 +23,28 @@
 			let messageData = data.data;
 			if(messageData != null && messageData.trim() != ""){
 				let jsonParse = JSON.parse(messageData);
+				/*
 				let message = "";
+				
 				if(jsonParse.roomId == roomId){
 					message = jsonParse.message;
 					let str = targetMessage(message);
 					$("#chat").append(str);
 					auto_scroll();
 				}
+				*/
+				
+				let message = jsonParse.message;
+				let str = '';
+				
+				if(jsonParse.sender == loginUser){
+					str = myMessage(message);
+				}else{
+					str = targetMessage(message);
+				}
+				$("#chat").append(str);
+				auto_scroll();
+				
 			}
 		};
 
@@ -45,7 +66,7 @@
 		
 		let msg = $("#chatting").val();
 		let str = myMessage(msg);
-		let sender = loginUser;
+		let sender = id;
 		let jsondata = {
 			roomId : roomId,
 			message : msg,
@@ -53,10 +74,10 @@
 			regDate : new Date().toLocaleDateString()
 		};
 		webSocket.send(JSON.stringify(jsondata));
-		$("#chat").append(str);
+		//$("#chat").append(str);
 		
 		$("#chatting").val("");
-		auto_scroll()
+		//auto_scroll()
 	}
 	
 	//상대방이 보낸 메세지
@@ -67,7 +88,6 @@
         str+= '<span class="status green"></span>';
         str+= '<h2>Vincent</h2>';
         str+= '<h3>10:12AM, Today</h3></div>';
-        str+= '<div class="triangle"></div>';
         str+= '<div class="message">';
         str+= msg;
         str+='</div></li>';
@@ -83,7 +103,6 @@
         str+= '<h3>10:12AM, Today</h3>';
         str+= '<h2>Vincent</h2>';
         str+= '<span class="status blue"></span></div>';
-        str+= '<div class="triangle"></div>';
         str+= '<div class="message">'
         str+= msg;
         str+= '</div></li>';

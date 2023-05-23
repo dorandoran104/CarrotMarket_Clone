@@ -6,7 +6,7 @@ public class ChatVO {
 	
 	private String roomId;
 	private String message;
-	private String sender;
+	private int sender;
 	private String regDate;
 
 }

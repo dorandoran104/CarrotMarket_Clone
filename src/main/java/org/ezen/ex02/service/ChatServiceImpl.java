@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.ezen.ex02.domain.ChatRoomVO;
+import org.ezen.ex02.domain.ChatVO;
 import org.ezen.ex02.mapper.ChatMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
 
@@ -16,6 +16,7 @@ public class ChatServiceImpl implements ChatService{
 	
 	@Setter(onMethod_=@Autowired)
 	private ChatMapper chatMapper;
+
 	//내 채팅방 불러오기
 	@Override
 	public List<ChatRoomVO> getMyChatRoom(int id) {
@@ -25,27 +26,21 @@ public class ChatServiceImpl implements ChatService{
 	
 	//채팅방이 존재하는지
 	@Override
-	public ChatRoomVO findChatRoom(int id, int targetUser) {
-		ChatRoomVO chatRoomVO = chatMapper.findChatRoom(id,targetUser);
+	public ChatRoomVO findChatRoom(int id, int articleNo) {
+		ChatRoomVO chatRoomVO = chatMapper.findChatRoom(id,articleNo);
 		return chatRoomVO;
 	}
+	
 	//채팅방이 없으면 새롭게 만들기
 	@Override
-	@Transactional
-	public ChatRoomVO createChatRoom(int id, int targetUser) {
+	public ChatRoomVO createChatRoom(int id, int targetUser, int articleNo) {
 		String uuid = UUID.randomUUID().toString();
 		
 		ChatRoomVO chatRoomVO = new ChatRoomVO();
 		chatRoomVO.setRoomId(uuid);
-		
-		//상대방한테도 리스트 뿌려주기 위해
-		chatRoomVO.setChatUser(targetUser);
-		chatRoomVO.setTargetUser(id);
-		
-		chatMapper.createChatRoom(chatRoomVO);
-		
 		chatRoomVO.setChatUser(id);
 		chatRoomVO.setTargetUser(targetUser);
+		chatRoomVO.setArticleNo(articleNo);
 		
 		chatMapper.createChatRoom(chatRoomVO);
 		
@@ -58,6 +53,15 @@ public class ChatServiceImpl implements ChatService{
 		ChatRoomVO chatRoomVO = chatMapper.getChatRoomByRoomId(roomId, chatUser);
 		return chatRoomVO;
 	}
+
+	//채팅메세지 db에 저장하기
+	@Override
+	public void insertMessage(ChatVO chatVO) {
+		chatMapper.insertMessage(chatVO);
+	}
+	
+	
+	
 	
 	
 

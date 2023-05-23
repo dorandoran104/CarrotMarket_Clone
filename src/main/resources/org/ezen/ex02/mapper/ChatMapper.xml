@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.ezen.ex02.mapper.ChatMapper">
+
+	<resultMap type="org.ezen.ex02.domain.ChatRoomVO" id="chatRoomMap">
+		<id property="roomId" column="roomId"/>
+		<result property="roomId" column="roomId"/>
+		<result property="chatUser" column="chatuser"/>
+		<result property="targetUser" column="targetuser"/>
+		<result property="articleNo" column="articleno"/>
+		<collection property="chatMessage" resultMap="chatMessage"></collection>
+	</resultMap>
+	
+	<resultMap type="org.ezen.ex02.domain.ChatVO" id="chatMessage">
+		<result property="roomId" column="roomId"/>
+		<result property="message" column="message"/>
+		<result property="sender" column="sender"/>
+		<result property="regDate" column="regdate"/>
+	</resultMap>
 	
 	<select id="getMyChatRoom" resultType="org.ezen.ex02.domain.ChatRoomVO">
 		select * from carrot_chatroom
-		where chatuser = #{id}
+		where chatuser = #{id} or targetuser = #{id} 
 	</select>
 	
 	<select id="findChatRoom" resultType="org.ezen.ex02.domain.ChatRoomVO">
 		select * from carrot_chatroom
-		where chatuser = #{id} and targetuser = #{targetUser}
+		where chatuser = #{id} and articleNo = #{articleNo}
 	</select>
 	
 	<insert id="createChatRoom">
-		insert into carrot_chatroom(roomid,chatuser,targetuser)
-		values(#{roomId},#{chatUser},#{targetUser})
+		insert into carrot_chatroom(roomid,chatuser,targetuser, articleNo)
+		values(#{roomId},#{chatUser},#{targetUser},#{articleNo})
 	</insert>
 	
 	<select id="getChatRoomByRoomId" resultType="org.ezen.ex02.domain.ChatRoomVO">
 		select * from carrot_chatroom
-		where chatuser = #{chatUser} and roomId = #{roomId}
+		where roomId = #{roomId}
 	</select>
+	
+	<insert id="insertMessage">
+		insert into carrot_chat(roomid, message, sender, regdate)
+		values(#{roomId}, #{message}, #{sender}, #{regDate})
+	</insert>
 	
 </mapper>

@@ -100,7 +100,7 @@
 				<div id="staticMap" style="width:100%;height:350px; margin:auto;" data-lng="${article.lng}" data-lat="${article.lat}"></div>	
 			</c:if>
 			
-			<button onclick="location.href='../chat/get?targetUser=${article.memberNo}'" id="chat-btn" class="mt-2 common-btn">채팅하기</button>
+			<button onclick="location.href='../chat/new?targetUser=${article.memberNo}&articleNo=${article.id}'" id="chat-btn" class="mt-2 common-btn">채팅하기</button>
 		</section>
 	</article>
 </div>
