@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.ezen.ex02.domain.ArticleVO;
 import org.ezen.ex02.domain.ChatRoomVO;
+import org.ezen.ex02.domain.ChatVO;
 import org.ezen.ex02.service.ArticlesService;
 import org.ezen.ex02.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +34,31 @@ public class ChatController {
 	
 	//내 채팅방 목록 불러오기
 	@GetMapping("/list")
-	public ModelAndView getChatRoom(HttpSession session) {
+	public ModelAndView chat(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("chat/get");
+		mav.setViewName("chat/list");
 		return mav;
 	}
 	
 	@GetMapping(value="/list/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ChatRoomVO>> getChatRoomAjax(@PathVariable("id") int id){
-		List<ChatRoomVO> list = chatService.getMyChatRoom(id);
+	public ResponseEntity<List<ChatRoomVO>> getChatRoomList(@PathVariable("id") int id){
+		List<ChatRoomVO> list = chatService.getMyChatRoomList(id);
 		
 		return list.size()>0? new ResponseEntity<>(list,HttpStatus.OK):new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
+	
+//	@GetMapping(value = "/get/{roomId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<ChatRoomVO> getChatRoom(@PathVariable("roomId") String roomId){
+//		ChatRoomVO chatRoomVO = chatService.getChatRoomDetail(roomId);
+//		return new ResponseEntity<>(chatRoomVO,HttpStatus.OK);
+//	}
+	
+	@GetMapping(value="/message/{roomId}",produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ChatVO>> getMessage(@PathVariable("roomId") String roomId){
+		List<ChatVO> list = chatService.getMessage(roomId);
+		return new ResponseEntity<>(list,HttpStatus.OK);
+	}
+	
 	//게시글에서 채팅하기 누룰때
 	@GetMapping("/new")
 	public ModelAndView createNewChat(HttpSession session, int targetUser, int articleNo) {
@@ -63,20 +77,20 @@ public class ChatController {
 		return mav;
 	}
 	//채팅목록에서 채팅방 들어가기
-	@GetMapping("/get")
-	public ModelAndView joinChatRoom(HttpSession session, String roomId) {
-		
-		int chatUser = (int)session.getAttribute("loginUser");
-		ChatRoomVO chatRoomVO = chatService.getChatRoomByRoomId(roomId,chatUser);
-		log.info(chatRoomVO);
-		
-		ArticleVO articleVO = articlesService.getArticle(chatRoomVO.getArticleNo());
-		
-		ModelAndView mav = new ModelAndView();
-		
-		mav.setViewName("chat/get");
-		mav.addObject("article", articleVO);
-		mav.addObject("chatRoom", chatRoomVO);
-		return mav;
-	}
+//	@GetMapping("/get")
+//	public ModelAndView joinChatRoom(HttpSession session, String roomId) {
+//		
+//		int chatUser = (int)session.getAttribute("loginUser");
+//		ChatRoomVO chatRoomVO = chatService.getChatRoomByRoomId(roomId,chatUser);
+//		log.info(chatRoomVO);
+//		
+//		ArticleVO articleVO = articlesService.getArticle(chatRoomVO.getArticleNo());
+//		
+//		ModelAndView mav = new ModelAndView();
+//		
+//		mav.setViewName("chat/get");
+//		mav.addObject("article", articleVO);
+//		mav.addObject("chatRoom", chatRoomVO);
+//		return mav;
+//	}
 }

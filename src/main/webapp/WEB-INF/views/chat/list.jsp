@@ -11,7 +11,7 @@
 
 <div id="container" style="margin-top: 150px; margin-bottom:70px;" data-id="${loginUser}">
   <aside>
-    <ul>
+    <ul id="chatList">
       <li>
         <div>
           <h2>Prénom Nom</h2>
@@ -22,8 +22,8 @@
   </aside>
   
   <main>
+    <header id="chatInfo">
     <!-- 
-    <header>
       <div id="chatroom" data-roomid="${chatRoom.roomId}" data-userid="${loginUser}">
       	<img src="../attach/thumbnail/${article.id}" style="width : 140px;border-radius: 10px;"/>
         <div>
@@ -34,34 +34,15 @@
         	</div>
        	</div>
       </div>
+       -->
     </header>
     <ul id="chat">
-    	<li class="you">
-        <div class="entete">
-          <span class="status green"></span>
-          <h2>Vincent</h2>
-          <h3>10:12AM, Today</h3>
-        </div>
-        <div class="message">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>Vincent</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="message">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        </div>
-      </li>
+    	
     </ul>
     <footer>
       <textarea placeholder="Type your message" id="chatting"></textarea>
       <a href="#" id="sendBtn"><i class="bi bi-send"></i></a>
-    </footer>
-     -->
+    </footer> 
   </main>
   
 </div><script src="../js/chat.js"></script>

@@ -68,13 +68,32 @@ select * from carrot_member;
 drop table carrot_chatroom;
 
 create table carrot_chatroom(
-roomid varchar2(40) constraint carr_chat_id_pk primary key,
+roomid varchar2(40) constraint chatroom_pk primary key,
 chatuser number(10) not null,
 targetuser number(10) not null,
+articleno number(10) not null,
 CONSTRAINT CARR_chat_cu_FK FOREIGN KEY (chatuser) REFERENCES CARROT_member (id),
-CONSTRAINT CARR_chat_tu_FK FOREIGN KEY (targetuser) REFERENCES CARROT_member (id)
+CONSTRAINT CARR_chat_tu_FK FOREIGN KEY (targetuser) REFERENCES CARROT_member (id),
+CONSTRAINT CARR_chat_an_FK FOREIGN KEY (articleno) REFERENCES carrot_articles (id)
 );
 drop sequence carr_chat_id_seq;
 create sequence carr_chat_id_seq;
 
 select * from carrot_chatroom;
+drop table carrot_chat;
+
+create table carrot_chat(
+roomid varchar2(40) not null,
+message varchar2(1000) not null,
+sender number(10) not null,
+regdate varchar2(15) not null,
+CONSTRAINT CARR_chat_id_FK FOREIGN KEY (roomid) REFERENCES carrot_chatroom (roomid)
+);
+
+select * from carrot_chat;
+
+select 
+room.roomid,
+room.chatuser,
+room.targetuser
+from carrot_chatroom room left outer join carrot_chat chat on room.roomid = chat.roomid;

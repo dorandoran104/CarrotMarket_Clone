@@ -72,12 +72,12 @@ public class ArticlesController {
 	}
 	
 	//게시글 등록 액션
-		@PostMapping("/new")
-		public String registerAction(MultipartFile[] files, ArticleVO article){
-			int articleNo = articlesService.registerArticles(article);
-			attachService.insertImg(files,articleNo);
-			return "redirect:/articles/get?id="+articleNo;
-		}
+	@PostMapping("/new")
+	public String registerAction(MultipartFile[] files, ArticleVO article){
+		int articleNo = articlesService.registerArticles(article);
+		attachService.insertImg(files,articleNo);
+		return "redirect:/articles/get?id="+articleNo;
+	}
 	
 	//게시글 상세 조회
 	@GetMapping("/get")

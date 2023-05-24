@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.ezen.ex02.mapper.ChatMapper">
-
-	<resultMap type="org.ezen.ex02.domain.ChatRoomVO" id="chatRoomMap">
-		<id property="roomId" column="roomId"/>
-		<result property="roomId" column="roomId"/>
-		<result property="chatUser" column="chatuser"/>
-		<result property="targetUser" column="targetuser"/>
-		<result property="articleNo" column="articleno"/>
-		<collection property="chatMessage" resultMap="chatMessage"></collection>
-	</resultMap>
 	
-	<resultMap type="org.ezen.ex02.domain.ChatVO" id="chatMessage">
-		<result property="roomId" column="roomId"/>
-		<result property="message" column="message"/>
-		<result property="sender" column="sender"/>
-		<result property="regDate" column="regdate"/>
-	</resultMap>
+	<select id="getMyChatRoomList" resultType="org.ezen.ex02.domain.ChatRoomVO">
+		select 
+			room.*
+			,art.title ,art.cost ,art.sell 
+			,mem1.usernickname as chatUserNickName
+			,mem2.usernickname as targetUserNickName
+		from carrot_chatroom room 
+		left outer join carrot_articles art on room.articleno = art.id
+		left outer join carrot_member mem1 on room.chatuser = mem1.id
+		left outer join carrot_member mem2 on room.targetuser = mem2.id
+		where 
+			room.chatuser = #{id} or room.targetuser = #{id}
+	</select>
 	
-	<select id="getMyChatRoom" resultType="org.ezen.ex02.domain.ChatRoomVO">
-		select * from carrot_chatroom
-		where chatuser = #{id} or targetuser = #{id} 
+	<select id="getMessage" resultType="org.ezen.ex02.domain.ChatVO">
+		select * from carrot_chat where roomid = #{roomId}
 	</select>
 	
 	<select id="findChatRoom" resultType="org.ezen.ex02.domain.ChatRoomVO">

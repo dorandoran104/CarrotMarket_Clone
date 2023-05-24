@@ -8,7 +8,13 @@ import org.ezen.ex02.domain.ChatVO;
 
 public interface ChatMapper {
 
-	List<ChatRoomVO> getMyChatRoom(int id);
+	List<ChatRoomVO> getMyChatRoomList(int id);
+	
+	ChatRoomVO getChatRoomDetail(String roomId);
+	
+	List<ChatVO> getMessage(String roomId);
+	
+	
 
 	ChatRoomVO findChatRoom(@Param("id") int id,@Param("articleNo") int articleNo);
 
@@ -17,5 +23,6 @@ public interface ChatMapper {
 	ChatRoomVO getChatRoomByRoomId(@Param("roomId") String roomId,@Param("chatUser") int chatUser);
 
 	void insertMessage(ChatVO chatVO);
+
 
 }

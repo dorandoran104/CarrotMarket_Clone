@@ -19,8 +19,21 @@ public class ChatServiceImpl implements ChatService{
 
 	//내 채팅방 불러오기
 	@Override
-	public List<ChatRoomVO> getMyChatRoom(int id) {
-		List<ChatRoomVO> list = chatMapper.getMyChatRoom(id);
+	public List<ChatRoomVO> getMyChatRoomList(int id) {
+		List<ChatRoomVO> list = chatMapper.getMyChatRoomList(id);
+		return list;
+	}
+	//채팅방 들어가면 상세 정보 가져오기
+	@Override
+	public ChatRoomVO getChatRoomDetail(String roomId) {
+		ChatRoomVO chatRoomVO = chatMapper.getChatRoomDetail(roomId);
+		return chatRoomVO;
+	}
+	
+	//채팅이력 불러오기
+	@Override
+	public List<ChatVO> getMessage(String roomId) {
+		List<ChatVO> list = chatMapper.getMessage(roomId);
 		return list;
 	}
 	
@@ -60,9 +73,4 @@ public class ChatServiceImpl implements ChatService{
 		chatMapper.insertMessage(chatVO);
 	}
 	
-	
-	
-	
-	
-
 }

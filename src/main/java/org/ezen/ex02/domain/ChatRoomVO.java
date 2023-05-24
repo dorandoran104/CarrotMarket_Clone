@@ -12,5 +12,13 @@ public class ChatRoomVO {
 	private int targetUser;
 	private int articleNo;
 	
-	private List<ChatVO> chatMessage;
+	//left join article
+	private String title;
+	private int cost;
+	
+	//left join member
+	private String chatUserNickName;
+	private String targetUserNickName;
+	
+	//left join chatList
 }

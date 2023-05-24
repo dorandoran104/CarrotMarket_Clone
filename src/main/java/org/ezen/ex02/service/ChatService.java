@@ -6,9 +6,13 @@ import org.ezen.ex02.domain.ChatRoomVO;
 import org.ezen.ex02.domain.ChatVO;
 
 public interface ChatService {
+	
+	List<ChatRoomVO> getMyChatRoomList(int id);
 
-	List<ChatRoomVO> getMyChatRoom(int id);
-
+	ChatRoomVO getChatRoomDetail(String roomId);
+	
+	List<ChatVO> getMessage(String roomId);
+	
 	ChatRoomVO findChatRoom(int id, int articleNo);
 
 	ChatRoomVO createChatRoom(int id, int targetUser, int articleNo);
@@ -16,4 +20,6 @@ public interface ChatService {
 	ChatRoomVO getChatRoomByRoomId(String roomId, int chatUser);
 
 	void insertMessage(ChatVO chatVO);
+
+
 }
