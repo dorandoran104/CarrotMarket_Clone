@@ -9,16 +9,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <link rel="stylesheet" type="text/css" href="../css/chat.css">
 
+
+<c:if test="${create != null }">	
+<input type="hidden" id="create" value="${create}"/>
+</c:if>
 <div id="container" style="margin-top: 150px; margin-bottom:70px;" data-id="${loginUser}">
   <aside>
-    <ul id="chatList">
-      <li>
-        <div>
-          <h2>Prénom Nom</h2>
-        </div>
-      </li>
-    
-    </ul>
+    <ul id="chatList"></ul>
   </aside>
   
   <main>
@@ -36,14 +33,15 @@
       </div>
        -->
     </header>
+    
     <ul id="chat">
-    	
     </ul>
+    
     <footer>
       <textarea placeholder="Type your message" id="chatting"></textarea>
       <a href="#" id="sendBtn"><i class="bi bi-send"></i></a>
     </footer> 
   </main>
-  
+
 </div><script src="../js/chat.js"></script>
 <%@ include file="../include/footer.jspf"%>

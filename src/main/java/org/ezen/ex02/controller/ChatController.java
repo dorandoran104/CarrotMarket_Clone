@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -32,27 +33,22 @@ public class ChatController {
 	@Setter(onMethod_=@Autowired )
 	private ArticlesService articlesService;
 	
-	//내 채팅방 목록 불러오기
+	//채팅방 폼
 	@GetMapping("/list")
 	public ModelAndView chat(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("chat/list");
 		return mav;
 	}
-	
+	//내 채팅방 목록 불러오기 가져올때 채팅방 정보 다 가져오게끔 (ex 해당채팅방 게시글 정보, 유저정보)
 	@GetMapping(value="/list/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ChatRoomVO>> getChatRoomList(@PathVariable("id") int id){
 		List<ChatRoomVO> list = chatService.getMyChatRoomList(id);
 		
 		return list.size()>0? new ResponseEntity<>(list,HttpStatus.OK):new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-	
-//	@GetMapping(value = "/get/{roomId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//	public ResponseEntity<ChatRoomVO> getChatRoom(@PathVariable("roomId") String roomId){
-//		ChatRoomVO chatRoomVO = chatService.getChatRoomDetail(roomId);
-//		return new ResponseEntity<>(chatRoomVO,HttpStatus.OK);
-//	}
-	
+
+	//방에 메세지 이력 가져오기
 	@GetMapping(value="/message/{roomId}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ChatVO>> getMessage(@PathVariable("roomId") String roomId){
 		List<ChatVO> list = chatService.getMessage(roomId);
@@ -61,7 +57,7 @@ public class ChatController {
 	
 	//게시글에서 채팅하기 누룰때
 	@GetMapping("/new")
-	public ModelAndView createNewChat(HttpSession session, int targetUser, int articleNo) {
+	public ModelAndView createNewChat(HttpSession session, int targetUser, int articleNo, RedirectAttributes rttr) {
 		int id = (int)session.getAttribute("loginUser");
 		
 		ChatRoomVO chatRoom = chatService.findChatRoom(id,articleNo);
@@ -69,28 +65,10 @@ public class ChatController {
 		if(chatRoom == null) {
 			chatRoom = chatService.createChatRoom(id,targetUser, articleNo);
 		}
-		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("chat/get");
-		mav.addObject("chatRoom", chatRoom);
-		
+		mav.setViewName("redirect:/chat/list");
+		rttr.addFlashAttribute("create",chatRoom.getArticleNo());
 		return mav;
 	}
-	//채팅목록에서 채팅방 들어가기
-//	@GetMapping("/get")
-//	public ModelAndView joinChatRoom(HttpSession session, String roomId) {
-//		
-//		int chatUser = (int)session.getAttribute("loginUser");
-//		ChatRoomVO chatRoomVO = chatService.getChatRoomByRoomId(roomId,chatUser);
-//		log.info(chatRoomVO);
-//		
-//		ArticleVO articleVO = articlesService.getArticle(chatRoomVO.getArticleNo());
-//		
-//		ModelAndView mav = new ModelAndView();
-//		
-//		mav.setViewName("chat/get");
-//		mav.addObject("article", articleVO);
-//		mav.addObject("chatRoom", chatRoomVO);
-//		return mav;
-//	}
+	
 }

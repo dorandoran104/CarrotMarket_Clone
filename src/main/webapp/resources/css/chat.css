@@ -131,6 +131,7 @@ aside li h3 {
 main header {
 	height: 140px;
 	padding: 10px 10px 10px 10px;
+	background-color: #f9f9f9;
 }
 
 main header>* {
@@ -167,6 +168,7 @@ main header h3 {
 	height: 612px;
 	border-top: 2px solid #fff;
 	border-bottom: 2px solid #fff;
+	backgound-color : #f9f9f9;
 }
 
 #chat li {
@@ -273,4 +275,17 @@ main footer a {
 #rebtn:hover{
     background-color:#f2f3f6;
    	opacity: .7;
+}
+.spinner-area{
+	width: 50%;
+    height: 50%;
+    margin: auto;
+    text-align: center;
+    padding-top: 260px;
+}
+
+.spinner-border{
+	width : 50px;
+	height : 50px;
+	font-size: 30px;
 }

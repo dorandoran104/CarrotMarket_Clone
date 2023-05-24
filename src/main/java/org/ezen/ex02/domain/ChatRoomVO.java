@@ -19,6 +19,4 @@ public class ChatRoomVO {
 	//left join member
 	private String chatUserNickName;
 	private String targetUserNickName;
-	
-	//left join chatList
 }

@@ -37,7 +37,6 @@ public class SocketHandler extends TextWebSocketHandler{
 		//sessionMap.put(session.getId(), session);
 		String roomId = session.getUri().toString().split("chating/")[1];
 		String sessionId = session.getId();
-		
 		ChatSession chatSession = new ChatSession();
 		chatSession.setRoomId(roomId);
 		chatSession.setSession(session);
@@ -51,12 +50,10 @@ public class SocketHandler extends TextWebSocketHandler{
 	//websocket 연걸 종료 시 실행되는 메서드
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		//sessionMap.remove(session.getId());
-		
 		if(sessionList.size()>0) {
 			for(int a = 0; a<sessionList.size(); a++) {
-				if(session.equals(sessionList.get(a).getSession())) {
+				if(session.getId().equals(sessionList.get(a).getSessionId())) {
 					sessionList.remove(a);
-					break;
 				}
 			}
 		}
@@ -67,13 +64,12 @@ public class SocketHandler extends TextWebSocketHandler{
 	//메세지 수신 및 송신
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String id = session.getId();
-		log.info("message payload" + message.getPayload());
-		log.info("session : " + id + "message : " + message);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
-		
 		ChatVO chatVO = objectMapper.readValue(message.getPayload(), ChatVO.class);
+		
 		//chatService.insertMessage(chatVO);
+		
 		if(sessionList.size()>0) {
 			for(int a = 0; a<sessionList.size(); a++) {
 				if(sessionList.get(a).getRoomId().equals(chatVO.getRoomId())) {
