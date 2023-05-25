@@ -54,17 +54,18 @@
 					 -->
 				<div id="article-profile-left" style="display:flex">
 					<div>
-						<div id="nickname">${article.nickname }</div>
+						<div id="nickname" class="fs-2">${article.nickname }</div>
 						<div id="region-name">${article.address }</div>
 					</div>
 					<c:choose>
 						<c:when test="${article.sell == 1 }">
-							<div class="ms-2"><span style="background-color : #22c355" class="badge"> 예약중 </span></div>
+							<div class="ms-4"><span style="background-color : #22c355;font-size: 12px; margin-left: -4px; margin-top: 6px"class="badge"> 예약중 </span></div>
 						</c:when>
 						<c:when test="${article.sell == 2 }">
-							<div class="ms-2"><span class="badge bg-secondary">거래 완료</span></div>
+							<div class="ms-4"><span class="badge bg-secondary" style="font-size: 12px; margin-left: -4px; margin-top: 6px">거래 완료</span></div>
 						</c:when>
 						<c:otherwise>
+							<div class="ms-4"><span class="badge" style="background-color: #ff8a3d; font-size: 12px; margin-left: -4px; margin-top: 6px">판매중</span></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -87,7 +88,7 @@
 		<section id="article-description">
 			<h1 property="schema:name" id="article-title"
 				style="margin-top: 0px;">${article.title}</h1>
-			<!-- <p id="article-category">가공식품 ∙<time> 6일 전 </time></p> -->
+			<p id="article-category" data-time='<fmt:formatDate value="${article.updateDate}" pattern="yyyy/MM/dd HH:mm:ss"/>'></p>
 			<p id="cost-area">
 				<fmt:formatNumber value="${article.cost}" pattern="#,###" />원
 			 </p>
@@ -100,7 +101,11 @@
 				<div id="staticMap" style="width:100%;height:350px; margin:auto;" data-lng="${article.lng}" data-lat="${article.lat}"></div>	
 			</c:if>
 			
-			<button onclick="location.href='../chat/new?targetUser=${article.memberNo}&articleNo=${article.id}'" id="chat-btn" class="mt-2 common-btn">채팅하기</button>
+			<c:if test="${article.locationInfo != null }">
+				<div class="mt-2 mb-2">희망 거래 장소 : ${article.locationInfo}</div>
+			</c:if>
+			
+			<button data-targetUser="${article.memberNo}" data-articleNo="${article.id}" data-sell="${article.sell}" id="chat-btn" class="mt-2 common-btn">채팅하기</button>
 		</section>
 	</article>
 </div>

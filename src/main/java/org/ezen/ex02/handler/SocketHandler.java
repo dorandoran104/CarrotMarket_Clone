@@ -68,7 +68,7 @@ public class SocketHandler extends TextWebSocketHandler{
 		ObjectMapper objectMapper = new ObjectMapper();
 		ChatVO chatVO = objectMapper.readValue(message.getPayload(), ChatVO.class);
 		
-		//chatService.insertMessage(chatVO);
+		 //chatService.insertMessage(chatVO);
 		
 		if(sessionList.size()>0) {
 			for(int a = 0; a<sessionList.size(); a++) {

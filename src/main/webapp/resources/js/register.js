@@ -3,8 +3,7 @@
  */
  
  $(document).ready(function(){
-
- 		
+	
  	//글 작성 누를시 유효성 검사하기
  	$("#register_submit").on("click",function(e){
  		e.preventDefault();

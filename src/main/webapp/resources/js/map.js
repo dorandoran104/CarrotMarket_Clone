@@ -12,6 +12,21 @@
 	 		makeMapDiv();
 	 		writeMap(lng, lat);
 	}
+	
+	$("#location_search").keydown(function(e){
+		if(e.keyCode == 13){
+			e.preventDefault();
+			$("#maparea").empty();
+			let location_search = $("#location_search").val();
+			
+			if(location_search.length == 0){
+				alert("장소를 입력해 주세요");
+				return false;
+			}
+			makeMapDiv();
+			startMap(location_search);
+		}
+	});
 
  	//버튼 클릭시 장소 찾기
  	$("#button-addon2").on("click",function(){

@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.ezen.ex02.domain.ChatRoomVO;
 import org.ezen.ex02.domain.ChatVO;
 import org.ezen.ex02.mapper.ChatMapper;
+import org.ezen.ex02.mapper.SecondHandArticlesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class ChatServiceImpl implements ChatService{
 	
 	@Setter(onMethod_=@Autowired)
 	private ChatMapper chatMapper;
+	
+	@Setter(onMethod_=@Autowired)
+	private SecondHandArticlesMapper articlesMapper;
 
 	//내 채팅방 불러오기
 	@Override
@@ -56,6 +60,7 @@ public class ChatServiceImpl implements ChatService{
 		chatRoomVO.setArticleNo(articleNo);
 		
 		chatMapper.createChatRoom(chatRoomVO);
+		articlesMapper.chatCountModify(articleNo);
 		
 		return chatRoomVO;
 		

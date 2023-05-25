@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.ezen.ex02.domain.ArticleVO;
+import org.ezen.ex02.domain.SecondHandArticleVO;
 import org.ezen.ex02.domain.ChatRoomVO;
 import org.ezen.ex02.domain.ChatVO;
-import org.ezen.ex02.service.ArticlesService;
+import org.ezen.ex02.service.SecondHandArticlesService;
 import org.ezen.ex02.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class ChatController {
 	private ChatService chatService;
 	
 	@Setter(onMethod_=@Autowired )
-	private ArticlesService articlesService;
+	private SecondHandArticlesService articlesService;
 	
 	//채팅방 폼
 	@GetMapping("/list")

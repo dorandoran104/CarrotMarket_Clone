@@ -9,7 +9,7 @@
 			,mem1.usernickname as chatUserNickName
 			,mem2.usernickname as targetUserNickName
 		from carrot_chatroom room 
-			left outer join carrot_articles art on room.articleno = art.id
+			left outer join carrot_secondhand_articles art on room.articleno = art.id
 			left outer join carrot_member mem1 on room.chatuser = mem1.id
 			left outer join carrot_member mem2 on room.targetuser = mem2.id
 		where 

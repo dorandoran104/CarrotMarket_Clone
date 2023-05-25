@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.ezen.ex02.domain.ArticleVO;
+import org.ezen.ex02.domain.SecondHandArticleVO;
 import org.ezen.ex02.domain.MemberVO;
-import org.ezen.ex02.service.ArticlesService;
+import org.ezen.ex02.service.SecondHandArticlesService;
 import org.ezen.ex02.service.MemberService;
 import org.ezen.ex02.util.JScript;
 import org.mindrot.jbcrypt.BCrypt;
@@ -36,7 +36,7 @@ public class MemberController {
 	private MemberService memberService;
 	
 	@Setter(onMethod_=@Autowired)
-	private ArticlesService articlesService;
+	private SecondHandArticlesService articlesService;
 	
 	//로그인 폼
 	@GetMapping("/login") 
@@ -154,7 +154,7 @@ public class MemberController {
 
 		int id = (int) session.getAttribute("loginUser");
 		
-		List<ArticleVO> list = articlesService.getMyArticles(id);
+		List<SecondHandArticleVO> list = articlesService.getMyArticles(id);
 		MemberVO memberVO = memberService.getMemberId(id);
 
 		model.addAttribute("member", memberVO);

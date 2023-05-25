@@ -8,8 +8,8 @@ img{
     position: relative;
     text-align: left;
     display: inline-block;
-    /* width: 217px; */
-     margin-right: 20px;
+    width: calc(33% - 20px);
+	margin-right: 20px;
     margin-bottom: 40px;
 }
 

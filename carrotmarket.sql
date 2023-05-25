@@ -13,7 +13,6 @@ usergender char(1)
 );
 
 create sequence carr_mem_id_seq;
-select * from carrot_member;
 
 --게시글 테이블
 drop table carrot_articles CASCADE CONSTRAINTS;
@@ -48,23 +47,6 @@ FILENAME VARCHAR2(100 BYTE) CONSTRAINT CARR_IMG_FILE_PK PRIMARY KEY,
 CONSTRAINT CARR_IMG_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES CARROT_ARTICLES (ID)
 );
 
-drop table carrot_thumbnail;
-create table carrot_thumbnail(
-ARTICLENO NUMBER(10,0) NOT NULL, 
-FILEPATH VARCHAR2(200 BYTE) NOT NULL, 
-FILENAME VARCHAR2(100 BYTE) CONSTRAINT CARR_THUM_FILE_PK PRIMARY KEY,
-CONSTRAINT CARR_THUM_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES CARROT_ARTICLES (ID)
-);
-
-
-
-select * from carrot_member;
-select * from carrot_articles;
-select * from carrot_thumbnail;
-select * from carrot_img;
-
-select * from carrot_member;
-
 drop table carrot_chatroom;
 
 create table carrot_chatroom(
@@ -79,7 +61,6 @@ CONSTRAINT CARR_chat_an_FK FOREIGN KEY (articleno) REFERENCES carrot_articles (i
 drop sequence carr_chat_id_seq;
 create sequence carr_chat_id_seq;
 
-select * from carrot_chatroom;
 drop table carrot_chat;
 
 create table carrot_chat(
@@ -89,11 +70,3 @@ sender number(10) not null,
 regdate varchar2(15) not null,
 CONSTRAINT CARR_chat_id_FK FOREIGN KEY (roomid) REFERENCES carrot_chatroom (roomid)
 );
-
-select * from carrot_chat;
-
-select 
-room.roomid,
-room.chatuser,
-room.targetuser
-from carrot_chatroom room left outer join carrot_chat chat on room.roomid = chat.roomid;
