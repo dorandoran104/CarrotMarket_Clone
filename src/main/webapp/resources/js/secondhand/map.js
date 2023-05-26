@@ -3,20 +3,34 @@
  */
 
  $(document).ready(function(){
-
-	if( $("#maparea").find("span[id='istrue']").length >= 1){ 
-	 		let lng = $("#lng").val();
-	 		let lat = $("#lat").val();
-	 		console.log("lng : " + lng);
-	 		console.log("lat : " + lat);
-	 		makeMapDiv();
-	 		writeMap(lng, lat);
-	}
 	
-	$("#location_search").keydown(function(e){
-		if(e.keyCode == 13){
-			e.preventDefault();
-			$("#maparea").empty();
+		//수정시 위치 정보가 있으면 표시해주기
+		if( $("#maparea").find("span[id='istrue']").length >= 1){ 
+		 		let lng = $("#lng").val();
+		 		let lat = $("#lat").val();
+		 		makeMapDiv();
+		 		writeMap(lng, lat);
+		}
+		
+		//위치 찾기에서 엔터 누를시 submit 막으면서 위치 찾기로
+		$("#location_search").keydown(function(e){
+			if(e.keyCode == 13){
+				e.preventDefault();
+				$("#maparea").empty();
+				let location_search = $("#location_search").val();
+				
+				if(location_search.length == 0){
+					alert("장소를 입력해 주세요");
+					return false;
+				}
+				makeMapDiv();
+				startMap(location_search);
+			}
+		});
+	
+	 	//버튼 클릭시 장소 찾기
+	 	$("#button-addon2").on("click",function(){
+	 		$("#maparea").empty();
 			let location_search = $("#location_search").val();
 			
 			if(location_search.length == 0){
@@ -24,33 +38,19 @@
 				return false;
 			}
 			makeMapDiv();
+			// 키워드로 장소를 검색합니다
 			startMap(location_search);
-		}
-	});
-
- 	//버튼 클릭시 장소 찾기
- 	$("#button-addon2").on("click",function(){
- 		$("#maparea").empty();
-		let location_search = $("#location_search").val();
+			
+			//ps.keywordSearch(location_search);
+		});
 		
-		if(location_search.length == 0){
-			alert("장소를 입력해 주세요");
-			return false;
-		}
-		makeMapDiv();
-		// 키워드로 장소를 검색합니다
-		startMap(location_search);
-		
-		//ps.keywordSearch(location_search);
-	});
-	
-	//초기화 누르면 주소를 없앤다
-	$("#maparea").on("click","#location_reset",function(){
-		$("#maparea").empty();
-		$("#hope_location").val("");
-		$("form").find("input[name='lat']").val("");
-        $("form").find("input[name='lng']").val("");
-	});
+		//초기화 누르면 주소를 없앤다
+		$("#maparea").on("click","#location_reset",function(){
+			$("#maparea").empty();
+			$("#hope_location").val("");
+			$("form").find("input[name='lat']").val("");
+	        $("form").find("input[name='lng']").val("");
+		});
  
  	
  	//아래부터 카카오맵 api

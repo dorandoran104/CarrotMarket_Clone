@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.Setter;
 
 @RestController
-@RequestMapping("/attach")
+@RequestMapping("/shattach")
 public class SecondHandAttachController {
 	
 	@Setter(onMethod_=@Autowired)
@@ -52,19 +52,29 @@ public class SecondHandAttachController {
 	return new UrlResource("file:"+ fileFullPath);
 	}
 	
-	//섬네일 뿌리기
+	//섬네일 뿌리기(이미지중 한장만)
 	@GetMapping(value="/thumbnail/{articleNo}")
 	public Resource showThumbnail(@PathVariable("articleNo") int articleNo) throws MalformedURLException {
-		
 		List<SecondHandAttachVO> list = secondHandAttachService.getArticleImage(articleNo);
-		
 		StringBuilder fileFullPath = new StringBuilder("C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\");
-		
+		//만약 이미지가 없으면 고유 사진 한장 띄우기
 		if(list == null || list.size() == 0) {
 			fileFullPath.append("images/DaangnMarket_logo.png");
 		}else {
 			fileFullPath.append(list.get(0).getFilePath() + list.get(0).getFileName());
 		}
 		return new UrlResource("file:"+fileFullPath.toString());
-	}	
+	}
+	
+	@PostMapping(
+			value="/deleteFile",
+			produces = MediaType.TEXT_PLAIN_VALUE
+			)
+	public ResponseEntity<String> deleteFile(SecondHandAttachVO attachVO){
+		
+		secondHandAttachService.deleteArticleFile(attachVO);
+		secondHandAttachService.deleteArticleImageDB(attachVO.getFileName());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 }

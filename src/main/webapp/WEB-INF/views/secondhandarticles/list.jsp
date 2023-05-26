@@ -21,7 +21,7 @@
 			<c:forEach items="${list}" var="list">
 			<article class="flea-market-article flat-card">
 				<a class="flea-market-article-link list-href" href="${list.id}">
-					<div class="card-photo" style="background: url(../attach/thumbnail/${list.id});background-size: cover;">
+					<div class="card-photo" style="background: url(../shattach/thumbnail/${list.id});background-size: cover;">
 						<!-- <img src="../attach/thumbnail/${list.id}" /> -->
 					</div>
 					<div class="article-info">

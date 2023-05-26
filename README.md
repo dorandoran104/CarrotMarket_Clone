@@ -206,18 +206,15 @@
 </details>
 
 <details>
-<summary>js</summary>
+<summary>파일js</summary>
 
 * 파일은 form방식으로 처리
 ```js
 //이미지 파일을 올릴 시 미리보기
  	$("#register_form").on("change","input[name='files']",function(e){
  		let img_area = $("#img_area");
- 		
  		img_area.empty();
-
  		let files = e.target.files;
- 		
  		let regex = new RegExp("(.*?)\.(jpg|png|jpeg|bmp)$");
  		
  		if(files.length >10 ){
@@ -248,9 +245,6 @@
  })
  
  //메서드 시작
- //이미지 불러올때 각각 이미지 Resource불러오기 
- 
- 
   //이미지 파일만 있는지 확인 메서드
  function checkFile(regex,name){
  	if( regex.test(name) ){
@@ -280,10 +274,97 @@
  });
 ```
 </details>
+
+<details>
+<summary>카카오맵js</summary>
+
+* 카카오맵 사이트에 나와있는 코드들은 따로 안적었습니다.
+
+```js
+//수정시 위치 정보가 있으면 표시해주기
+	if( $("#maparea").find("span[id='istrue']").length >= 1){ 
+	 		let lng = $("#lng").val();
+	 		let lat = $("#lat").val();
+	 		makeMapDiv();
+	 		writeMap(lng, lat);
+	}
+	
+	//위치 찾기에서 엔터 누를시 submit 막으면서 위치 찾기로
+	$("#location_search").keydown(function(e){
+		if(e.keyCode == 13){
+			e.preventDefault();
+			$("#maparea").empty();
+			let location_search = $("#location_search").val();
+			
+			if(location_search.length == 0){
+				alert("장소를 입력해 주세요");
+				return false;
+			}
+			makeMapDiv();
+			startMap(location_search);
+		}
+	});
+
+ 	//버튼 클릭시 장소 찾기
+ 	$("#button-addon2").on("click",function(){
+ 		$("#maparea").empty();
+		let location_search = $("#location_search").val();
+		
+		if(location_search.length == 0){
+			alert("장소를 입력해 주세요");
+			return false;
+		}
+		makeMapDiv();
+		// 키워드로 장소를 검색합니다
+		startMap(location_search);
+	});
+	
+	//초기화 누르면 주소를 없앤다
+	$("#maparea").on("click","#location_reset",function(){
+		$("#maparea").empty();
+		$("#hope_location").val("");
+		$("form").find("input[name='lat']").val("");
+        $("form").find("input[name='lng']").val("");
+	});
+```
+</details>
+
 </details>
 
 ***
 <details>
 <summary>게시글 수정</summary>
 
+* 수정 시 Map부분은 작성과 공통으로 사용하였습니다.
+* 이미지 수정 또한 form 방식으로 넘겨주고, 기존 이미지 중 삭제 처리 이벤트가 일어난 것들은 submit을 누를 시 ajax로 삭제 처리 하였습니다.
 </details>
+
+<details>
+<summary>Controller</summary>
+
+```java
+//게시글 수정 폼
+	@GetMapping("/modify")
+	public String modifyArticle(Model model,int id) {
+		SecondHandArticleVO articleVO = secondHandArticlesService.getArticle(id);
+		model.addAttribute("article",articleVO);
+		
+		String kakaoApiKey = new ApiKey().getKakaoKey();
+		model.addAttribute("kakaoKey",kakaoApiKey);
+		return "secondhandarticles/modify";
+	}
+
+	//게시글 수정
+	@PostMapping("/modify")
+	public String modifyArticle(SecondHandArticleVO articleVO, MultipartFile[] files) {
+			//새롭게 올린 이미지는 db,파일 저장
+			attachService.insertImg(files,articleVO.getId());
+			//마지막 게시글 수정
+			secondHandArticlesService.modifyArticle(articleVO);
+		return "redirect:/sharticle/get?id="+articleVO.getId();
+	}
+```
+</details>
+</details>
+
+***

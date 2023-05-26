@@ -1,8 +1,17 @@
 /**
  * 
  */
- 
  $(document).ready(function(){
+ 	//이미지 처리하기
+ 	let articleNo = $("#content").data("id");
+ 	
+ 	$.ajax({
+ 		url: '../shattach/' + articleNo,
+ 		success : function(result){
+ 			showImage(result);
+ 			slickfunction();
+ 		}
+ 	});
  	
  	let timeValue = $("#article-category").data('time');
  	let updateTime = displayTime(timeValue);
@@ -13,17 +22,13 @@
 		e.preventDefault();
 		
 		if(confirm('게시글을 삭제하시겠습니까?') ){
-			console.log("실행");
-			let id = $(this).data("id");
-			console.log(id);
-			
 			$.ajax({
 				url : 'delete',
-				data : {id : id},
+				data : {id : articleNo},
 				type : 'post',
 				success : function(result){
 					alert("삭제에 성공했습니다.");
-					location.replace('/ex02/articles/list');
+					location.replace('/ex02/sharticle/list');
 				},
 				error : function(error){
 					alert("오류");
@@ -31,15 +36,13 @@
 				}
 			})
 		}else{
-			console.log("취소");
 			return false;
 		}
 	});
+	
 	//판매상태 변경
 	$(".isSell").on("click",function(e){
 		e.preventDefault();
-		
-		console.log($(this).attr("href"));
 		
 		if(confirm('정보를 변경하시겠습니까?') ){
 			location.replace("sell?" + $(this).attr("href"));
@@ -54,7 +57,6 @@
 		
 		let sell = $(this).data("sell");
 		let targetUser = $(this).data("targetuser");
-		let articleNo = $(this).data("articleno");
 		
 		if(sell == 2){
 			alert('이미 거래가 완료되었습니다.');
@@ -63,9 +65,12 @@
 		
 		location.href = '../chat/new?targetUser=' + targetUser + '&articleNo=' + articleNo;
 	});
+	
+	//이미지 처리
+	
  });
  
- 
+//게시글 올린 시간을 조회한 시간 기준으로 표시하기
 function displayTime(timeValue){
 	let today = new Date();
 	
@@ -91,6 +96,33 @@ function displayTime(timeValue){
 		str = Math.floor(updateTime/60/24)+ '일 전';
 		return str;
 	}
-	
-	
 }
+//이미지 가져오기
+function showImage(result){
+ 	let imgArea = $(".imageArea");
+ 	
+ 	if(result.length == 0){
+	 	let str = '';
+		str+= '<img src="../shattach/get?fileName=non"/>';
+		imgArea.append(str);
+ 	}
+ 	
+ 	for(let i = 0; i<result.length; i++){
+ 		let str = '';
+ 		let filecallpath = encodeURIComponent(result[i].filePath + result[i].fileName);
+ 		str+= '<img src="../shattach/get?fileName='+ filecallpath + '"/>';
+ 		imgArea.append(str);
+ 	}
+ }
+ //이미지 가져온 후 slick을 사용해 슬라이드 구현
+ function slickfunction(){
+ 	$(".imageArea").slick({
+ 		slide: 'img',
+ 		infinite : true,
+ 		dots : true,
+ 		draggable : true,
+ 		arrows: true,
+ 		prevArrow: $('#aro1_prev'),
+		nextArrow: $('#aro1_next'),
+ 	})
+ }

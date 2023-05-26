@@ -113,5 +113,4 @@
 <script src="../js/secondhand/staticMap.js"></script>
 </c:if>
 <script src="../js/secondhand/article.js"></script>
-<script src="../js/secondhand/image.js"></script>
 <%@ include file="../include/footer.jspf"%>

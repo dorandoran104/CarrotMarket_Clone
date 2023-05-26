@@ -7,7 +7,7 @@
  	
  	//페이지 로딩하면 게시글 이미지 불러오기
  	$.ajax({
- 		url : '../attach/' + id,
+ 		url : '../shattach/' + id,
  		success : function(result){
  			showImage(result);
  		}
@@ -21,7 +21,7 @@
  			
  			let str = ' <li style="padding: 5px; display:inline-block; width : calc(32%); height : 150px">';
  				str += '<div style="width : 100%; cursor:pointer" class="delete_img" data-articleno="'+value.articleNo+'" data-filename="'+ value.fileName +'" data-filepath="'+ value.filePath+'">X</div>';
- 				str += '<img style="display : block; width:100%; height: 90%;" src="../attach/get?fileName=' + filecallpath + '"/>';
+ 				str += '<img style="display : block; width:100%; height: 90%;" src="../shattach/get?fileName=' + filecallpath + '"/>';
  				$("#img_area").append(str);
  		});
  	}
@@ -72,7 +72,7 @@
  			let articleNo = $(this).data("articleno");
  			
  			$.ajax({
- 				url : 'modify/file',
+ 				url : '../attach/deleteFile',
  				type : 'post',
  				data : {
  					fileName : fileName,
@@ -117,8 +117,6 @@
  		}
  		
  	});
- 	
- 	
  });
  
  function checkFile(regex,name){

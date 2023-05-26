@@ -35,8 +35,8 @@ public class SecondHandAttachServiceImpl implements SecondHandAttachService{
 	//파일 저장하기, db에 넣기
 	@Override
 	public void insertImg(MultipartFile[] files,int articleNo) {
-		
 		StringBuilder filePath = new StringBuilder("images");
+		//System.getProperty("user.dir") 가 이상하게 작동해서 일단 절대경로로 설정
 		String fileFullPath = "C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\";
 		
 		File uploadPath = new File(new StringBuilder().append(fileFullPath).append(filePath).toString(),getFolder());

@@ -90,7 +90,6 @@ public class SecondHandArticlesController {
 	//게시글 수정 폼
 	@GetMapping("/modify")
 	public String modifyArticle(Model model,int id) {
-		System.out.println(id);
 		SecondHandArticleVO articleVO = secondHandArticlesService.getArticle(id);
 		model.addAttribute("article",articleVO);
 		
@@ -102,22 +101,11 @@ public class SecondHandArticlesController {
 	//게시글 수정
 	@PostMapping("/modify")
 	public String modifyArticle(SecondHandArticleVO articleVO, MultipartFile[] files) {
-			
+			//새롭게 올린 이미지는 db,파일 저장
 			attachService.insertImg(files,articleVO.getId());
-			
 			//마지막 게시글 수정
 			secondHandArticlesService.modifyArticle(articleVO);
 		return "redirect:/sharticle/get?id="+articleVO.getId();
-	}
-	
-	//수정시 삭제한 파일 지우기
-	@PostMapping("/modify/file")
-	@ResponseBody
-	public ResponseEntity<String> deleteFile(SecondHandAttachVO attachVO){
-		log.error(attachVO);
-		attachService.deleteArticleFile(attachVO);
-		attachService.deleteArticleImageDB(attachVO.getFileName());
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	//내 게시글 예약중/거래완료로 바꾸기

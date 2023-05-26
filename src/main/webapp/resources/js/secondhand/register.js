@@ -1,24 +1,18 @@
 /**
  * 
  */
- 
  $(document).ready(function(){
-	
  	//글 작성 누를시 유효성 검사하기
  	$("#register_submit").on("click",function(e){
  		e.preventDefault();
- 		
  		if( $("#register_form").find("input[name='title']").val().length == 0 ) {
  			alert('제목을 입력해 주세요');
  			return false;
  		}
- 		
  		if( $("#register_form").find("textarea").val().length == 0 ) {
  			alert('내용을을 입력해 주세요');
  			return false;
  		}
- 		
- 		
  		//여기서부터는 value 처리
  		
  		if( $("#register_form").find("input[name='cost']").val().length == 0 ){
@@ -31,11 +25,8 @@
  	//이미지 파일을 올릴 시 미리보기
  	$("#register_form").on("change","input[name='files']",function(e){
  		let img_area = $("#img_area");
- 		
  		img_area.empty();
-
  		let files = e.target.files;
- 		
  		let regex = new RegExp("(.*?)\.(jpg|png|jpeg|bmp)$");
  		
  		if(files.length >10 ){
@@ -66,10 +57,7 @@
  })
  
  //메서드 시작
- //이미지 불러올때 각각 이미지 Resource불러오기 
- 
- 
-  //이미지 파일만 있는지 확인 메서드
+ //이미지 파일만 있는지 확인 메서드
  function checkFile(regex,name){
  	if( regex.test(name) ){
  		return true;
