@@ -60,19 +60,30 @@ $(document).ready(function() {
 		url : 'list/' + id,
 		success : function(result) {
 			let str = '';
+			console.log(result);
 			$.each(result, function(key, value) {
-				str += '<li><div><h2><a href="';
+				let targetNickName;
+				let myNickName;
+				
+				if(id == value.chatUser){
+					myNickName = value.chatUserNickName;
+					targetNickName = value.targetUserNickName;	
+				}else{
+					myNickName = value.targetUserNickName;
+					targetNickName = value.chatUserNickName;
+				}
+			
+				str += '<li><div class="chatList"><div class="chatListNickName">';
+				str += myNickName;
+				str+= '</div><h2>';
+				str+= '<a href="';
 				str += value.roomId;
 				str += '" data-title ="' + value.title;
 				str += '" data-cost="' + value.cost;
+				str += '" data-sell="' + value.sell;
 				str += '" data-articleno="' + value.articleNo;
-				if (id == value.chatUser) {
-					str += '" data-mynickname="' + value.chatUserNickName;
-					str += '" data-targetnickname="' + value.targetUserNickName;
-				} else {
-					str += '" data-mynickname="' + value.targetUserNickName;
-					str += '" data-targetnickname="' + value.chatUserNickName;
-				}
+				str += '" data-mynickname="' + value.chatUserNickName;
+				str += '" data-targetnickname="' + value.targetUserNickName;
 				str += '">' + value.title;
 				str += '</a></h2></div></li>';
 			});
@@ -95,12 +106,13 @@ $(document).ready(function() {
  		let articleno = $(this).data("articleno");
  		let mynickname = $(this).data("mynickname");
  		let targetnickname = $(this).data("targetnickname");
+ 		let sell = $(this).data("sell");
  		
 		$("#chat").empty();
  		
  		$("#chat").append('<div class="spinner-area"><div class="spinner-border text-warning" role="status"><span class="visually-hidden">Loading...</span></div></div>');
 		
-		chatroominfo(title, cost, articleno, mynickname, targetnickname, roomId);
+		chatroominfo(title, cost, articleno, mynickname, targetnickname, roomId, sell);
 		
 		switchChatRoom(roomId, id, mynickname, targetnickname);
 	});
@@ -135,14 +147,22 @@ $(document).ready(function() {
 	}
 	
 	//채팅방 클릭시 상세정보 들고오기
-	function chatroominfo(title, cost, articleno, mynickname, targetnickname,roomId){
+	function chatroominfo(title, cost, articleno, mynickname, targetnickname,roomId, sell){
 		$("#chatInfo").empty();
 		
 		let str = '';
-		str+= '<div id="chatroom"><img src="../attach/thumbnail/';
+		str+= '<div id="chatroom"><img style="height:100px; widht: 120px" src="../attach/thumbnail/';
 		str+= articleno;
 		str+= '" style="width : 140px;border-radius: 10px;"/>';
-	    str+= '<div><h2>';
+	    str+= '<div>'
+	    if(sell == 0){
+	    	str+= "<span style='color : #ff6f0f'> 판매중 </span>";
+	    }else if(sell == 1){
+	    	str+= "<span style='color : green'>예약중 </span>";
+	    }else if(sell == 2){
+	    	str+= "거래 완료 "
+	    }
+	    str+= '<h2>';
 	    str+= title;
 	    str+= '</h2><h3>';
 	    str+= AddComma(cost);

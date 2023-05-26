@@ -19,7 +19,7 @@
 <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-<link rel="stylesheet" href="../css/article.css" />
+<link rel="stylesheet" href="../css/secondhand/article.css" />
 <!-- 카카오 맵 -->
 
 <div style="margin: 95px auto; width: 100%; font-size: 1.5rem">
@@ -110,8 +110,8 @@
 	</article>
 </div>
 <c:if test="${article.lng != null && article.lat != null }">
-<script src="../js/staticMap.js"></script>
+<script src="../js/secondhand/staticMap.js"></script>
 </c:if>
-<script src="../js/article.js"></script>
-<script src="../js/image.js"></script>
+<script src="../js/secondhand/article.js"></script>
+<script src="../js/secondhand/image.js"></script>
 <%@ include file="../include/footer.jspf"%>

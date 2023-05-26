@@ -15,6 +15,7 @@ public class ChatRoomVO {
 	//left join article
 	private String title;
 	private int cost;
+	private int sell;
 	
 	//left join member
 	private String chatUserNickName;

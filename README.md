@@ -1,332 +1,289 @@
-# 학원 팀 프로젝트_SPRING Project 당근마켓 클론 코딩
+## SPRING PROJECT 당근마켓 클론코딩
+-----
 
-## 개발 동기 및 개요
+#### 개발 동기
+* 학원 팀 프로젝트 시간이 생기고 조금 더 공부하자는 팀원들과 함께 중고거래로 널리 알려진 당근마켓을 클론코딩 해보기로 하였습니다.
 
-* 곧 수료이면서 팀 프로젝트 겸 스터디를 위해 널리 알려진 중고 거래 플랫폼인 당근마켓을 클론 코딩 해보기로 했습니다. 1주차씩 기능을 공부하면서 적용해보기로 했습니다.
 
-## 사용 기술
+#### 사용 기술
 * java
 * spring
-* jquery
-* jsp,jstl
+* jsp/jstl
 * mybatis
 * oracle
 
-## 1주차
-#### 로그인/회원가입 기능
+#### 개발 파트
+* 중고거래 게시판
+* 중고거래 채팅
+
+#### 개발 코드
 
 <details>
-    <summary>로그인/로그아웃</summary>
+ <summary>게시글 리스트</summary>
 
+<details>
+<summary>Controller</summary>
 
-* 로그인 후 원래 있던곳으로 돌아가기 위해 request.getHeaer()을 썼지만, 아이디 혹은 비밀번호가 틀려서 다시 돌아올경우 로그인폼으로 돌아가는 현상 수정
-
-	<details>
-	    <summary>Controller</summary>
-
-	<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-	```java
-	  //로그인 폼
-	@GetMapping("/login")
-	public String loginForm(Model model, HttpServletRequest request) {
-
-		String pre_Url = (String)model.getAttribute("url");
-		//request.getHeader로 전 url 불러올때
-		//로그인이 실패하면 전 url이 로그인폼으로 지정되어서 아래처럼 변경
-		if(pre_Url == null) {
-			model.addAttribute("url", request.getHeader("referer"));
-		}else {
-			model.addAttribute("url",pre_Url);
-		}
-		return "member/loginForm";
+* 게시글 더보기 누를시 ajax를 통해 비동기 방식 사용
+```java
+@GetMapping("/list")
+	public String listPage(Model model) {
+		
+		//리스트
+		List<SecondHandArticleVO> list = secondHandArticlesService.getArticles(new Criteria());
+		model.addAttribute("list",list);
+		return "secondhandarticles/list";
 	}
-
-	//로그인 액션
-	@PostMapping("/login")
-	public String loginAction(HttpSession session, RedirectAttributes rttr, String userid, String userpwd, String url) {
-
-		MemberVO memberVO = memberService.getMember(userid);
-
-		if(memberVO == null || !memberVO.getUserpwd().equals(userpwd)) {
-			rttr.addFlashAttribute("message", "아이디 혹은 비밀번호가 맞지않습니다.");
-			rttr.addFlashAttribute("url",url);
-			return "redirect:/member/login";
-		}
-		session.setAttribute("loginUser", memberVO.getId());
-
-		return "redirect:"+ url;
+	
+	//더보기 누를 시 리스트 뿌리기
+	@GetMapping(
+			value="/list/{page}",
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<SecondHandArticleVO>> getArticles(@PathVariable("page") int page) {
+		Criteria cri = new Criteria(page);
+		
+		List<SecondHandArticleVO> list = secondHandArticlesService.getArticles(cri);
+		
+		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
-
-	//로그아웃 액션
-	@GetMapping("/logoutAction")
-	public String logoutAction(HttpSession session, HttpServletRequest request) {
-		session.invalidate();
-		String url = request.getHeader("referer");
-		return "redirect:" + url;
-	}
-
-	```
-	</details>
-
-	<details>
-	    <summary>Service</summary>
-
-	<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-	```java
-	  //맴버 가져오기
-		@Override
-		public MemberVO getMember(String userid) {
-			return memberMapper.getMember(userid);
-		}
-	```
-	</details>
-
-	<details>
-	    <summary>Mapper</summary>
-
-	<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-	```html
-	  <select id="getMember" resultType="org.ezen.ex02.domain.MemberVO">
-		select * from carrot_member where userid = #{userid}
-	</select>
-	```
-	</details>
+```
 
 </details>
 
 <details>
-	<summary>회원가입</summary>
+<summary>Service</summary>
 
-<!-- summary 아래 한칸 공백 두고 내용 삽입 -->
-* ajax을 통해 아이디 중복확인 비동기 처리
-* jquery를 이용해 유효성 검사
-
-	
-	<details>
-		<summary>Controller</summary>
-		
-		
-	```java
-	//회원가입 폼
-	@GetMapping("/join")
-	public String joinForm() {
-		return "member/joinForm";
-	}
-
-	//회원가입 액션
-	@PostMapping("/join")
-	public String joinAction(MemberVO memberVO) {
-		memberService.joinMember(memberVO);
-		return "redirect:/";
-	}
-
-	//아이디 중복 확인
-	@GetMapping(
-			value ="/join/{userid}",
-			produces ={MediaType.TEXT_PLAIN_VALUE}
-			)
-	@ResponseBody
-	public ResponseEntity<String> idCheck(@PathVariable("userid") String userid){
-
-		MemberVO memberVO = memberService.getMember(userid);
-
-		return memberVO == null ? new ResponseEntity<String>(HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	```
-		
-	</details>
-	
-	<details>
-   		<summary>Service</summary>
-
-	```java
-	//맴버 가져오기
+```java
+//게시글 리스트 불러오기
 	@Override
-	public MemberVO getMember(String userid) {
-		return memberMapper.getMember(userid);
+	public List<SecondHandArticleVO> getArticles(Criteria cri) {
+		List<SecondHandArticleVO> list = secondHandArticlesMapper.getArticles(cri);
+		return list;
 	}
+```
+</details>
 
-	//회원가입
-	//로그인시에도 사용
-	@Override
-	public void joinMember(MemberVO memberVO) {
-		memberMapper.joinMember(memberVO);
-	}
-	```
-	</details>
+<details>
+<summary>Mapper</summary>
 
-	<details>
-	<summary>Mapper</summary>
-		
-		
-	```html
-	<select id="getMember" resultType="org.ezen.ex02.domain.MemberVO">
-		select * from carrot_member where userid = #{userid}
+```html
+<select id="getArticles" resultType="org.ezen.ex02.domain.SecondHandArticleVO">
+		<![CDATA[
+		select c.*
+			,m.usernickname as nickname
+			,m.useraddress as address
+		from 
+			carrot_secondhand_articles c left outer join carrot_member m on(c.memberno = m.id) 
+		where rownum <= #{page} *6
+		order by updatedate desc
+		]]>
 	</select>
+```
+</details>
+</details>
 
 
-	<insert id="joinMember">
-		insert into carrot_member(id, userid, userpwd, username, nickname, address)
-		values(carr_mem_id_seq.nextval, #{userid},#{userpwd},#{username},#{nickname},#{address})
-	</insert>
-	```
-	</details>
+***
+<details>
+<summary>게시글 작성</summary>
+* 이미지 작성으로 위해 AttachController,Serivce,Mapper 생성
+
+<details>
+<summary>Controller</summary>
+
+```java
+//게시글 등록 폼
+	@GetMapping("/new")
+	public String registerPage(Model model) {
+		String kakaoApiKey = new ApiKey().getKakaoKey(); 
+		model.addAttribute("kakaoKey",kakaoApiKey);
+		return "secondhandarticles/register";
+	}
 	
-	
-	<details>
-		<summary>js</summary>
+	//게시글 등록 액션
+	@PostMapping("/new")
+	public String registerAction(MultipartFile[] files, SecondHandArticleVO article){
+		int articleNo = secondHandArticlesService.registerArticles(article);
+		attachService.insertImg(files,articleNo);
+		return "redirect:/sharticle/get?id="+articleNo;
+	}
+```
+</details>
+
+<details>
+<summary>Service</summary>
+
+```java
+//게시글+파일 작성하기
+	@Override
+	@Transactional
+	public int registerArticles(SecondHandArticleVO article){
+		secondHandArticlesMapper.registerArticles(article);		
+		int articleId = secondHandArticlesMapper.getLastId();
+		return articleId;
+	}
+```
+
+```java
+//파일 저장하기, db에 넣기
+	@Override
+	public void insertImg(MultipartFile[] files,int articleNo) {
+		StringBuilder filePath = new StringBuilder("images");
+		//System.getProperty("user.dir") 가 이상하게 작동해서 일단 절대경로로 설정
+		String fileFullPath = "C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\";
 		
+		File uploadPath = new File(new StringBuilder().append(fileFullPath).append(filePath).toString(),getFolder());
 		
-	* 회원가입 유효성, ajax 아이디 중복처리
-	```javascript
-	$(document).ready(function(){
-		$("#join_button").on("click",function(e){
-			e.preventDefault();
-			location.href = 'join';
-		});
-
-		$("#join_submit").css("cursor","pointer");
-		$("#join_reset").css("cursor","pointer");
-
-		//아이디 중복 체크 후 아이디 수정하면 중복체크 확인 날리기
-		$("#join_form").find("input[name='userid']").on("keyup",function(){
-			$("#id_check_result").empty();
-			$("#id_check_success").val("0");
-		});
-
-		//아이디 중복 체크
-		$("#id_check").on("click",function(){
-			let userid = $("#join_form").find("input[name='userid']").val();
-
-			if(userid.length == 0){
-				$("#id_check_result").css("color","red").text("아이디를 입력해주세요");
-				$("#id_check_success").val("0");
-				return false;
-			}
-			if(userid.length < 4){
-				$("#id_check_result").css("color","red").text("아이디가 너무 짧습니다.");
-				$("#id_check_success").val("0");
-				return false;
-			}
-
-			$.ajax({
-				url : 'join/'+userid,
-				type : 'get',
-				success : function(data){
-					console.log(data);
-					$("#id_check_result").css("color","green").text("사용 가능한 아이디 입니다.");
-					$("#id_check_success").val("1");
-				},
-				error : function(){
-					$("#id_check_result").css("color","red").text("사용 불가한 아이디 입니다.");
-					$("#id_check_success").val("0");
-				}
-			});
-			console.log(userid);
-		});
-
-
-		//비밀번호 같은지 체크
-		$("#join_form").on("keyup","input[name='userpwd']",function(){
-			userpwd_check();
-		});
-
-		//비밀번호 같은지 체크
-		$("#join_form").on("keyup","input[name='userpwd_check']",function(){
-			userpwd_check();
-		});
-
-
-		//회원가입이 버튼 누를 시 조건 확인
-		$("#join_submit").on("click",function(e){
-
-			e.preventDefault();
-
-			//이름 작성 유무
-			if( $("#join_form").find("input[name='username']").val().length == 0 ){
-				alert("이름을 입력해 주세요");
-
-				let input = $("#join_form").find("input[name='username']");
-
-				focus_scroll(input);
-
-				return false;
-			}
-			//닉네임 입력 유무
-			if( $("#join_form").find("input[name='nickname']").val().length == 0 ){
-				alert("닉네임을 입력해 주세요");
-				let input = $("#join_form").find("input[name='nickname']");
-
-				focus_scroll(input);
-
-				return false;
-			}
-
-			//아이디 중복 체크 유무
-			if( $("#id_check_success").val() == 0){
-				alert("아이디 중복확인이 필요합니다.");
-				let input = $("#id_check");
-
-				focus_scroll(input);
-
-				return false;
-			}
-
-
-			//비밀번호 일치 유무
-			if( $("#userpwd_check_success").val() == 0){
-				let input = $("#join_form").find("input[name='userpwd']"); 
-				alert("비밀번호가 일치하지 않습니다.");
-
-				focus_scroll(input);
-
-				return false;
-			}
-
-			//주소 입력 유무
-			if( $("#join_form").find("input[name='address']").val().length == 0 ){
-				alert("주소를 입력해 주세요");
-				let input = $("#join_form").find("input[name='address']");
-
-				focus_scroll(input);
-
-				return false;
-			}
-
-			$("#join_form").submit();
-		});
-
-	 });
-
-
-	 //메소드 시작
-
-	 //비밀번호 같은지 체크
-	 function userpwd_check(){
-		let userpwd = $("#join_form").find("input[name='userpwd']").val();
-		let userpwd_check = $("#join_form").find("input[name='userpwd_check']").val();
-		let userpwd_check_success = $("#userpwd_check_success");
-		let pwd_check = $("#pwd_check");
-
-		if(userpwd.length < 4){
-			pwd_check.css("color","red").text("비밀번호가 짧습니다.");
-			userpwd_check_success.val("0");
-		}else if(userpwd != userpwd_check){
-			pwd_check.css("color","red").text("비밀번호가 다릅니다.");
-			userpwd_check_success.val("0");
-		}else if(userpwd == userpwd_check){
-			pwd_check.css("color","green").text("비밀번호가 같습니다.");
-			userpwd_check_success.val("1");
+		if(!uploadPath.exists()) {
+			uploadPath.mkdirs();
 		}
-	 }
+		//이미지 파일들 저장하기
+		for(int a = 0; a<files.length; a++) {
+			//빈파일 체크 후 빈 파일이면 파일저장없이 return
+			if(files[a].isEmpty()) {
+				return;
+			}
+			SecondHandAttachVO imageVO = new SecondHandAttachVO();
+			StringBuilder sb = new StringBuilder();
+			UUID uuid = UUID.randomUUID();
+			
+			sb.append(uuid + "-");
+			sb.append(files[a].getOriginalFilename());
+			//new file(경로,파일명);
+			File saveFile = new File(uploadPath.getPath(), sb.toString());
+		
+			try {
+				files[a].transferTo(saveFile);
+				imageVO.setArticleNo(articleNo);
+				imageVO.setFileName(sb.toString());
+				imageVO.setFilePath(filePath.toString() + "\\" +  getFolder() + "\\");
+				
+				secondHandAttachMapper.registerImg(imageVO);
+			} catch (Exception e) {
+				log.error(e.getMessage());
+				new Exception();
+			}
+		}
+	}
+```
+</details>
 
-	 //포커스 및 스크롤 처리
-	 function focus_scroll(input){
+<details>
+<summary>Mapper</summary>
 
-		input.focus();
-		let temp = input.offset();
-		$("html body").animate({scrollTop : temp.top});
-	 }	
-	```
+```html
+<insert id="registerArticles">
+		insert into carrot_secondhand_articles(
+			id, memberno, title, body
+			<if test="cost != null">,cost</if>
+			<if test="costOffer != null">,costOffer</if>
+			<if test="lng != null">,lng</if>
+			<if test="lat != null">,lat</if>
+			<if test="locationInfo != null">,locationInfo</if>
+			)
+		values(
+			carr_art_id_seq.nextval, #{memberNo}, #{title}, #{body}
+			<if test="cost != null">,#{cost}</if>
+			<if test="costOffer != null">,#{costOffer}</if>
+			<if test="lng != null">,#{lng}</if>
+			<if test="lat != null">,#{lat}</if>
+			<if test="locationInfo != null">,#{locationInfo}</if>
+			)
+</insert>
+
+<select id="getLastId" resultType="int">
+		select carr_art_id_seq.currval from dual
+</select>
+```
+
+```html
+<insert id="registerImg">
+		insert into carrot_secondhand_img(articleno, filepath, filename)
+		values(#{articleNo},#{filePath},#{fileName}) 
+</insert>
+```
+</details>
+
+<details>
+<summary>js</summary>
+
+* 파일은 form방식으로 처리
+```js
+//이미지 파일을 올릴 시 미리보기
+ 	$("#register_form").on("change","input[name='files']",function(e){
+ 		let img_area = $("#img_area");
+ 		
+ 		img_area.empty();
+
+ 		let files = e.target.files;
+ 		
+ 		let regex = new RegExp("(.*?)\.(jpg|png|jpeg|bmp)$");
+ 		
+ 		if(files.length >10 ){
+ 			alert("최대 10개까지만 등록할 수 있습니다.");
+ 			$("input[name='files']").val("");
+ 			return false;
+ 		}
+ 		
+ 		for(let i = 0; i<files.length; i++){
+ 			if( ! checkFile(regex, files[i].name) ){
+ 				alert('이미지만 등록 가능합니다.');
+ 				$("input[name='files']").val("");
+ 				return false;
+ 			}
+ 			let reader = new FileReader();
+ 			
+ 			reader.onload = function(e){
+ 				let str = '<li style="padding: 5px; display:inline-block; width : calc(100%/3); height : 150px">';
+ 				str+='<div style="width : 100%; cursor:pointer" class="delete_img" data-fno="'+ i +'">X</div>';
+ 				str+= '<img style="display : block; width:100%; height: 90%;" src="' + e.target.result + '"/>';
+ 				str+='<div style="font-size : 1.2rem;height: 10%;overflow:hidden; text-overflow:ellipsis; white-space:nowrap">' + files[i].name + '</div></li>';
+ 				
+ 				img_area.append(str);
+ 			}
+ 			reader.readAsDataURL(files[i]);
+ 		}
+ 	});
+ })
+ 
+ //메서드 시작
+ //이미지 불러올때 각각 이미지 Resource불러오기 
+ 
+ 
+  //이미지 파일만 있는지 확인 메서드
+ function checkFile(regex,name){
+ 	if( regex.test(name) ){
+ 		return true;
+ 	}
+ 	return false;
+ }
+ 
+ //선택한 이미지 지우기
+ $(document).on("click","div[class='delete_img']",function(e){
+	
+	 let fno = $(this).closest("li").index();
+	 
+	 const dataTransfer = new DataTransfer();
+	 
+	 let files = $("#register_form").find("input[name='files']")[0].files;
+	 let fileArray = Array.from(files);
+	 
+	 fileArray.splice(fno, 1);
+	 
+	 fileArray.forEach(file => { 
+	 	dataTransfer.items.add(file); 
+	});
+	 
+	 $("#register_form").find("input[name='files']")[0].files = dataTransfer.files;
+	 $(this).closest("li").remove();
+ });
+```
+</details>
+</details>
+
+***
+<details>
+<summary>게시글 수정</summary>
 
 </details>

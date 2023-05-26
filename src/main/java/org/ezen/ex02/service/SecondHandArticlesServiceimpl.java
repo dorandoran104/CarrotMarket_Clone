@@ -31,9 +31,6 @@ public class SecondHandArticlesServiceimpl implements SecondHandArticlesService{
 		secondHandArticlesMapper.registerArticles(article);
 		
 		int articleId = secondHandArticlesMapper.getLastId();
-		
-		
-		
 		return articleId;
 	}
 	

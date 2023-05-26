@@ -43,5 +43,5 @@
     </footer> 
   </main>
 
-</div><script src="../js/chat.js"></script>
+</div><script src="../js/secondhand/chat.js"></script>
 <%@ include file="../include/footer.jspf"%>

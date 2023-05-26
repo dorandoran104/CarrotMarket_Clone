@@ -11,7 +11,7 @@ a {
 }
 
 #container {
-	width : 60%;
+	width : 65%;
 	height: 850px;
 	margin: 0 auto;
 	font-size: 0;
@@ -20,7 +20,7 @@ a {
 }
 
 aside {
-	width: 30%;
+	width: 35%;
 	height: 850px;
 	background-color: #3b3e49;
 	display: inline-block;
@@ -29,7 +29,7 @@ aside {
 }
 
 main {
-	width: 70%;
+	width: 65%;
 	height: 850px;
 	display: inline-block;
 	font-size: 15px;
@@ -62,7 +62,7 @@ aside input::placeholder {
 }
 
 aside ul {
-	padding-left: 0;
+	padding :20px 0;
 	margin: 0;
 	list-style-type: none;
 	overflow-y: scroll;
@@ -71,6 +71,7 @@ aside ul {
 
 aside li {
 	padding: 10px 0;
+	margin : 5px 10px;
 }
 
 aside li:hover {
@@ -88,9 +89,7 @@ aside li img {
 }
 
 aside li div {
-	display: inline-block;
 	vertical-align: top;
-	margin-top: 12px;
 }
 
 aside li h2 {
@@ -98,6 +97,25 @@ aside li h2 {
 	color: #fff;
 	font-weight: normal;
 	margin-bottom: 5px;
+}
+
+aside li a{
+	display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 125px;
+}
+
+aside .chatList{
+	display: flex;
+	justify-content: flex-start;
+}
+
+.chatListNickName{
+	margin-right : 10px;
+	font-weight: bold;
+    font-size: 15px;
+    color : white;
 }
 
 aside li h3 {
@@ -148,8 +166,16 @@ main header div {
 }
 
 main header h2 {
-	font-size: 16px;
-	margin-bottom: 5px;
+	width: 300px;
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+main header span{
+	
+	font-size : 16px;
+	font-weight: bold;
 }
 
 main header h3 {
@@ -183,6 +209,7 @@ main header h3 {
 
 #chat h3 {
 	color: #bbb;
+	padding : 0 10px;
 }
 
 #chat .entete {

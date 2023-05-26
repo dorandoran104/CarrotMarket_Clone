@@ -29,7 +29,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Controller
-@RequestMapping("/articles")
+@RequestMapping("/sharticle")
 @Log4j
 public class SecondHandArticlesController {
 	
@@ -43,11 +43,9 @@ public class SecondHandArticlesController {
 	public String listPage(Model model) {
 		
 		//리스트
-		
 		List<SecondHandArticleVO> list = secondHandArticlesService.getArticles(new Criteria());
-		
 		model.addAttribute("list",list);
-		return "articles/list";
+		return "secondhandarticles/list";
 	}
 	
 	//더보기 누를 시 리스트 뿌리기
@@ -65,10 +63,10 @@ public class SecondHandArticlesController {
 	
 	//게시글 등록 폼
 	@GetMapping("/new")
-	public String registerPage(HttpSession session, Model model) {
+	public String registerPage(Model model) {
 		String kakaoApiKey = new ApiKey().getKakaoKey(); 
 		model.addAttribute("kakaoKey",kakaoApiKey);
-		return "articles/register";
+		return "secondhandarticles/register";
 	}
 	
 	//게시글 등록 액션
@@ -76,7 +74,7 @@ public class SecondHandArticlesController {
 	public String registerAction(MultipartFile[] files, SecondHandArticleVO article){
 		int articleNo = secondHandArticlesService.registerArticles(article);
 		attachService.insertImg(files,articleNo);
-		return "redirect:/articles/get?id="+articleNo;
+		return "redirect:/sharticle/get?id="+articleNo;
 	}
 	
 	//게시글 상세 조회
@@ -86,7 +84,7 @@ public class SecondHandArticlesController {
 		model.addAttribute("article",articleVO);
 		String kakaoApiKey = new ApiKey().getKakaoKey();
 		model.addAttribute("kakaoKey",kakaoApiKey);
-		return "articles/article";
+		return "secondhandarticles/article";
 	}
 	
 	//게시글 수정 폼
@@ -98,7 +96,7 @@ public class SecondHandArticlesController {
 		
 		String kakaoApiKey = new ApiKey().getKakaoKey();
 		model.addAttribute("kakaoKey",kakaoApiKey);
-		return "articles/modify";
+		return "secondhandarticles/modify";
 	}
 
 	//게시글 수정
@@ -109,7 +107,7 @@ public class SecondHandArticlesController {
 			
 			//마지막 게시글 수정
 			secondHandArticlesService.modifyArticle(articleVO);
-		return "redirect:/articles/get?id="+articleVO.getId();
+		return "redirect:/sharticle/get?id="+articleVO.getId();
 	}
 	
 	//수정시 삭제한 파일 지우기
@@ -126,7 +124,7 @@ public class SecondHandArticlesController {
 	@GetMapping("/sell")
 	public String isSell(int id, int sell){
 		secondHandArticlesService.setSell(id,sell);
-		return "redirect:/articles/get?id="+id;
+		return "redirect:/sharticle/get?id="+id;
 	}
 	
 	//게시글 삭제
