@@ -1,10 +1,11 @@
-<%@page import="org.springframework.web.context.annotation.SessionScope"%>
+<%@ page import="org.springframework.web.context.annotation.SessionScope"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>  
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <c:set var="pageTitle" value="${article.title}"></c:set>
 <%@ include file="../include/header.jspf"%>
+
 <c:if test="${article.lng != null && article.lat != null }">
 <script type="text/javascript" src="${kakaoKey}"></script>
 </c:if>
@@ -91,9 +92,12 @@
 			<p id="article-category" data-time='<fmt:formatDate value="${article.updateDate}" pattern="yyyy/MM/dd HH:mm:ss"/>'></p>
 			<p id="cost-area">
 				<fmt:formatNumber value="${article.cost}" pattern="#,###" />원
+				<span style="color : gray ">
+					${article.costOffer == true ? '가격제안 가능' : '가격제안 불가능' }
+				</span>
 			 </p>
 			<!--  <div property="schema:description" id="article-detail">-->
-				<pre>${article.body}</pre>
+				<pre> ${article.body} </pre>
 			<!-- </div> -->
 			<p id="article-counts">관심 0 ∙ 채팅 ${article.chatCount} ∙ 조회 ${article.hitCount }</p>
 			
@@ -112,5 +116,6 @@
 <c:if test="${article.lng != null && article.lat != null }">
 <script src="../js/secondhand/staticMap.js"></script>
 </c:if>
+
 <script src="../js/secondhand/article.js"></script>
 <%@ include file="../include/footer.jspf"%>

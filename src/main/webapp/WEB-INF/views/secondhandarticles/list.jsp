@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <c:set var="pageTitle" value="당근 찾기"></c:set>
 
 <link rel="stylesheet" media="all" href="https://d1unjqcospf8gs.cloudfront.net/assets/home/search/index-0ea06e6a74007d2189f614229a312e9d24063f6171f58f38e95232750d810017.css" />
@@ -18,12 +19,11 @@
 				</c:if>
 			</div>
 			<div id="result-area">
+			
 			<c:forEach items="${list}" var="list">
 			<article class="flea-market-article flat-card">
 				<a class="flea-market-article-link list-href" href="${list.id}">
-					<div class="card-photo" style="background: url(../shattach/thumbnail/${list.id});background-size: cover;">
-						<!-- <img src="../attach/thumbnail/${list.id}" /> -->
-					</div>
+					<div class="card-photo" style="background: url(../shattach/thumbnail/${list.id});background-size: cover;"></div>
 					<div class="article-info">
 						<div class="article-title-content">
 							<span class="article-title">${list.title}</span> 

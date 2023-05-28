@@ -63,8 +63,7 @@
 				
 				<div class="mb-3">
 			 		<label for="location_detail" class="form-label">선택한 곳의 장소명을 입력해 주세요</label>
-			 		<span style="font-size : 1rem; color : gray;">누구나 찾기 쉬운 공공장소가 좋아요</span> 
-			 		${article.locationInfo}
+			 		<span style="font-size : 1rem; color : gray;">누구나 찾기 쉬운 공공장소가 좋아요</span>
 					<input type="text" class="form-control" name="locationInfo" value="${article.locationInfo}">
 				</div>
 			</div>

@@ -26,6 +26,7 @@
  	$("#register_form").on("change","input[name='files']",function(e){
  		let img_area = $("#img_area");
  		img_area.empty();
+ 		
  		let files = e.target.files;
  		let regex = new RegExp("(.*?)\.(jpg|png|jpeg|bmp)$");
  		
@@ -41,17 +42,18 @@
  				$("input[name='files']").val("");
  				return false;
  			}
- 			let reader = new FileReader();
  			
- 			reader.onload = function(e){
- 				let str = '<li style="padding: 5px; display:inline-block; width : calc(100%/3); height : 150px">';
- 				str+='<div style="width : 100%; cursor:pointer" class="delete_img" data-fno="'+ i +'">X</div>';
- 				str+= '<img style="display : block; width:100%; height: 90%;" src="' + e.target.result + '"/>';
- 				str+='<div style="font-size : 1.2rem;height: 10%;overflow:hidden; text-overflow:ellipsis; white-space:nowrap">' + files[i].name + '</div></li>';
- 				
- 				img_area.append(str);
- 			}
- 			reader.readAsDataURL(files[i]);
+		let reader = new FileReader();
+		
+		reader.onload = function(e){
+			let str = '<li style="padding: 5px; display:inline-block; width : calc(100%/3); height : 150px">';
+			str+='<div style="width : 100%; cursor:pointer" class="delete_img" data-fno="'+ i +'">X</div>';
+			str+= '<img style="display : block; width:100%; height: 90%;" src="' + e.target.result + '"/>';
+			str+='<div style="font-size : 1.2rem;height: 10%;overflow:hidden; text-overflow:ellipsis; white-space:nowrap">' + files[i].name + '</div></li>';
+			
+			img_area.append(str);
+		}
+		reader.readAsDataURL(files[i]);
  		}
  	});
  })

@@ -4,13 +4,13 @@
 	
 	<select id="getArticles" resultType="org.ezen.ex02.domain.SecondHandArticleVO">
 		<![CDATA[
-		select c.*
+		select /*+ INDEX_DESC(carrot_secondhand_articles carr_sec_art_ind)*/ 
+			c.*
 			,m.usernickname as nickname
 			,m.useraddress as address
 		from 
 			carrot_secondhand_articles c left outer join carrot_member m on(c.memberno = m.id) 
 		where rownum <= #{page} *6
-		order by updatedate desc
 		]]>
 	</select>
 	

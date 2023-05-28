@@ -76,7 +76,6 @@ function displayTime(timeValue){
 	
 	let updateDate = new Date(timeValue);
 	let updateTime = Math.floor((today.getTime() - updateDate.getTime()) / 1000 / 60);
-	console.log(updateTime);
 	let str = '';
 	
 	if(updateTime <1){

@@ -18,7 +18,7 @@ create sequence carr_mem_id_seq;
 drop table carrot_articles CASCADE CONSTRAINTS;
 drop sequence carr_art_id_seq;
 
-create table carrot_articles(
+create table carrot_secondhand_articles(
 ID NUMBER(10,0) constraint carr_art_id_pk primary key,
 MEMBERNO NUMBER(10,0) NOT NULL, 
 TITLE VARCHAR2(50 BYTE) NOT NULL, 
@@ -36,15 +36,16 @@ chatcount number(10,0) default 0,
 CONSTRAINT CARR_ART_MEM_FK foreign key(MEMBERNO) references carrot_member (id)
 );
 create sequence carr_art_id_seq;
+create index carr_sec_art_ind on carrot_secondhand_articles(updatedate);
 
 --이미지 테이블
 drop table carrot_img;
 
-CREATE TABLE CARROT_IMG (	
+CREATE TABLE CARROT_secondhand_IMG (	
 ARTICLENO NUMBER(10,0) NOT NULL, 
 FILEPATH VARCHAR2(200 BYTE) NOT NULL, 
 FILENAME VARCHAR2(100 BYTE) CONSTRAINT CARR_IMG_FILE_PK PRIMARY KEY,
-CONSTRAINT CARR_IMG_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES CARROT_ARTICLES (ID)
+CONSTRAINT CARR_IMG_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES carrot_secondhand_articles (ID)
 );
 
 drop table carrot_chatroom;
@@ -56,7 +57,7 @@ targetuser number(10) not null,
 articleno number(10) not null,
 CONSTRAINT CARR_chat_cu_FK FOREIGN KEY (chatuser) REFERENCES CARROT_member (id),
 CONSTRAINT CARR_chat_tu_FK FOREIGN KEY (targetuser) REFERENCES CARROT_member (id),
-CONSTRAINT CARR_chat_an_FK FOREIGN KEY (articleno) REFERENCES carrot_articles (id)
+CONSTRAINT CARR_chat_an_FK FOREIGN KEY (articleno) REFERENCES carrot_secondhand_articles (id)
 );
 drop sequence carr_chat_id_seq;
 create sequence carr_chat_id_seq;
@@ -67,6 +68,6 @@ create table carrot_chat(
 roomid varchar2(40) not null,
 message varchar2(1000) not null,
 sender number(10) not null,
-regdate varchar2(15) not null,
+regdate varchar2(25) not null,
 CONSTRAINT CARR_chat_id_FK FOREIGN KEY (roomid) REFERENCES carrot_chatroom (roomid)
 );

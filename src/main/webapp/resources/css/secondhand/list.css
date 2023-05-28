@@ -8,11 +8,15 @@ img{
     position: relative;
     text-align: left;
     display: inline-block;
-    width: calc(33% - 20px);
-	margin-right: 20px;
+    width: calc(33% - 23px);
+	margin-right: 38px;
     margin-bottom: 40px;
 }
 
 #result .result-container .articles-wrap .flat-card:nth-child(3n-2) {
-    margin-right: 20px;
+    margin-right: 38px;
+}
+
+#result .result-container .articles-wrap .flat-card:nth-child(3n) {
+    margin-right: 0px;
 }
