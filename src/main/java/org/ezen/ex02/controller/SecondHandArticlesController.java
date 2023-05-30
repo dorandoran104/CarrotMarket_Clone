@@ -82,8 +82,11 @@ public class SecondHandArticlesController {
 	public String getArticle(Model model, int id) {
 		SecondHandArticleVO articleVO = secondHandArticlesService.getArticle(id);
 		model.addAttribute("article",articleVO);
+		
 		String kakaoApiKey = new ApiKey().getKakaoKey();
+		
 		model.addAttribute("kakaoKey",kakaoApiKey);
+		
 		return "secondhandarticles/article";
 	}
 	

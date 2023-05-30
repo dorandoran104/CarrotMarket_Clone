@@ -25,7 +25,6 @@
 
 <div style="margin: 95px auto; width: 100%; font-size: 1.5rem">
 	<article id="content" data-id="${article.id}">
-		<h1 class="hide">참치캔</h1>
 		<div class="row">
 			<span class="prev col-1" id="aro1_prev" style="text-align: center"><i class="bi bi-arrow-left"></i></span>
 			<div class="imageArea col-10" style="height:350px; overflow: hidden; margin: auto"></div>
@@ -70,8 +69,10 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-		
+				
 				<div id="article-profile-right">
+					<i class="bi bi-heart"></i>
+				<!--
 					<dl id="temperature-wrap">
 						<dt>매너온도</dt>
 						<dd class="text-color-04 ">
@@ -83,6 +84,7 @@
 					</div>
 					<div class=" face face-04"></div>
 				</div>
+				 -->
 			</div>
 		</section>
 
@@ -92,14 +94,14 @@
 			<p id="article-category" data-time='<fmt:formatDate value="${article.updateDate}" pattern="yyyy/MM/dd HH:mm:ss"/>'></p>
 			<p id="cost-area">
 				<fmt:formatNumber value="${article.cost}" pattern="#,###" />원
-				<span style="color : gray ">
+				<span style="color : gray ; font-size : 10px;">
 					${article.costOffer == true ? '가격제안 가능' : '가격제안 불가능' }
 				</span>
 			 </p>
 			<!--  <div property="schema:description" id="article-detail">-->
-				<pre> ${article.body} </pre>
+				<pre>${article.body} </pre>
 			<!-- </div> -->
-			<p id="article-counts">관심 0 ∙ 채팅 ${article.chatCount} ∙ 조회 ${article.hitCount }</p>
+			<p id="article-counts">관심 <span id="like">${article.likeCount}</span> ∙ 채팅 ${article.chatCount} ∙ 조회 ${article.hitCount }</p>
 			
 			<c:if test="${article.lng != null && article.lat != null }">
 				<div id="staticMap" style="width:100%;height:350px; margin:auto;" data-lng="${article.lng}" data-lat="${article.lat}"></div>	

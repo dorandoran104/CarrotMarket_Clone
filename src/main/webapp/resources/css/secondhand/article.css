@@ -58,6 +58,7 @@ cursor : pointer;
 
 #article-profile{
 	border-bottom: 1px solid #e9ecef;
+	padding-bottom: 10px;
 }
 
 .common-btn{
@@ -97,7 +98,7 @@ cursor : pointer;
 #cost-area{
 	font-weight: 600;
     color: #ff8a3d;
-    font-size: 15px;
+    font-size: 17px;
     line-height: 18px;
     margin-top: 6px;
 }
@@ -108,4 +109,17 @@ pre{
     letter-spacing: -0.6px;
     margin: 16px 0;
     word-break: break-all;
+}
+
+.bi-heart{
+	font-size: 18px;
+    color: #ff8a3d;
+    padding-right: 15px;
+    cursor : pointer;
+}
+.bi-heart-fill{
+	font-size: 18px;
+    color: #ff8a3d;
+    padding-right: 15px;
+    cursor : pointer;
 }

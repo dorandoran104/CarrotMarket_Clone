@@ -22,8 +22,9 @@ public class SecondHandArticleVO {
 	private int sell;
 	private int hitCount;
 	private int chatCount;
-	
+	private int likeCount;
 	//join
 	private String nickname;
 	private String address;
+	
 }

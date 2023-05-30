@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.ezen.ex02.domain.SecondHandArticleVO;
+import org.ezen.ex02.domain.SecondHandLikeVO;
 import org.ezen.ex02.domain.Criteria;
 
 @Mapper
@@ -29,4 +30,7 @@ public interface SecondHandArticlesMapper {
 	void hitCountModify(int id);
 
 	void chatCountModify(int id);
+
+	void updateLikeCnt(@Param("id") int id,@Param("amount") int amount);
+
 }

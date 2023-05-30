@@ -39,7 +39,8 @@
 	</select>
 	
 	<select id="getArticle" resultType="org.ezen.ex02.domain.SecondHandArticleVO">
-		select c.*
+		select     
+			c.*
 			,m.usernickname as nickname
 			,m.useraddress as address
 		from 
@@ -90,6 +91,12 @@
 		<if test="lat != null">,lat = #{lat}</if>
 		<if test="locationInfo != null">,locationInfo = #{locationInfo}</if>
 		,updatedate = sysdate
+		where id = #{id}
+	</update>
+	
+	<update id="updateLikeCnt">
+		update carrot_secondhand_articles
+		set likecount = (select likecount from carrot_secondhand_articles where id = #{id}) + #{amount}
 		where id = #{id}
 	</update>
 	

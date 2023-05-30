@@ -2,9 +2,20 @@
  * 
  */
  $(document).ready(function(){
- 	//이미지 처리하기
  	let articleNo = $("#content").data("id");
  	
+ 	//관심글인지 유무
+ 	$.ajax({
+ 		url : '../shlike/like/'+articleNo,
+ 		success : function(result){
+ 			if(result == 'success'){
+	 			$(".bi").toggleClass("bi-heart-fill");
+				$(".bi").toggleClass("bi-heart");
+			}
+ 		}
+ 	});
+ 	
+ 	//이미지 처리하기
  	$.ajax({
  		url: '../shattach/' + articleNo,
  		success : function(result){
@@ -17,10 +28,46 @@
  	let updateTime = displayTime(timeValue);
  	$("#article-category").text(updateTime);
  	
+ 	//관심 게시글 클릭시
+ 	$(".bi").on("click",function(){
+		
+		if( $(this).hasClass("bi-heart")){
+			console.log(articleNo);
+			$.ajax({
+				url : '../shlike/like/'+ articleNo ,
+				type : 'post',
+				success : function(){
+					alert("관심글이 등록되었습니다.");
+					$(".bi").toggleClass("bi-heart-fill");
+					$(".bi").toggleClass("bi-heart");
+					let likeCount = parseInt($("#like").text());
+					$("#like").text(likeCount+1);
+				},
+				error : function(){
+					alert('오류');
+				}
+			});
+		}else if( $(this).hasClass("bi-heart-fill")){
+			$.ajax({
+				url : '../shlike/unlike/'+articleNo,
+				type : 'delete',
+				success : function(result){
+					alert("관심글이 해제되었습니다.");
+					$(".bi").toggleClass("bi-heart-fill");
+					$(".bi").toggleClass("bi-heart");
+					let likeCount = parseInt($("#like").text());
+					$("#like").text(likeCount-1);
+				},
+				error : function(){
+					alert('오류');
+				}
+			});
+		}
+ 	});
+ 	
  	//게시글 삭제
 	$("#delete-article").on("click",function(e){
 		e.preventDefault();
-		
 		if(confirm('게시글을 삭제하시겠습니까?') ){
 			$.ajax({
 				url : 'delete',
@@ -62,12 +109,8 @@
 			alert('이미 거래가 완료되었습니다.');
 			return false;
 		}
-		
 		location.href = '../chat/new?targetUser=' + targetUser + '&articleNo=' + articleNo;
 	});
-	
-	//이미지 처리
-	
  });
  
 //게시글 올린 시간을 조회한 시간 기준으로 표시하기
