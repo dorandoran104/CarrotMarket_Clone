@@ -40,11 +40,7 @@ public class SecondHandArticlesController {
 	private SecondHandAttachService attachService;
 	
 	@GetMapping("/list")
-	public String listPage(Model model) {
-		
-		//리스트
-		List<SecondHandArticleVO> list = secondHandArticlesService.getArticles(new Criteria());
-		model.addAttribute("list",list);
+	public String listPage() {
 		return "secondhandarticles/list";
 	}
 	

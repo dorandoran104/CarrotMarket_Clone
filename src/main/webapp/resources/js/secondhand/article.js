@@ -101,12 +101,17 @@
 	//채팅버튼 누를시 유효검사
 	$("#chat-btn").click(function(e){
 		e.preventDefault();
-		
+		let loginUser = $(this).data("loginuser");
 		let sell = $(this).data("sell");
 		let targetUser = $(this).data("targetuser");
 		
 		if(sell == 2){
 			alert('이미 거래가 완료되었습니다.');
+			return false;
+		}
+		
+		if(loginUser == targetUser){
+			alert('본인이 작성한 글입니다.');
 			return false;
 		}
 		location.href = '../chat/new?targetUser=' + targetUser + '&articleNo=' + articleNo;

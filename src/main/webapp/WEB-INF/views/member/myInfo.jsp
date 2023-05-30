@@ -45,9 +45,9 @@
       <section class="cards-wrap">
       	<c:forEach items="${list}" var="list">
 	        <article class="card ">
-	  			<a class="card-link" href="../articles/get?id=${list.id}">
+	  			<a class="card-link" href="../sharticle/get?id=${list.id}">
 				    <div class="card-photo" >
-				        <img src="../attach/thumbnail/${list.id}" style="width : 100%; height : 100%" />
+				        <img src="../shattach/thumbnail/${list.id}" style="width : 100%; height : 100%" />
 				    </div>
 	    		<div class="card-desc">
 		      		<h2 class="card-title">${list.title}</h2>

@@ -111,7 +111,7 @@
 				<div class="mt-2 mb-2">희망 거래 장소 : ${article.locationInfo}</div>
 			</c:if>
 			
-			<button data-targetUser="${article.memberNo}" data-articleNo="${article.id}" data-sell="${article.sell}" id="chat-btn" class="mt-2 common-btn">채팅하기</button>
+			<button data-loginuser="${loginUser}" data-targetUser="${article.memberNo}" data-articleNo="${article.id}" data-sell="${article.sell}" id="chat-btn" class="mt-2 common-btn">채팅하기</button>
 		</section>
 	</article>
 </div>

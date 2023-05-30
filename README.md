@@ -337,7 +337,6 @@
 
 * 수정 시 Map부분은 작성과 공통으로 사용하였습니다.
 * 이미지 수정 또한 form 방식으로 넘겨주고, 기존 이미지 중 삭제 처리 이벤트가 일어난 것들은 submit을 누를 시 ajax로 삭제 처리 하였습니다.
-</details>
 
 <details>
 <summary>Controller</summary>
@@ -364,7 +363,34 @@
 		return "redirect:/sharticle/get?id="+articleVO.getId();
 	}
 ```
+
+```java
+@PostMapping(
+			value="/deleteFile",
+			produces = MediaType.TEXT_PLAIN_VALUE
+			)
+	public ResponseEntity<String> deleteFile(SecondHandAttachVO attachVO){
+		
+		secondHandAttachService.deleteArticleFile(attachVO);
+		secondHandAttachService.deleteArticleImageDB(attachVO.getFileName());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+```
 </details>
+
+<details>
+<summary>Service</summary>
+//게시글 수정
+	@Override
+	public void modifyArticle(SecondHandArticleVO articleVO) {
+		secondHandArticlesMapper.modifyArticle(articleVO);
+		
+	}	
+```java
+
+```
+</details>
+
 </details>
 
 ***

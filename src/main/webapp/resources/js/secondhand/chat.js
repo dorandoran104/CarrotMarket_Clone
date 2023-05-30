@@ -151,7 +151,7 @@ $(document).ready(function() {
 		$("#chatInfo").empty();
 		
 		let str = '';
-		str+= '<div id="chatroom"><img style="height:100px; widht: 120px" src="../attach/thumbnail/';
+		str+= '<div id="chatroom"><img style="height:100px; widht: 120px" src="../shattach/thumbnail/';
 		str+= articleno;
 		str+= '" style="width : 140px;border-radius: 10px;"/>';
 	    str+= '<div>'
