@@ -21,5 +21,7 @@ public interface ChatService {
 
 	void deleteMessage(ChatVO chatVO);
 
+	int deleteChatRoom(String roomId);
+
 
 }

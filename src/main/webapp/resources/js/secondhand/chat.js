@@ -71,7 +71,7 @@ $(document).ready(function() {
 					targetNickName = value.chatUserNickName;
 				}
 			
-				str += '<li><div class="chatList"><div class="chatListNickName">';
+				str += '<li><div class="chatListItem"><div class="chatListNickName">';
 				str += myNickName;
 				str+= '</div><h2>';
 				str+= '<a href="';
@@ -108,6 +108,7 @@ $(document).ready(function() {
  		
 		$("#chat").empty();
  		
+ 		//로딩중 띄우기
  		$("#chat").append('<div class="spinner-area"><div class="spinner-border text-warning" role="status"><span class="visually-hidden">Loading...</span></div></div>');
 		
 		chatroominfo(title, cost, articleno, mynickname, targetnickname, roomId, sell);
@@ -116,18 +117,27 @@ $(document).ready(function() {
 	});
 	
 	
-	//마우스 오른쪽 클릭 이벤트
+	//내가보낸 메세지 마우스 오른쪽 클릭 이벤트
 	$(document).on("contextmenu",".me .message",function(e){
 		e.preventDefault();
+		$(".contextmenu").hide();
 		let message = $(this).prev("div").find("h3").text();
 		$(".contextmenu a").attr("href",message);
-		$(".contextmenu").css("left",e.pageX).css("top",e.pageY - 155).show();
+		$(".contextmenu").css("left",e.pageX).css("top",e.pageY - 150).show();
 	});
+	
+	$(document).on("contextmenu","#chatList li",function(e){
+		e.preventDefault();
+		console.log("채팅방 클릭");
+		$(".contextmenu").hide();
+	})
+	
 	//다른곳 클릭하면 마우스 오른쪽클릭 이벤트 종료
 	$(document).on("click",function(){
 		$(".contextmenu a").attr("href","#");
 		$(".contextmenu").hide();
 	});
+	
 	//삭제하기 버튼 누를시
 	$(".contextmenu").on("click","a",function(e){
 		e.preventDefault();
@@ -140,7 +150,7 @@ $(document).ready(function() {
 		$("#chatInfo").empty();
 		
 		let str = '';
-		str+= '<div id="chatroom"><img style="height:100px; widht: 120px" src="../shattach/thumbnail/';
+		str+= '<div id="chatroom"><img style="padding-top: 20px; height:100px; width: 120px" src="../shattach/thumbnail/';
 		str+= articleno;
 		str+= '" style="width : 140px;border-radius: 10px;"/>';
 	    str+= '<div>'
@@ -201,7 +211,6 @@ $(document).ready(function() {
 				regDate : getTime()
 			};
 		}
-		
 		socket.send(JSON.stringify(jsondata));
 		$("#chatting").val("");
 	}
@@ -275,10 +284,6 @@ $(document).ready(function() {
 				auto_scroll();
 				}
 			}
-		};
-	
-		socket.onerror = function(event) {
-			switchingRoom = false;
 		};
 	}
 });

@@ -106,7 +106,7 @@ aside li a {
 	width: 125px;
 }
 
-aside .chatList {
+aside .chatListItem {
 	display: flex;
 	justify-content: flex-start;
 }
@@ -337,6 +337,7 @@ main footer a {
 .contextmenu li {
 	border-left: 3px solid transparent;
 	transition: ease .2s;
+	margin : 0;
 }
 
 .contextmenu li a {
@@ -345,6 +346,7 @@ main footer a {
 	text-decoration: none;
 	transition: ease .2s;
 	color: black;
+	padding : 10px;
 }
 
 .contextmenu li:hover {

@@ -6,12 +6,13 @@ import javax.servlet.http.HttpSession;
 
 import org.ezen.ex02.domain.ChatRoomVO;
 import org.ezen.ex02.domain.ChatVO;
-import org.ezen.ex02.service.SecondHandArticlesService;
 import org.ezen.ex02.service.ChatService;
+import org.ezen.ex02.service.SecondHandArticlesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,6 +67,14 @@ public class ChatController {
 		mav.setViewName("redirect:/chat/list");
 		rttr.addFlashAttribute("create",chatRoom.getArticleNo());
 		return mav;
+	}
+
+	//채팅방 나가기
+	@DeleteMapping("/{roomId}")
+	public ResponseEntity<String> outChatRoom(@PathVariable("roomId") String roomId){
+		int result = chatService.deleteChatRoom(roomId);
+		return result>0 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
 	}
 	
 }

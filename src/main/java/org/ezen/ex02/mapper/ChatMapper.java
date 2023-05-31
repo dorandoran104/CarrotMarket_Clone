@@ -26,5 +26,9 @@ public interface ChatMapper {
 
 	void deleteMessage(ChatVO chatVO);
 
+	void deleteAllMessage(String roomId);
+
+	int deleteChatRoom(String roomId);
+
 
 }

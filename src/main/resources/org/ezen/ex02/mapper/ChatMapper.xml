@@ -46,4 +46,14 @@
 		where roomid = #{roomId} and regdate = #{regDate}
 	</update>
 	
+	<delete id="deleteAllMessage">
+		delete carrot_chat
+		where roomId = #{roomId}
+	</delete>
+	
+	<delete id="deleteChatRoom">
+		delete carrot_chatroom
+		where roomId = #{roomId}
+	</delete>
+	
 </mapper>

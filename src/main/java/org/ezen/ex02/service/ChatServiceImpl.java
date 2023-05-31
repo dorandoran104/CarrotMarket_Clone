@@ -9,6 +9,7 @@ import org.ezen.ex02.mapper.ChatMapper;
 import org.ezen.ex02.mapper.SecondHandArticlesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
 
@@ -76,6 +77,16 @@ public class ChatServiceImpl implements ChatService{
 	public void deleteMessage(ChatVO chatVO) {
 		chatMapper.deleteMessage(chatVO);
 		
+	}
+	
+	//채팅방 나갈 시
+	@Override
+	@Transactional
+	public int deleteChatRoom(String roomId) {
+		//메세지 먼저 지우기
+		chatMapper.deleteAllMessage(roomId);
+		//채팅방 지우기
+		return chatMapper.deleteChatRoom(roomId);
 	}
 	
 }

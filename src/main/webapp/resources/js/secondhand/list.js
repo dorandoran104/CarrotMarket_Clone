@@ -46,6 +46,7 @@
  function appendList(result){
  	console.log(result);
  	let str = '';
+	
 	for(let i = 0; i<result.length; i++){
 		str +='<article class="flea-market-article flat-card">'
 		str +='<a class="flea-market-article-link list-href" href="' + result[i].id + '">'

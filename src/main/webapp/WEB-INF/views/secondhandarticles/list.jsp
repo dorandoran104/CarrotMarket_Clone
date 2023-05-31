@@ -15,7 +15,7 @@
 			<div style="display: flex; justify-content: space-between;">
 				<p class="article-kind">중고거래</p>
 				<c:if test="${loginUser != null }">
-					<a href="/ex02/sharticle/new" class="article-kind">당근 등록</a>
+					<a href="javascript:location.replace('/ex02/sharticle/new')" class="article-kind">당근 등록</a>
 				</c:if>
 			</div>
 			<div id="result-area">

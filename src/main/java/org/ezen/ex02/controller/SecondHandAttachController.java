@@ -52,9 +52,11 @@ public class SecondHandAttachController {
 	}
 	
 	//섬네일 뿌리기(이미지중 한장만)
-	@GetMapping(value="/thumbnail/{articleNo}")
+	@GetMapping(value="/thumbnail/ ")
 	public Resource showThumbnail(@PathVariable("articleNo") int articleNo) throws MalformedURLException {
+		
 		List<SecondHandAttachVO> list = secondHandAttachService.getArticleImage(articleNo);
+		
 		StringBuilder fileFullPath = new StringBuilder("C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\");
 		//만약 이미지가 없으면 고유 사진 한장 띄우기
 		if(list == null || list.size() == 0) {

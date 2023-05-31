@@ -62,7 +62,7 @@ public class SocketHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ChatVO chatVO = objectMapper.readValue(message.getPayload(), ChatVO.class);
-		System.out.println(chatVO);
+		
 		if(chatVO.getType().equals("delete")) {
 			//chatService.deleteMessage(chatVO);
 		}else {
