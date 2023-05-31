@@ -7,11 +7,7 @@
 		insert into carrot_secondhand_article_like(id, articleno, memberno)
 		values(carr_like_seq.nextval, #{articleNo}, #{memberNo})
 	</insert>
-	
-	<select id="getLastId" resultType="int">
-		select carr_like_seq.currval from dual
-	</select>
-	
+
 	<delete id="unlikeArticle">
 		delete carrot_secondhand_article_like
 		where articleNo = #{articleNo} and memberNo = #{memberNo}

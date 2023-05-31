@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.ezen.ex02.domain.SecondHandArticleVO;
-import org.ezen.ex02.domain.SecondHandLikeVO;
 import org.ezen.ex02.domain.Criteria;
 
 @Mapper

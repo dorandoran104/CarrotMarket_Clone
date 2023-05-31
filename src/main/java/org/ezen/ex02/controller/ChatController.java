@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.ezen.ex02.domain.SecondHandArticleVO;
 import org.ezen.ex02.domain.ChatRoomVO;
 import org.ezen.ex02.domain.ChatVO;
 import org.ezen.ex02.service.SecondHandArticlesService;
@@ -21,11 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 
 @RequestMapping("/chat")
 @RestController
-@Log4j
 public class ChatController {
 	@Setter(onMethod_=@Autowired )
 	private ChatService chatService;

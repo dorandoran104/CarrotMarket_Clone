@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.Setter;
@@ -65,13 +64,12 @@ public class SecondHandAttachController {
 		}
 		return new UrlResource("file:"+fileFullPath.toString());
 	}
-	
+	//이미지 지우기
 	@PostMapping(
 			value="/deleteFile",
 			produces = MediaType.TEXT_PLAIN_VALUE
 			)
 	public ResponseEntity<String> deleteFile(SecondHandAttachVO attachVO){
-		
 		secondHandAttachService.deleteArticleFile(attachVO);
 		secondHandAttachService.deleteArticleImageDB(attachVO.getFileName());
 		return new ResponseEntity<>(HttpStatus.OK);

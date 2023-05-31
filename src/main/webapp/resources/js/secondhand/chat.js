@@ -1,36 +1,35 @@
 let switchingRoom = false;
+//중첩연결 방지용
 let socket = null;
-
-
 
 //상대방이 보낸 메세지
 function targetMessage(msg, regDate,targetnickname){
 	let str = '';
 	str+= '<li class="you">';
-       str+= '<div class="entete">';
-       str+= '<span class="status green"></span>';
-       str+= '<h2>'+ targetnickname+'</h2>';
-       str+= '<h3>'+regDate+'</h3></div>';
-       str+= '<div class="message">';
-       str+= msg;
-       str+='</div></li>';
-       
-       return str;
+	str+= '<div class="entete">';
+	str+= '<span class="status green"></span>';
+	str+= '<h2>'+ targetnickname+'</h2>';
+	str+= '<h3>'+regDate+'</h3></div>';
+	str+= '<div class="message">';
+	str+= msg;
+	str+='</div></li>';
+	   
+	return str;
 }
 
 //내가 보낸 메세지 폼
 function myMessage(msg,regDate,mynickname){
 	let str =''; 
 	str+= '<li class="me">';
-       str+= '<div class="entete">';
-       str+= '<h3>'+ regDate +'</h3>';
-       str+= '<h2>'+mynickname+'</h2>';
-       str+= '<span class="status blue"></span></div>';
-       str+= '<div class="message">'
-       str+= msg;
-       str+= '</div></li>';
-       
-       return str;
+	str+= '<div class="entete">';
+	str+= '<h3>'+ regDate +'</h3>';
+	str+= '<h2>'+mynickname+'</h2>';
+	str+= '<span class="status blue"></span></div>';
+	str+= '<div class="message">'
+	str+= msg;
+	str+= '</div></li>';
+   
+   return str;
 }
 
 //메세지 전송시 현재시각 구하기
@@ -60,7 +59,6 @@ $(document).ready(function() {
 		url : 'list/' + id,
 		success : function(result) {
 			let str = '';
-			console.log(result);
 			$.each(result, function(key, value) {
 				let targetNickName;
 				let myNickName;
@@ -117,34 +115,25 @@ $(document).ready(function() {
 		switchChatRoom(roomId, id, mynickname, targetnickname);
 	});
 	
-	//엔터누르면 보내기
-	$("#chatting").on("keyup",function(e){
-		if(e.keyCode == 13){
-			send();
-		}
-	});
-	//클릭시에도 보내기
-	$("#sendBtn").on("click",function(){
-		send();
-	});
 	
-	function send() {
-		let msg = $("#chatting").val();
-		let sender = id;
-		let jsondata = {
-			roomId : $("#roomId").val(),
-			message : msg,
-			sender : sender,
-			regDate : getTime()
-		};
-		socket.send(JSON.stringify(jsondata));
-		$("#chatting").val("");
-	}
-	
-	//채팅시 맨 밑 포커스
-	function auto_scroll(){
-		$('#chat').scrollTop($('#chat')[0].scrollHeight);
-	}
+	//마우스 오른쪽 클릭 이벤트
+	$(document).on("contextmenu",".me .message",function(e){
+		e.preventDefault();
+		let message = $(this).prev("div").find("h3").text();
+		$(".contextmenu a").attr("href",message);
+		$(".contextmenu").css("left",e.pageX).css("top",e.pageY - 155).show();
+	});
+	//다른곳 클릭하면 마우스 오른쪽클릭 이벤트 종료
+	$(document).on("click",function(){
+		$(".contextmenu a").attr("href","#");
+		$(".contextmenu").hide();
+	});
+	//삭제하기 버튼 누를시
+	$(".contextmenu").on("click","a",function(e){
+		e.preventDefault();
+		let deleteReg = $(this).attr("href");
+		send("delete",deleteReg);
+	});	
 	
 	//채팅방 클릭시 상세정보 들고오기
 	function chatroominfo(title, cost, articleno, mynickname, targetnickname,roomId, sell){
@@ -178,6 +167,48 @@ $(document).ready(function() {
 	    str+='"/>'
 	       
 	    $("#chatInfo").append(str);
+	}
+	
+	//엔터누르면 보내기
+	$("#chatting").on("keyup",function(e){
+		if(e.keyCode == 13){
+			send();
+		}
+	});
+	//클릭시에도 보내기
+	$("#sendBtn").on("click",function(){
+		send();
+	});
+	
+	function send(deleteMessage, deleteReg) {
+		let type = deleteMessage || 'message';
+		let msg = $("#chatting").val();
+		let sender = id;
+		let jsondata;
+		
+		if(deleteMessage){
+			jsondata = {
+				type : type,
+				roomId : $("#roomId").val(),
+				regDate : deleteReg
+			};
+		}else{
+			jsondata = {
+				type : type,
+				roomId : $("#roomId").val(),
+				message : msg,
+				sender : sender,
+				regDate : getTime()
+			};
+		}
+		
+		socket.send(JSON.stringify(jsondata));
+		$("#chatting").val("");
+	}
+	
+	//채팅시 맨 밑 포커스
+	function auto_scroll(){
+		$('#chat').scrollTop($('#chat')[0].scrollHeight);
 	}
 	
 	//웹 소켓 연결 변경하기
@@ -223,22 +254,26 @@ $(document).ready(function() {
 	
 	// WebSocket 메시지 수신 처리
 	socket.onmessage = function(event) {
-		let messageDate = event.data;
-		console.log(messageDate);
-		if(messageDate != null && messageDate.trim() != ""){
-			let jsonParse = JSON.parse(messageDate);
-			let message = jsonParse.message;
-			let regDate = jsonParse.regDate;
-			let str = '';
+		let messageData = event.data;
+		if(messageData != null && messageData.trim() != ""){
+			let jsonParse = JSON.parse(messageData);
 			
-			if(jsonParse.sender == id){
-				str = myMessage(message,regDate,mynickname);
+			if(jsonParse.type == "delete"){
+				let deleteDate = jsonParse.regDate;
+				let find = $("h3:contains('"+deleteDate+"')").closest("div").next("div").text("삭제된 메세지 입니다.");
 			}else{
-				str = targetMessage(message,regDate,targetnickname);
-			}
-			$("#chat").append(str);
-			//document.querySelector("#chat").append(str);
-			auto_scroll();
+				let message = jsonParse.message;
+				let regDate = jsonParse.regDate;
+				let str = '';
+			
+				if(jsonParse.sender == id){
+					str = myMessage(message,regDate,mynickname);
+				}else{
+					str = targetMessage(message,regDate,targetnickname);
+				}
+				$("#chat").append(str);
+				auto_scroll();
+				}
 			}
 		};
 	

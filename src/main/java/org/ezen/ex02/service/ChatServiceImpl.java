@@ -65,13 +65,7 @@ public class ChatServiceImpl implements ChatService{
 		return chatRoomVO;
 		
 	}
-	//내 채팅방에서 해당채팅방 들어갈때
-	@Override
-	public ChatRoomVO getChatRoomByRoomId(String roomId, int chatUser) {
-		ChatRoomVO chatRoomVO = chatMapper.getChatRoomByRoomId(roomId, chatUser);
-		return chatRoomVO;
-	}
-
+	
 	//채팅메세지 db에 저장하기
 	@Override
 	public void insertMessage(ChatVO chatVO) {

@@ -35,9 +35,12 @@ HITCOUNT NUMBER(10,0) DEFAULT 0,
 chatcount number(10,0) default 0,
 CONSTRAINT CARR_ART_MEM_FK foreign key(MEMBERNO) references carrot_member (id)
 );
-create sequence carr_art_id_seq;
-create index carr_sec_art_ind on carrot_secondhand_articles(updatedate);
 
+alter table carrot_secondhand_articles add (likecount number(10,0) default 0);
+--시퀀스
+create sequence carr_art_id_seq;
+--인덱스
+create index carr_sec_art_ind on carrot_secondhand_articles(updatedate desc);
 --이미지 테이블
 drop table carrot_img;
 
@@ -47,7 +50,24 @@ FILEPATH VARCHAR2(200 BYTE) NOT NULL,
 FILENAME VARCHAR2(100 BYTE) CONSTRAINT CARR_IMG_FILE_PK PRIMARY KEY,
 CONSTRAINT CARR_IMG_ART_FK FOREIGN KEY (ARTICLENO)REFERENCES carrot_secondhand_articles (ID)
 );
+-- 게시글 좋아요 테이블
+drop table carrot_secondhand_article_like;
+select * from carrot_secondhand_articles;
+create table carrot_secondhand_article_like(
+id number(10) constraint carr_like_id_pk primary key,
+articleno number(10) not null,
+memberno number(10) not null,
+constraint carr_like_article_fk foreign key (articleno) REFERENCES carrot_secondhand_articles (id),
+constraint carr_like_member_fk foreign key (memberno) REFERENCES carrot_member (id)
+);
+drop sequence carr_like_seq;
+create sequence carr_like_seq;
 
+select * from carrot_secondhand_article_like;
+
+select count(id) from carrot_secondhand_article_like where articleno = 11;
+
+-- 채팅방
 drop table carrot_chatroom;
 
 create table carrot_chatroom(
@@ -62,6 +82,7 @@ CONSTRAINT CARR_chat_an_FK FOREIGN KEY (articleno) REFERENCES carrot_secondhand_
 drop sequence carr_chat_id_seq;
 create sequence carr_chat_id_seq;
 
+--채팅
 drop table carrot_chat;
 
 create table carrot_chat(

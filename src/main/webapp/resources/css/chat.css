@@ -5,13 +5,13 @@
 }
 
 a {
-	color : white;
+	color: white;
 	text-decoration: none;
 	white-space: nowrap;
 }
 
 #container {
-	width : 65%;
+	width: 65%;
 	height: 850px;
 	margin: 0 auto;
 	font-size: 0;
@@ -62,7 +62,7 @@ aside input::placeholder {
 }
 
 aside ul {
-	padding :20px 0;
+	padding: 20px 0;
 	margin: 0;
 	list-style-type: none;
 	overflow-y: scroll;
@@ -71,7 +71,7 @@ aside ul {
 
 aside li {
 	padding: 10px 0;
-	margin : 5px 10px;
+	margin: 5px 10px;
 }
 
 aside li:hover {
@@ -99,23 +99,23 @@ aside li h2 {
 	margin-bottom: 5px;
 }
 
-aside li a{
+aside li a {
 	display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 125px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 125px;
 }
 
-aside .chatList{
+aside .chatList {
 	display: flex;
 	justify-content: flex-start;
 }
 
-.chatListNickName{
-	margin-right : 10px;
+.chatListNickName {
+	margin-right: 10px;
 	font-weight: bold;
-    font-size: 15px;
-    color : white;
+	font-size: 15px;
+	color: white;
 }
 
 aside li h3 {
@@ -133,7 +133,7 @@ aside li h3 {
 }
 
 .green {
-	background-color:  #a4a4a4;
+	background-color: #a4a4a4;
 }
 
 .orange {
@@ -141,7 +141,7 @@ aside li h3 {
 }
 
 .blue {
-	background-color:  #ff6f0f;
+	background-color: #ff6f0f;
 	margin-right: 0;
 	margin-left: 7px;
 }
@@ -157,33 +157,34 @@ main header>* {
 	vertical-align: top;
 }
 
-#chatroom{
-	display : flex;	
+#chatroom {
+	display: flex;
 }
+
 main header div {
 	margin-left: 10px;
-	width : 100%;
+	width: 100%;
 }
 
 main header h2 {
 	width: 300px;
-    font-size: 16px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+	font-size: 16px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
-main header span{
-	
-	font-size : 16px;
+
+main header span {
+	font-size: 16px;
 	font-weight: bold;
 }
 
 main header h3 {
-    font-size: 17px;
-    font-weight: normal;
-    color: #7e818a;
-    text-align: left;
-    padding-left: 2px;
+	font-size: 17px;
+	font-weight: normal;
+	color: #7e818a;
+	text-align: left;
+	padding-left: 2px;
 }
 
 #chat {
@@ -194,7 +195,7 @@ main header h3 {
 	height: 612px;
 	border-top: 2px solid #fff;
 	border-bottom: 2px solid #fff;
-	backgound-color : #f9f9f9;
+	backgound-color: #f9f9f9;
 }
 
 #chat li {
@@ -209,7 +210,7 @@ main header h3 {
 
 #chat h3 {
 	color: #bbb;
-	padding : 0 10px;
+	padding: 0 10px;
 }
 
 #chat .entete {
@@ -252,27 +253,27 @@ main header h3 {
 
 #chat .me .triangle {
 	border-color: transparent transparent #ff6f0f transparent;
-    margin-left: 811px;
+	margin-left: 811px;
 }
 
 main footer {
-	display:flex;
-	background-color : white;
+	display: flex;
+	background-color: white;
 	height: 155px;
 	padding: 20px 15px 10px 20px;
 }
 
 main footer textarea {
 	resize: none;
-    background-color:#e5e5e570;
-    border: none;
-    display: block;
-    width: 100%;
-    height: 80px;
-    border-radius: 10px;
-    padding: 20px;
-    font-size: 13px;
-    margin-bottom: 13px;
+	background-color: #e5e5e570;
+	border: none;
+	display: block;
+	width: 100%;
+	height: 80px;
+	border-radius: 10px;
+	padding: 20px;
+	font-size: 13px;
+	margin-bottom: 13px;
 }
 
 main footer textarea::placeholder {
@@ -286,33 +287,71 @@ main footer img {
 
 main footer a {
 	font-weight: bold;
-    font-size: 30px;
-    color: #ff6f0f;
-    margin-top: 5px;
-    display: inline-block;
-    padding-top: 27px;
-    margin-left: 14px;
-}
-
-#rebtn{
-    width: 100px;
-    height: 34px;
-}
-
-#rebtn:hover{
-    background-color:#f2f3f6;
-   	opacity: .7;
-}
-.spinner-area{
-	width: 50%;
-    height: 50%;
-    margin: auto;
-    text-align: center;
-    padding-top: 260px;
-}
-
-.spinner-border{
-	width : 50px;
-	height : 50px;
 	font-size: 30px;
+	color: #ff6f0f;
+	margin-top: 5px;
+	display: inline-block;
+	padding-top: 27px;
+	margin-left: 14px;
+}
+
+#rebtn {
+	width: 100px;
+	height: 34px;
+}
+
+#rebtn:hover {
+	background-color: #f2f3f6;
+	opacity: .7;
+}
+
+.spinner-area {
+	width: 50%;
+	height: 50%;
+	margin: auto;
+	text-align: center;
+	padding-top: 260px;
+}
+
+.spinner-border {
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+}
+
+.contextmenu {
+	display: none;
+	position: absolute;
+	width: 200px;
+	margin: 0;
+	padding: 0;
+	background: #FFFFFF;
+	border-radius: 5px;
+	list-style: none;
+	box-shadow: 0 15px 35px rgba(50, 50, 90, 0.1), 0 5px 15px
+		rgba(0, 0, 0, 0.07);
+	overflow: hidden;
+	z-index: 999999;
+}
+
+.contextmenu li {
+	border-left: 3px solid transparent;
+	transition: ease .2s;
+}
+
+.contextmenu li a {
+	display: block;
+	font-size: 13px; color : black;
+	text-decoration: none;
+	transition: ease .2s;
+	color: black;
+}
+
+.contextmenu li:hover {
+	background: #f89d5f;
+	border-left: 3px solid #ff6f0f;
+}
+
+.contextmenu li:hover a {
+	color: #FFFFFF;
 }

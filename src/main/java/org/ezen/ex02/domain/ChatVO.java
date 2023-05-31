@@ -4,6 +4,9 @@ import lombok.Data;
 @Data
 public class ChatVO {
 	
+	private String type;
+	
+	private String uuid;
 	private String roomId;
 	private String message;
 	private int sender;

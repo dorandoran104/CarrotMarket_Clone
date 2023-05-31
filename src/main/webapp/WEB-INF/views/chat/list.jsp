@@ -6,21 +6,27 @@
 <c:set var="pageTitle" value="채팅"></c:set>
 
 <%@ include file="../include/header.jspf"%>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <link rel="stylesheet" type="text/css" href="../css/chat.css">
 
 
-<c:if test="${create != null }">	
-<input type="hidden" id="create" value="${create}"/>
+<c:if test="${create != null }">
+	<input type="hidden" id="create" value="${create}" />
 </c:if>
-<div id="container" style="margin-top: 150px; margin-bottom:70px;" data-id="${loginUser}">
-  <aside>
-    <ul id="chatList"></ul>
-  </aside>
-  
-  <main>
-    <header id="chatInfo">
-    <!-- 
+
+<div id="container" style="margin-top: 150px; margin-bottom: 70px;"
+	data-id="${loginUser}">
+
+			
+
+	<aside>
+		<ul id="chatList"></ul>
+	</aside>
+
+	<main>
+		<header id="chatInfo">
+			<!-- 
       <div id="chatroom" data-roomid="${chatRoom.roomId}" data-userid="${loginUser}">
       	<img src="../attach/thumbnail/${article.id}" style="width : 140px;border-radius: 10px;"/>
         <div>
@@ -32,16 +38,23 @@
        	</div>
       </div>
        -->
-    </header>
-    
-    <ul id="chat">
-    </ul>
-    
-    <footer>
-      <textarea placeholder="Type your message" id="chatting"></textarea>
-      <a href="#" id="sendBtn"><i class="bi bi-send"></i></a>
-    </footer> 
-  </main>
+			
+		</header>
 
-</div><script src="../js/secondhand/chat.js"></script>
+		<ul id="chat">
+		</ul>
+
+		<footer>
+			<textarea placeholder="Type your message" id="chatting"></textarea>
+			<a href="#" id="sendBtn"><i class="bi bi-send"></i></a>
+			
+		</footer>
+	</main>
+</div>
+<div>
+	<ul class="contextmenu">
+		<li><a href="#" id="chat_delete">삭제하기</a></li>
+	</ul>
+</div>
+<script src="../js/secondhand/chat.js"></script>
 <%@ include file="../include/footer.jspf"%>

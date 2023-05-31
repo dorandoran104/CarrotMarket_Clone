@@ -16,14 +16,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 
-@Log4j
 @Component
 public class SocketHandler extends TextWebSocketHandler{
 	
 	//private HashMap<String,WebSocketSession> sessionMap = new HashMap<>();
-	
 	//roomid에따라 채팅방 분리를 위해 ChatSession class를 따로 만듬
 	private List<ChatSession> sessionList = new ArrayList<>();
 	
@@ -63,11 +60,9 @@ public class SocketHandler extends TextWebSocketHandler{
 	@Override
 	//메세지 수신 및 송신
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String id = session.getId();
-		
 		ObjectMapper objectMapper = new ObjectMapper();
 		ChatVO chatVO = objectMapper.readValue(message.getPayload(), ChatVO.class);
-		
+		 
 		 //chatService.insertMessage(chatVO);
 		
 		if(sessionList.size()>0) {

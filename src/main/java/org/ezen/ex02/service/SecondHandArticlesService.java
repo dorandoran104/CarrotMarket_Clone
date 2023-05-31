@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.ezen.ex02.domain.SecondHandArticleVO;
 import org.ezen.ex02.domain.Criteria;
-import org.ezen.ex02.domain.SecondHandAttachVO;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface SecondHandArticlesService {
 

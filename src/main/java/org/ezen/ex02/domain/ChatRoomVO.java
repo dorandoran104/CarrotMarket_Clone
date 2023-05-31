@@ -1,7 +1,5 @@
 package org.ezen.ex02.domain;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data

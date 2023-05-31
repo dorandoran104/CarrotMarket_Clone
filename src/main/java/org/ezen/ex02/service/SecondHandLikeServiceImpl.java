@@ -17,6 +17,7 @@ public class SecondHandLikeServiceImpl  implements SecondHandLikeService{
 	@Setter(onMethod_=@Autowired)
 	private SecondHandArticlesMapper articlesMapper;
 	
+	//관심글 설정시 게시글 db도 수정
 	@Override
 	@Transactional
 	public int likeArticle(SecondHandLikeVO likeVO) {
@@ -32,7 +33,7 @@ public class SecondHandLikeServiceImpl  implements SecondHandLikeService{
 		articlesMapper.updateLikeCnt(likeVO.getArticleNo(), -1);
 		return result;
 	}
-
+	//관심글 확인
 	@Override
 	public SecondHandLikeVO findLike(int memberNo, int articleNo) {
 		return likeMapper.findLike(memberNo, articleNo);

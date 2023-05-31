@@ -1,9 +1,6 @@
 package org.ezen.ex02.controller;
 
-import java.util.Arrays;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.ezen.ex02.domain.SecondHandArticleVO;
 import org.ezen.ex02.domain.SecondHandAttachVO;
@@ -21,16 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/sharticle")
-@Log4j
 public class SecondHandArticlesController {
 	
 	@Setter(onMethod_=@Autowired)

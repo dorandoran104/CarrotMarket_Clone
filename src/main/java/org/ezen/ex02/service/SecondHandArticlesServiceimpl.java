@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
 
 @Service
-@Log4j
 public class SecondHandArticlesServiceimpl implements SecondHandArticlesService{
 	
 	@Setter(onMethod_=@Autowired)

@@ -17,8 +17,6 @@ public interface ChatService {
 
 	ChatRoomVO createChatRoom(int id, int targetUser, int articleNo);
 
-	ChatRoomVO getChatRoomByRoomId(String roomId, int chatUser);
-
 	void insertMessage(ChatVO chatVO);
 
 
