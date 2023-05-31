@@ -40,4 +40,10 @@
 		values(#{roomId}, #{message}, #{sender}, #{regDate})
 	</insert>
 	
+	<update id="deleteMessage">
+		update carrot_chat
+		set message = '삭제된 메세지 입니다.'
+		where roomid = #{roomId} and regdate = #{regDate}
+	</update>
+	
 </mapper>

@@ -62,9 +62,12 @@ public class SocketHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
 		ChatVO chatVO = objectMapper.readValue(message.getPayload(), ChatVO.class);
-		 
-		 //chatService.insertMessage(chatVO);
-		
+		System.out.println(chatVO);
+		if(chatVO.getType().equals("delete")) {
+			//chatService.deleteMessage(chatVO);
+		}else {
+			//chatService.insertMessage(chatVO);
+		}
 		if(sessionList.size()>0) {
 			for(int a = 0; a<sessionList.size(); a++) {
 				if(sessionList.get(a).getRoomId().equals(chatVO.getRoomId())) {

@@ -19,5 +19,7 @@ public interface ChatService {
 
 	void insertMessage(ChatVO chatVO);
 
+	void deleteMessage(ChatVO chatVO);
+
 
 }

@@ -71,5 +71,11 @@ public class ChatServiceImpl implements ChatService{
 	public void insertMessage(ChatVO chatVO) {
 		chatMapper.insertMessage(chatVO);
 	}
+	//채팅 삭제시 db처리
+	@Override
+	public void deleteMessage(ChatVO chatVO) {
+		chatMapper.deleteMessage(chatVO);
+		
+	}
 	
 }
