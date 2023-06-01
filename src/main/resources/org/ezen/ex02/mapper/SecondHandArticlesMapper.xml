@@ -12,7 +12,8 @@
 			,m.usernickname as nickname
 			,m.useraddress as address
 		from 
-			carrot_secondhand_articles c left outer join carrot_member m on(c.memberno = m.id) 
+			carrot_secondhand_articles c left outer join carrot_member m on(c.memberno = m.id)
+			where sell < 2
 			order by updatedate desc)
 		where rownum <= #{page} *6
 		]]>

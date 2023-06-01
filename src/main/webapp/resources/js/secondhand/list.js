@@ -3,8 +3,16 @@
  */
  $(document).ready(function(){
  	let pageNum = 1;
- 	getList(pageNum)
  	
+ 	$(window).on('pageshow', function(event) {
+	    if (event.originalEvent.persisted || (window.performance && window.performance.navigation.type == 2)) {
+	        pageNum = history.state.page;
+	        getList(pageNum);
+	    }else{
+			getList(pageNum);    
+	    }
+	});	
+
  	$(".more-btn").on("click",function(e){
  		let loading = '<div class="spinner-border text-warning" role="status"><span class="visually-hidden">Loading...</span></div>'
  		let clone = $(this).clone();
@@ -18,11 +26,7 @@
  
  	$("#result-area").on("click","a",function(e){
  		e.preventDefault();
- 		
  		let id = $(this).attr("href");
-
- 		console.log(id);
- 		
  		$.ajax({
  			url : 'hitcount/'+id,
  			type : 'post',
@@ -39,12 +43,14 @@
  				$("#result-area").empty();
  				appendList(result);
  			}	
- 		})
+ 		});
+ 		
+ 		history.pushState({page : pageNum},null,'list');
+ 		console.log(pageNum);
  	}
  })
  
  function appendList(result){
- 	console.log(result);
  	let str = '';
 	
 	for(let i = 0; i<result.length; i++){

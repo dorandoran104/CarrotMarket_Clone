@@ -1,8 +1,14 @@
 /**
  * 
  */
+ window.onpopstate = function(e){
+	console.log(e.state)
+}		
+ 
  $(document).ready(function(){
  	let articleNo = $("#content").data("id");
+ 	
+ 	console.log(history.state);
  	
  	//관심글인지 유무
  	$.ajax({
