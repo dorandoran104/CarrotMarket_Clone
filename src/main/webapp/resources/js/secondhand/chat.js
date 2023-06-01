@@ -122,14 +122,19 @@ $(document).ready(function() {
 		e.preventDefault();
 		$(".contextmenu").hide();
 		let message = $(this).prev("div").find("h3").text();
-		$(".contextmenu a").attr("href",message);
+		$(".contextmenu a").attr("href",message).text('삭제하기').data('type','delete');
+
 		$(".contextmenu").css("left",e.pageX).css("top",e.pageY - 150).show();
-	});
+	}); 
 	
+	//채팅방 오른쪽 클릭할때
 	$(document).on("contextmenu","#chatList li",function(e){
 		e.preventDefault();
-		console.log("채팅방 클릭");
+		
 		$(".contextmenu").hide();
+		let temp = $(".contextmenu a").attr('href', $(this).find("a").attr('href'));
+		$(".contextmenu a").text('채팅방 나가기').data('type','chatOut');
+		$(".contextmenu").css("left",e.pageX).css("top",e.pageY - 150).show();
 	})
 	
 	//다른곳 클릭하면 마우스 오른쪽클릭 이벤트 종료
@@ -141,8 +146,30 @@ $(document).ready(function() {
 	//삭제하기 버튼 누를시
 	$(".contextmenu").on("click","a",function(e){
 		e.preventDefault();
-		let deleteReg = $(this).attr("href");
-		send("delete",deleteReg);
+		let type = $(this).data('type');
+		
+		if(type == 'delete'){
+			let deleteReg = $(this).attr("href");
+			send("delete",deleteReg);
+		}else if(type == 'chatOut'){
+			let roomId = $(this).attr('href');
+			if(confirm('채팅방을 나가시겠습니까?')){
+				
+				$.ajax({
+					url : roomId,
+					type : 'delete',
+					success : function(){
+						let find = $("#chatList a[href='"+roomId+"']");
+						find.parents('li').remove();
+						console.log(find);
+					}
+				})
+			}else{
+				return false;
+			}
+		}
+		
+		
 	});	
 	
 	//채팅방 클릭시 상세정보 들고오기

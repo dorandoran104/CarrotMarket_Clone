@@ -53,7 +53,7 @@
 </div>
 <div>
 	<ul class="contextmenu">
-		<li><a href="#" id="chat_delete">삭제하기</a></li>
+		<li><a href="#" id="chat_delete" data-type="delete">삭제하기</a></li>
 	</ul>
 </div>
 <script src="../js/secondhand/chat.js"></script>

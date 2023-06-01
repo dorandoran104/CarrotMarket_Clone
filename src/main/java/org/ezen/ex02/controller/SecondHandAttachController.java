@@ -52,7 +52,7 @@ public class SecondHandAttachController {
 	}
 	
 	//섬네일 뿌리기(이미지중 한장만)
-	@GetMapping(value="/thumbnail/ ")
+	@GetMapping(value="/thumbnail/{articleNo}")
 	public Resource showThumbnail(@PathVariable("articleNo") int articleNo) throws MalformedURLException {
 		
 		List<SecondHandAttachVO> list = secondHandAttachService.getArticleImage(articleNo);

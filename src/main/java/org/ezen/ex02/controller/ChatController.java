@@ -21,9 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @RequestMapping("/chat")
 @RestController
+@Log4j
 public class ChatController {
 	@Setter(onMethod_=@Autowired )
 	private ChatService chatService;
@@ -74,7 +76,6 @@ public class ChatController {
 	public ResponseEntity<String> outChatRoom(@PathVariable("roomId") String roomId){
 		int result = chatService.deleteChatRoom(roomId);
 		return result>0 ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		
 	}
 	
 }
