@@ -181,6 +181,7 @@ $(document).ready(function() {
 		str+= articleno;
 		str+= '" style="width : 140px;border-radius: 10px;"/>';
 	    str+= '<div>'
+	    
 	    if(sell == 0){
 	    	str+= "<span style='color : #ff6f0f'> 판매중 </span>";
 	    }else if(sell == 1){
@@ -192,8 +193,8 @@ $(document).ready(function() {
 	    str+= title;
 	    str+= '</h2><h3>';
 	    str+= AddComma(cost);
-	    str+= '원</h3><div><button id="rebtn">예약하기</button></div></div></div>';
-	    str+= '<input type="hidden" id="mynickname" value="'
+	    str+= '원</h3>'; //<div><button id="rebtn">예약하기</button></div>';
+	    str+= '</div></div><input type="hidden" id="mynickname" value="'
 	    str+= mynickname;
 	    str+='"/>'
 	    str+= '<input type="hidden" id="targetnickname" value="'

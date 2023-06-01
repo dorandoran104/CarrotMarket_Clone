@@ -72,7 +72,7 @@
  			let articleNo = $(this).data("articleno");
  			
  			$.ajax({
- 				url : '../attach/deleteFile',
+ 				url : '../shattach/deleteFile',
  				type : 'post',
  				data : {
  					fileName : fileName,

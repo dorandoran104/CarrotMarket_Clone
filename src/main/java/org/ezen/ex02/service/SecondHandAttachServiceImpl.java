@@ -1,6 +1,7 @@
 package org.ezen.ex02.service;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,6 +16,8 @@ import org.ezen.ex02.mapper.SecondHandAttachMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import net.coobird.thumbnailator.Thumbnailator;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -58,9 +61,15 @@ public class SecondHandAttachServiceImpl implements SecondHandAttachService{
 			sb.append(files[a].getOriginalFilename());
 			//new file(경로,파일명);
 			File saveFile = new File(uploadPath.getPath(), sb.toString());
-		
+			
 			try {
+				FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath.getPath(), "s_" + sb.toString()));
+				
+				Thumbnailator.createThumbnail(files[a].getInputStream(), thumbnail, 250, 250);
+				// 출력스트림에 저장된 thumbnail부터 읽어와 크기 100 x 100의 섬네일 파일 생성
+				thumbnail.close();
 				files[a].transferTo(saveFile);
+				
 				imageVO.setArticleNo(articleNo);
 				imageVO.setFileName(sb.toString());
 				imageVO.setFilePath(filePath.toString() + "\\" +  getFolder() + "\\");
@@ -99,9 +108,11 @@ public class SecondHandAttachServiceImpl implements SecondHandAttachService{
 		StringBuilder fileFullPath = new StringBuilder("C:\\Users\\82104\\Desktop\\spring_ex\\teamproject\\carrotmarket\\src\\main\\webapp\\resources\\");
 	
 		Path file = Paths.get(fileFullPath.toString() + attachVO.getFilePath() + attachVO.getFileName());
+		Path thumbnail = Paths.get(fileFullPath.toString() + attachVO.getFilePath() + "\\s_"+attachVO.getFileName());
 		log.info(file);
 		try {
 			Files.deleteIfExists(file);
+			Files.deleteIfExists(thumbnail);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

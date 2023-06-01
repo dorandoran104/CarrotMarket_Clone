@@ -54,7 +54,7 @@
 					<div class="card-price "><fmt:formatNumber value="${list.cost}" pattern="#,###" />원</div>
 		      		<div class="card-region-name">${member.useraddress}</div>
 					<div class="card-counts">
-					    <span>관심 9</span>∙<span>채팅 0</span>
+					    <span>관심 ${list.likeCount}</span>∙<span>채팅 ${list.chatCount}</span>
 					</div>
 	   			</div>
 				</a>

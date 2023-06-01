@@ -15,11 +15,7 @@
 	<input type="hidden" id="create" value="${create}" />
 </c:if>
 
-<div id="container" style="margin-top: 150px; margin-bottom: 70px;"
-	data-id="${loginUser}">
-
-			
-
+<div id="container" data-id="${loginUser}">
 	<aside>
 		<ul id="chatList"></ul>
 	</aside>

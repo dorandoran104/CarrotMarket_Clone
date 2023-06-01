@@ -62,7 +62,7 @@ public class SecondHandAttachController {
 		if(list == null || list.size() == 0) {
 			fileFullPath.append("images/DaangnMarket_logo.png");
 		}else {
-			fileFullPath.append(list.get(0).getFilePath() + list.get(0).getFileName());
+			fileFullPath.append(list.get(0).getFilePath() +"\\s_"+ list.get(0).getFileName());
 		}
 		return new UrlResource("file:"+fileFullPath.toString());
 	}
