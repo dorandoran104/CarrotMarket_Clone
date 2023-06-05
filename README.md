@@ -23,8 +23,18 @@
 
 
 <details>
- <summary>게시글 리스트</summary>
+<summary>View</summary>
 
+* 리스트
+<img src="https://github.com/dorandoran104/CarrotMarket_Clone/assets/117650784/3dc11f4c-e13c-456d-8329-5cbc89cda7ac">
+
+*게시글
+<img src="https://github.com/dorandoran104/CarrotMarket_Clone/assets/117650784/d6b1112e-7130-4dd7-9dbd-c4c3cfb9bff9">
+</details>	
+	
+<details>
+ <summary>게시글 리스트</summary>
+	
 <details>
 <summary>Controller</summary>
 
@@ -1075,7 +1085,18 @@ function showImage(result){
 <summary>채팅</summary>
 
 * STOMP, socket.js 등등 채팅방을 구현 해볼수 있는 기능들이 많지만 기본 WebSocket을 사용해서 구현 해봤습니다.
+* REST API를 사용했습니다.
 
+	
+<details>
+<summary>View</summary>
+
+* 채팅방 + 채팅 리스트
+<img src="https://github.com/dorandoran104/CarrotMarket_Clone/assets/117650784/6fb23a15-f60d-4b26-980e-4bb8b85feebe">
+
+
+</details>	
+	
 <details>
 <summary>Handler, Config</summary>
 
